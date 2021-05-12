@@ -98,6 +98,8 @@
         margin: calc(var(--grid-cell)*-15);
         pointer-events: none;
         transition: .2s;
+        
+        display: none;
     }
     @keyframes shift {
         0% {
@@ -137,7 +139,7 @@
         border: none;
         z-index: 5;
         pointer-events: none;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
     .grid {
         position: relative;
@@ -157,6 +159,15 @@
         background-image: url("dungeon.png");
         background-size: 100%;
         background-position: center;
+    }
+    .plus {
+        position: absolute;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: 2px solid red;
+        z-index: 5;
+        pointer-events: none;
+        transition: .2s ease;
     }
     .layout {
         position: fixed;
@@ -370,6 +381,7 @@
    z-index: 12;
    background: radial-gradient(rgb(0,0,0,0), red);
    transition: 1s ease;
+   transform: translate3d(calc(var(--grid-cell)*5),calc(var(--grid-cell)*-5), 0);
 }
 .dpad-button {
    appearance:none;
@@ -474,6 +486,14 @@
         <div class="icon" id="icon"></div>
         <div class="shadow"></div>
         
+    <div class="plus" id="plus">
+    <div class="plus" style="left: calc(var(--grid-cell)*-10)"></div>
+    <div class="plus" style="right: calc(var(--grid-cell)*-10)"></div>
+    <div class="plus" style="top: calc(var(--grid-cell)*-10)"></div>
+    <div class="plus" style="bottom: calc(var(--grid-cell)*-10)"></div>
+    </div>
+      
+<!--
     <div class="grid" id="grid">
         <div class="square">hey</div>
         <div class="square">hey</div>
@@ -502,6 +522,7 @@
         <div class="square">hey</div>
     </div>
     </div>
+        -->
         
     </div>
         
@@ -557,12 +578,14 @@
     
 <script>
     
-    var backdrop = document.getElementsByClassName("square")[0];
+    var backdrop = document.getElementsByClassName("square");
+    
+    var rng = (Math.round(Math.random() * 100));
     
     
     window.setInterval(function() {
     if (xcord==1 && ycord==0) {
-        backdrop.style.backgroundImage = "url('dungeon2.png')";
+        backdrop[1].style.backgroundImage = "url('dungeon2.png')";
     }
     },200);
     
@@ -760,7 +783,8 @@ $(window).on('load', () => {
     
     var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
     
-    var map = document.getElementById("grid");
+    //var map = document.getElementById("grid");
+    var map = document.getElementById("plus");
         
     
     function myfunction(el,d) {
@@ -772,7 +796,7 @@ $(window).on('load', () => {
             icon.style.backgroundImage = "url('back.png')",
             y=y-160,
             map.style.top =
-        `${y*pixelSize}px`,
+        `${-y*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
@@ -789,7 +813,7 @@ $(window).on('load', () => {
             icon.style.backgroundImage = "url('left.png')",
             x=x-160,
             map.style.left =
-        `${x*pixelSize}px`,
+        `${-x*pixelSize}px`,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
         },500);
@@ -816,7 +840,7 @@ $(window).on('load', () => {
     detectswipe('swipeme',myfunction);
     
     window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col;
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng;
     },200);
 
     let col = 0;
