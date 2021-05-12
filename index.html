@@ -1,0 +1,1434 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content= "ie=edge">
+    <title>UN 2.0</title>
+    
+    <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>     
+</head>
+    
+<style>
+    :root {
+        --pixel-size: 5px;
+        --grid-cell: calc(var(--pixel-size)*16);
+    }
+    @media only screen and (min-width: 900px) {
+        .dpad {
+            display: none;
+        }
+        .bottomscreen {
+            top: calc(var(--grid-cell) * -4);
+        }
+    }
+    @media (max-width: 900px) {
+        :root {
+            --pixel-size: 4px;
+        }
+    }
+    @media (max-width: 700px) {
+        :root {
+            --pixel-size: 3px;
+        }
+    }
+    .pixel-art {
+        image-rendering: pixelated;
+    }
+    @font-face {
+        font-family: "pixel";
+        src: url("/dogica.otf");
+    }
+    @font-face {
+        font-family: "boldpixel";
+        src: url("/dogicabold.otf");
+    }
+    html, body {
+        max-height: 100%;
+        overflow: hidden;
+    }
+    body {
+        -webkit-tap-highlight-color: transparent;
+        background: #000;
+        color: #fff;
+        touch-action: manipulation;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .camera {
+        width: calc(var(--pixel-size)*160);
+        height: calc(var(--pixel-size)*160);
+        overflow: hidden;
+        position: relative;
+    }
+    .vinegar {
+        width: calc(var(--pixel-size)*160);
+        height: calc(var(--pixel-size)*160);
+        overflow: hidden;
+        position: fixed;
+        z-index: 4;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*2) #000;
+    }
+    @keyframes darken {
+        0% {filter:brightness(1)}
+        50% {filter:brightness(.9)}
+        100% {filter:brightness(1)}
+    }
+    .camera .ocean {
+        width: calc(var(--pixel-size)*160);
+        height: calc(var(--pixel-size)*160);
+        background: #000;
+        background-size: 100%;
+        image-rendering: pixelated;
+        position: absolute;
+    }
+    .map {
+        image-rendering: pixelated;
+        background-image: url("/grass.png");
+        background-size: 100%;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        position: relative;
+    }
+    .icon {
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        position: absolute;
+        overflow: hidden;
+    }
+    .icon_sprite {
+        width: calc(var(--grid-cell)*40);
+        height: calc(var(--grid-cell)*40);
+        position: absolute;
+        background-image: url("sheet.png");
+        background-size: 100%;
+        image-rendering: pixelated;
+    }
+    .button1 {
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1.1);
+        left: calc(var(--grid-cell)*1);
+    }
+    .icon[walking="false"] .icon_sprite {
+        animation: none;
+    }
+    @keyframes down {
+        from {
+            background-position-x: calc(var(--grid-cell)*0);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-8);
+        }
+    }
+    @keyframes up {
+        from {
+            background-position-x: calc(var(--grid-cell)*-8);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-16);
+        }
+    }
+    @keyframes right {
+        from {
+            background-position-x: calc(var(--grid-cell)*-16);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-24);
+        }
+    }
+    @keyframes left {
+        from {
+            background-position-x: calc(var(--grid-cell)*-24);
+        }
+        to {
+            background-position-x: calc(var(--grid-cell)*-32);
+        }
+    }
+    .icon[walking="true"][facing="right"] .icon_sprite {
+        animation: right .75s steps(4) infinite;
+    }
+    .icon[walking="true"][facing="left"] .icon_sprite {
+        animation: left .75s steps(4) infinite;
+    }
+    .icon[walking="true"][facing="up"] .icon_sprite {
+        animation: up .75s steps(4) infinite;
+    }
+    .icon[walking="true"][facing="down"] .icon_sprite {
+        animation: down .75s steps(4) infinite;
+    }
+    .icon[walking="false"][facing="up"] .icon_sprite {
+        background-position-x: calc(var(--grid-cell)*-8);
+    }
+    .icon[walking="false"][facing="down"] .icon_sprite {
+        background-position-x: calc(var(--grid-cell)*0);
+    }
+    button {
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        background: none;
+        color: #fff;
+        /*background: linear-gradient(lightgrey, dimgrey);*/
+        transition: .5s;
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*2);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .button2 {
+        position: fixed;
+        top: calc(var(--grid-cell)*.225);
+        right: calc(var(--grid-cell)*.3);
+        border: none;
+        background-size: 100%;
+        background-image: url('gear.png');
+        width: calc(var(--grid-cell)*.5);
+        height: calc(var(--grid-cell)*.5);
+        opacity: 30%;
+        z-index: 2;
+    }
+    .button3 {
+        width: calc(var(--grid-cell)*6);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1.8);
+        left: calc(var(--grid-cell)*1);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*4);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .button6 {
+        width: calc(var(--grid-cell)*6);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*2.9);
+        left: calc(var(--grid-cell)*1);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*4);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+    }
+    .button4 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1.1);
+        left: calc(var(--grid-cell)*6);
+    }
+    .button5 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1.1);
+        left: calc(var(--grid-cell)*4.5);
+    }
+    .button7 {
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.4);
+        left: calc(var(--grid-cell)*1);
+    }
+    .picker {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*.6);
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.4);
+        left: calc(var(--grid-cell)*3.1);
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        background: transparent;
+    }
+    .menu {
+        transition: .2s steps(15);
+        width: calc(var(--grid-cell)*8);
+        height: calc(var(--grid-cell)*5);
+        position: fixed;
+        background: #000;
+        transform: translateY(calc(var(--grid-cell)*15));
+        z-index: 2;
+        color: #fff;
+        opacity: 100%;
+    }
+    .overlay {
+        width: 1000%;
+        height: 1000%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #000;
+        position: fixed;
+        opacity: 0%;
+        pointer-events: none;
+        transition: .5s;
+    }
+    .cell {
+        position: fixed
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*1);
+        text-align: center;
+        left: calc(var(--grid-cell)*1.5);
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*3);
+    }
+    .wall {
+        position: relative;
+        width: calc(var(--grid-cell)*1.25);
+        height: calc(var(--grid-cell)*1.25);
+        background: aqua;
+    }
+    .gear {
+        background-size: 100%;
+        background-image: url('gear/png');
+        image-rendering: pixelated;
+        position: relative;
+        width: calc(var(--pixel-size)*32);
+        height: calc(var(--pixel-size)*32);
+    }
+    .loader,
+    .loader:after {
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+    }
+    #loading {
+        pointer-events: none;
+        position:absolute;
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color:#FFF;
+        z-index: 999;
+}
+    .header {
+        width: 100%;
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        background: #000;
+        opacity: 40%;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*.5) #fff;
+        top: 0;
+    }
+    .glow {
+        height: calc(var(--grid-cell)*2.5);
+        width: calc(var(--grid-cell)*2.5);
+        position: absolute;
+        z-index: 1;
+        top: calc(var(--grid-cell)*3.75);
+        left: calc(var(--grid-cell)*3.75);
+        background: orangered;
+        border-radius: calc(var(--grid-cell)*1);
+        filter: blur(calc(var(--grid-cell)*.7));
+        mix-blend-mode: screen;
+        opacity: 0%;
+    }
+    @keyframes glowy {
+    0% {opacity:0%;}
+    50% {opacity:100%;}
+    100% {opacity:0%;}
+}
+    .shadow {
+        background-image: url(shadow.png);
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background-size: 100%;
+        position: fixed;
+        top: calc(var(--grid-cell)*.2);
+        z-index: -1;
+        opacity: 20%;
+    }
+    .clock {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        background-image: url(clock.png);
+        background-size: 100%;
+        z-index: 3;
+        border-radius: calc(var(--grid-cell)*1);
+        top: calc(var(--grid-cell)*.2);
+        left: calc(var(--grid-cell)*.2);
+        image-rendering: pixelated;
+    }
+    .ticker {
+        width: calc(var(--pixel-size)*18);
+        height: calc(var(--pixel-size)*18);
+        position: fixed;
+        background: conic-gradient(transparent,transparent,transparent,#fff,transparent,transparent,transparent,transparent,transparent,transparent,transparent);
+        filter: contrast(1);
+        z-index: 2;
+        border-radius: calc(var(--grid-cell)*1);
+        top: calc(var(--pixel-size)*1.9);
+        left: calc(var(--pixel-size)*1.9);
+        animation: clock 15s linear infinite;
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        background-color: #000;
+    }
+    .stats {
+        width: calc(var(--grid-cell)*1.4);
+        height: calc(var(--grid-cell)*.3);
+        position: fixed;
+        z-index: 1;
+        top: calc(var(--grid-cell)*.45);
+        left: calc(var(--grid-cell)*1.2);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        text-align: center;
+        border: solid #fff;
+        padding-top: calc(var(--pixel-size)*2);
+        border-width: calc(var(--pixel-size)*.1);
+    }
+    .timer {
+        width: calc(var(--grid-cell)*3.2);
+        height: calc(var(--grid-cell)*.3);
+        position: fixed;
+        z-index: 3;
+        top: calc(var(--grid-cell)*.75);
+        left: calc(var(--grid-cell)*1.5);
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        text-align: center;
+        border: solid #fff;
+        padding-top: calc(var(--pixel-size)*2);
+        border-width: calc(var(--pixel-size)*.1);
+    }
+    @keyframes clock {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .topbar {
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*1.5);
+        position: fixed;
+        background: linear-gradient(#000, transparent);
+        z-index: 1;
+        /*border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);*/
+    }
+    .grid {
+        z-index: 4;
+        display: grid;
+        width: calc(var(--grid-cell)*7);
+        height: calc(var(--grid-cell)*7);
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+    .square {
+        aspect-ratio: 1;
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+    }
+    .landingsplash {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: fixed;
+        background: #000;
+        z-index: 10;
+    }
+    .buttonstart {
+        position: relative;
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        z-index: 14;
+        border: none;
+        color: #fff;
+        text-shadow: #3d03fc 0  calc(var(--pixel-size)*.2) calc(var(--pixel-size)*2);
+        opacity: 80%;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
+    }
+    .buttonquick {
+        position: relative;
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*1);
+        margin-top: calc(var(--grid-cell)*2);
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.3);
+        z-index: 14;
+        border: none;
+        color: #fff;
+        text-shadow: #3d03fc 0  calc(var(--pixel-size)*.2) calc(var(--pixel-size)*2);
+        opacity: 80%;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
+    }
+    .buttonspecial {
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        z-index: 14;
+        border: none;
+        text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
+        top: calc(var(--grid-cell)*.5);
+        right: calc(var(--grid-cell)*.5);
+    }
+    .title {
+        position: fixed;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        z-index: 13;
+        border: none;
+        text-shadow: #3d03fc 0 0 calc(var(--pixel-size)*10);
+        top: calc(var(--grid-cell)*.5);
+        left: calc(var(--grid-cell)*.5);
+    }
+    .anim {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: calc(var(--grid-cell)*12);
+        image-rendering: pixelated;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
+    }
+    @keyframes hues {
+        0% {
+            filter: hue-rotate(-30deg);
+        }
+        50% {
+            filter: hue-rotate(180deg);
+        }
+        100% {
+            filter: hue-rotate(-30deg);
+        }
+    }
+    .mainmenu {
+        position: fixed;
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*5);
+        background-color: rgba(0,0,0, .3);
+        box-shadow: inset #000 0 0 calc(var(--pixel-size)*10);
+        border: solid #fff;
+        border-width: calc(var(--pixel-size)*.1);
+        z-index: 13;
+        border-radius: calc(var(--pixel-size)*1);
+    }
+    .intromain {
+        z-index: 13;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*2);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        opacity: 50%;
+        position: fixed;
+        bottom: calc(var(--grid-cell)*.5);
+    }
+    .accesspoint {
+        z-index: 14;
+        color: #fff;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*2);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        display: none;
+    }
+    .bottomscreen {
+        position: relative;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*4);
+        background: rgb(0, 0, 0, .4);
+        z-index: 4;
+    }
+    .textbox {
+        position: relative;
+        top: calc(var(--grid-cell)*3);
+        width: calc(var(--grid-cell)*6);
+        height: calc(var(--grid-cell)*2.5);
+        top: calc(var(--grid-cell)*.25);
+        left: calc(var(--grid-cell)*.5);
+        z-index: 5;
+        border: solid transparent;
+        border-width: calc(var(--pixel-size)*.1);
+        color: #fff;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        letter-spacing: calc(var(--pixel-size)*-.1);
+        padding: calc(var(--pixel-size)*2);
+    }
+    .type {
+        position: relative;
+        height: calc(var(--grid-cell)*2.5);
+        overflow: hidden;
+        animation: none;
+        white-space: nowrap;
+        left: calc(var(--grid-cell)*.5);
+    }
+    @keyframes typing {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+    .panel {
+        position: fixed;
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*7.15);
+        background-size: 100%;
+        image-rendering: pixelated;
+        background-image: url('border.png');
+        z-index: 12;
+        animation: hues 10s linear infinite;
+        animation-delay: 5s;
+        background-color: rgb(0, 0, 0, .7);
+    }
+    .panelmenu {
+        position: fixed;
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*7.15);
+        z-index: 13;
+    }
+    .button0 {
+        position: relative;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*.65);
+        background-size: 100%;
+        image-rendering: pixelated;
+        z-index: 13;
+        top: calc(var(--grid-cell)*1);
+        left: calc(var(--grid-cell)*1);
+        margin-top: calc(var(--grid-cell)*.25);
+    }
+    
+</style>
+    
+
+<!--characters-->
+<style>
+    .char1 {
+        position: relative;
+        width: calc(var(--grid-cell)*1.25);
+        height: calc(var(--grid-cell)*1.25);
+        background: indigo;
+    }
+    .water {
+        position: relative;
+        width: calc(var(--grid-cell)*1.5);
+        height: calc(var(--grid-cell)*1.5);
+        background: indigo;
+    }
+</style>
+    
+<style>
+    .daynightcycle {
+        z-index: 2;
+        /*mix-blend-mode: color-burn;*/
+        mix-blend-mode: color-burn;
+        opacity: 80%;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        position: fixed;
+    background: linear-gradient(180deg, #bdf7ff, #ffffae, #c3e5ff, #fff190, #ffd092, #ff6e6e, #df92ff, #a692ff, #92aaff);
+    background-size: 2600% 2600%;
+}
+@keyframes cycle {
+    0%{background-position:50% 0%;opacity:20%;}
+    50%{background-position:50% 100%;opacity:80%;}
+    100%{background-position:50% 0%;opacity:20%;}
+}
+</style>
+    
+<style>
+.dpad {
+   position: relative;
+   left: calc(var(--grid-cell) * 7);
+   top: calc(var(--grid-cell) * -3);
+   width: calc(var(--pixel-size) * 37);
+   height: calc(var(--pixel-size) * 38);
+   background: radial-gradient(rgb(0,0,0,0), #000);
+}
+.dpad-button {
+   appearance:none;
+   outline:0;
+   border:0;
+   background:transparent;
+   padding:0;
+   cursor:pointer;
+}
+
+.dpad-button.pressed { opacity:10%; }
+
+.dpad-up {
+   position: absolute;
+   left: calc(var(--pixel-size) * 12);
+   top:0;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("ud.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+}
+.dpad-down {
+   position: absolute;
+   bottom:var(--pixel-size);
+   left: calc(var(--pixel-size) * 12);
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("dd.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+}
+.dpad-left {
+   position: absolute;
+   top: calc(var(--pixel-size) * 12);
+   left:0;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("ld.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+}
+.dpad-right {
+   position: absolute;
+   top: calc(var(--pixel-size) * 12);
+   right:0;
+    width: calc(var(--pixel-size) * 12);
+    height: calc(var(--pixel-size) * 12);
+    background: url("rd.png") no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    background-size: 100%;
+}
+.dpad {
+   user-select:none;
+}
+</style>
+    
+<style>
+.marquee {
+  height: calc(var(--pixel-size)*3);
+  width: 40020px;
+  overflow: hidden;
+  position: relative;
+  z-index: 13;
+}
+.marquee div {
+  display: block;
+  width: 200%;
+  height: calc(var(--pixel-size)*3);
+  position: absolute;
+  overflow: hidden;
+  animation: marquee 5s linear infinite;
+}
+.marquee span {
+  float: left;
+  width: 50%;
+  color: #fff;
+  font-family: boldpixel;
+  font-size: calc(var(--pixel-size)*3);
+  letter-spacing: calc(var(--pixel-size)*-.1);
+  white-space: nowrap;
+}
+@keyframes marquee {
+  0% { left: 0; }
+  100% { left: -100%; }
+}
+    .fadein {
+        position: fixed;
+        width: auto;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #000;
+        z-index: 15;
+        pointer-events: none;
+        animation: none;
+        opacity: 0%;
+    }
+    @keyframes fadein {
+        0% {
+            opacity: 0%;
+        }
+        50% {
+            opacity: 100%;
+        }
+        100% {
+            opacity: 0%;
+        }
+    }
+</style>
+    
+  
+<body id="body">
+    
+    <button class="buttonstart" id="post">New Game</button>
+    
+    
+    <div class="fadein" id="fade"></div>
+    
+    <!--<div class="mainmenu"></div>-->
+    
+    <button class="buttonspecial" id="post2">Special Access</button>
+    
+    <a href="home.html" style="width: 200px; height: 200px;z-index: 16;position:fixed;color#fff;top: 10%;">Swipe</a>
+        
+    <button class="buttonquick" id=post6>Quick Start</button>
+
+    
+
+    
+    
+   <!-- <div class="marquee">
+  <div>
+    <span>LATEST UPDATE: 5052021 FULL BETA RELEASE SOON</span>
+      <span>LATEST UPDATE: 5052021 FULL BETA RELEASE SOON</span>
+  </div>
+</div>
+-->
+    
+    
+    <button class="title" id="post3">Title</button>
+    <p class="intromain" style="box-shadow: #000 0 0 calc(var(--pixel-size)*10);opacity:40%;" id="post4">Beta Version 1.1.1 &copy; 2021</p>
+    
+    <p class="accesspoint" id="post5">Unavailable</p>
+    
+    <div class="landingsplash" id="splash">
+        
+    <img class="anim" src="lights/lights0.png"/>
+        
+    <img class="anim" src="lights/lights0.png"/ style="left:calc(var(--grid-cell)*12);">
+    <img class="anim" src="lights/lights0.png"/ style="right:calc(var(--grid-cell)*12);">
+
+    </div>
+    
+    <!--<div class="header"></div>-->
+    
+    <div style="top:calc(var(--grid-cell)*1);position:fixed;">
+        
+        <div class="glow" id="glow"></div>
+        
+        <div class="daynightcycle" id="daynightcycle"></div>
+        
+        <div class="vinegar" id="vinegar">
+        <div class="vinegar"></div>
+        <div class="vinegar"></div>
+        <div class="vinegar"></div>
+        </div>
+        
+    <div class="camera" id="camera">
+        <!--<div class="topbar">-->
+        <!--<div class="timer" id="timer"></div>
+        </div>-->
+        <div class="ocean pixel-art"></div>
+        <div class="map pixel-art">
+        <div class="icon" facing="down" walking="true">
+            <!--<div class="shadow"></div>-->
+            <div class="icon_sprite pixel-art">
+            </div>
+            </div>
+
+  <!--  <div class="grid">
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+
+    </div> -->
+            
+            <div class="wall" id="wall"></div>
+            
+            <div class="char1" id="char1"></div>
+            
+            <div class="water" id="water"></div>
+            
+        </div>
+    </div>
+        <div class="cell">
+            <p>Coordinates: <span id="test"></span></p>
+        </div>
+        
+        <div class="bottomscreen">
+            
+            <div class="textbox" id="texty">
+                <div class='type' id='type'></div>
+            </div>
+            
+            <div class="dpad" id="dpad">
+        <div class="DemoDirectionUI flex-center">
+            <button class="dpad-button dpad-left"></button>
+            <button class="dpad-button dpad-up"></button>
+            <button class="dpad-button dpad-right"></button>
+            <button class="dpad-button dpad-down"></button>
+        </div>
+    </div>
+        
+        </div>
+        
+    
+
+        
+    </div>
+    
+    <button class="button2" id="button2"></button>
+    <div class="menu" id="menu">
+        <p style="text-align:center;font-family: pixel;font-size: calc(var(--pixel-size)*3); letter-spacing: calc(var(--pixel-size)*-.1);">Options</p>
+        <button class="button1">disable/enable dpad controls</button>
+        <button class="button4">resize+</button>
+        <button class="button5">resize-</button>
+        <button class="button3" id="button3">Return</button>
+        <button class="button6" id="button6">Reset</button>
+        <!--
+        <button class="button7" id="button7">Change Theme</button>
+        <input class="picker" type="color" id="colorme" value="#000000">
+        -->
+        <div class="cell">
+            <p>Coordinates: <span id="test"></span></p>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    
+</body>
+    
+    
+    
+<script>
+const $element = $('.anim');
+const imagePath = '/lights';
+const totalFrames = 39;
+const animationDuration = 2000;
+const timePerFrame = animationDuration / totalFrames;
+let timeWhenLastUpdate;
+let timeFromLastUpdate;
+let frameNumber = 0;
+
+function step2(startTime) {
+
+  if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
+  timeFromLastUpdate = startTime - timeWhenLastUpdate;
+
+  if (timeFromLastUpdate > timePerFrame) {
+
+    $element.attr('src', imagePath + `/lights${frameNumber}.png`);
+    timeWhenLastUpdate = startTime;
+
+    if (frameNumber >= totalFrames) {
+      frameNumber = 1;
+    } else {
+      frameNumber = frameNumber + 1;
+    }        
+  }
+  
+  requestAnimationFrame(step2);
+}
+
+$(document).ready(() => {
+  for (var i = 1; i < totalFrames + 1; i++) {
+    $('body').append(`<div id="preload-image-${i}" style="background-image: url('${imagePath}/lights${i}.png');"></div>`);
+  }
+});
+
+$(window).on('load', () => {
+  requestAnimationFrame(step2);
+});
+</script>
+    
+<script>
+    
+    var daycount = 0;
+    var mms = 0;
+    var ms = 0;
+    var s = 0;
+    var min = 0;
+    var minute = 0;
+    var ten = 0;
+    
+    window.setInterval(function() {
+        mms = mms + 1;
+    },10);
+    
+    window.setInterval(function() {
+        ms = ms + 1;
+    },100);
+    
+    window.setInterval(function() {
+        daycount = daycount + 1;
+    },30000);
+    
+    //window.setInterval(function() {
+        //document.getElementById("days").innerHTML = "Day " + daycount;
+    //},1000);
+    
+    //window.setInterval(function() {
+        //document.getElementById("timer").innerHTML = '00:' + ten + '' + minute + ':' + min + '' + s + ':' + ms + '' + mms;
+    //},10);
+    
+    window.setInterval(function() {
+        if (mms > 8){
+            mms = 0;
+            }
+    },10);
+    
+    window.setInterval(function() {
+        if (ms > 8){
+            ms = 0,
+            s = s + 1;
+            }
+    },10);
+    
+    window.setInterval(function() {
+        if (s > 9){
+            s = 0,
+            min = min + 1;
+            }
+    },100);
+    
+    window.setInterval(function() {
+        if (min > 5 && s == 9){
+            min = 0,
+            minute = minute + 1;
+            }
+    },100);
+    
+    window.setInterval(function() {
+        if (minute > 5 && min == 9){
+            minute = 0,
+            ten = ten + 1;
+            }
+    },1000);
+
+
+    
+    document.addEventListener("keyup", function(event) {
+        if (event.keyCode === 82) {
+            document.getElementById("button3").click();
+        }
+    });
+    
+    var padhide = 0;
+    
+    $('.button1').click(function() {
+        if (padhide === 0) {
+        padhide = padhide + 1,
+        document.getElementById("dpad").style.display="none";
+    } else {
+        padhide = padhide -1,
+        document.getElementById("dpad").style.display="block";
+    }
+    });
+    
+    var settings = 0;
+    
+    $('.button2').click(function() {
+        if (settings === 0) {
+        settings = settings + 1,
+        document.getElementById("menu").style.border="1px solid #fff",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
+        document.getElementById("menu").style.opacity="100%",
+        document.getElementById("button2").style.opacity="100%",
+        document.getElementById("overlay").style.opacity="70%";
+    } else {
+        settings = settings -1,
+        document.getElementById("menu").style.border="none",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
+        document.getElementById("menu").style.opacity="0%",
+        document.getElementById("button2").style.opacity="30%",
+        document.getElementById("overlay").style.opacity="0%";
+    }
+    });
+    
+    $('.button3').click(function() {
+        if (settings === 0) {
+        settings = settings + 1,
+        document.getElementById("menu").style.border="1px solid #fff",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*-2))",
+        document.getElementById("menu").style.opacity="100%",
+        document.getElementById("button2").style.opacity="100%",
+        document.getElementById("overlay").style.opacity="70%";
+    } else {
+        settings = settings -1,
+        document.getElementById("menu").style.border="none",
+        document.getElementById("menu").style.transform="translateY(calc(var(--grid-cell)*15))",
+        document.getElementById("menu").style.opacity="0%",
+        document.getElementById("button2").style.opacity="30%",
+        document.getElementById("overlay").style.opacity="0%";
+    }
+    });
+    
+
+    $('.button7').click(function() {
+        document.getElementById("body").style.background = document.getElementById("colorme").value;
+    });
+    
+    
+    var plusone = 2;
+
+    
+    $('.button4').click(function() {
+        plusone = plusone + 1;
+        document.documentElement.style.setProperty('--pixel-size', (plusone + "px"));
+    });
+    
+    $('.button5').click(function() {
+        plusone = plusone -1;
+        document.documentElement.style.setProperty('--pixel-size', (plusone + "px"));
+    });
+    
+    $('.button6').click(function() {
+        location.reload();
+        return false;
+    });
+    
+    $('.buttonstart').click(function() {
+        delete lefti;
+        delete righti;
+        delete topi;
+        delete bottomi;
+        setTimeout(function() {
+        document.getElementById("splash").style.display="none";
+        document.getElementById("post").style.display="none";
+        document.getElementById("post2").style.display="none";
+        document.getElementById("post3").style.display="none";
+        document.getElementById("post4").style.display="none";
+        document.getElementById("post6").style.display="none";
+        document.getElementById("post7").style.display="none";
+        }, 4000);
+        
+        document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
+        document.getElementById("glow").style.animation= "glowy 30s ease infinite";
+        document.getElementById("vinegar").style.animation= "glowy 30s ease infinite";
+        
+        //document.getElementById("camera").style.animation="darken 30s ease infinite;";
+        document.getElementById("fade").style.animation="fadein 8s linear";
+    });
+    
+    $('.buttonquick').click(function() {
+        delete lefti;
+        delete righti;
+        delete topi;
+        delete bottomi;
+        setTimeout(function() {
+        document.getElementById("splash").style.display="none";
+        document.getElementById("post").style.display="none";
+        document.getElementById("post2").style.display="none";
+        document.getElementById("post3").style.display="none";
+        document.getElementById("post4").style.display="none";
+        document.getElementById("post6").style.display="none";
+        document.getElementById("post7").style.display="none";
+        }, 1000);
+        
+        document.getElementById("daynightcycle").style.animation="cycle 30s ease infinite";
+        document.getElementById("camera").style.animation= "darken 30s ease infinite";
+        document.getElementById("glow").style.animation= "glowy 30s ease infinite";
+        document.getElementById("vinegar").style.animation= "glowy 30s ease infinite";
+        
+        //document.getElementById("camera").style.animation="darken 30s ease infinite;";
+        document.getElementById("fade").style.animation="fadein 2s linear";
+    });
+    
+    $('.buttonspecial').click(function() {
+        document.getElementById("post2").style.display="none";
+        document.getElementById("post").style.display="none";
+        document.getElementById("post3").style.display="none";
+        document.getElementById("post4").style.display="none";
+        document.getElementById("post6").style.display="none";
+        document.getElementById("post5").style.display="block";
+    });
+    
+    
+    </script>
+    
+    
+    <script>
+$('body').append('<div style="" id="loading"><div class= "post"></div></div>');
+$(window).on('load', function(){
+  setTimeout(removeLoader, 500); //wait for page load PLUS two seconds.
+});
+function removeLoader(){
+    $( "#loading" ).fadeOut(500, function() {
+        $('html, body').css({overflow: 'hidden'});
+      // fadeOut complete. Remove the loading div
+      $('html, body').css({overflow: 'visible'});
+      $( "#loading" ).remove(); //makes page more lightweight 
+  });  
+}
+</script>
+    
+<script>
+    
+    
+    window.setInterval(function() {
+        document.getElementById("test").innerHTML = "X: " + x + " Y: " + y;
+    },200);
+    
+   lefti = -10;
+   righti = 10;
+   topi = -10;
+   bottomi = 10;
+    
+    window.setInterval(function(test) {
+   if (x < lefti) { x = lefti; }
+   if (x > righti) { x = righti; }
+   if (y < topi) { y = topi; }
+   if (y > bottomi) { y = bottomi; }
+    },100);
+    
+    
+    var icon = document.querySelector(".icon");
+    
+    var map = document.querySelector(".map");
+    
+    var wall = document.querySelector(".wall");
+    
+    var water = document.querySelector(".water");
+
+    var char1 = document.querySelector(".char1");
+    
+    var x = 0;
+    var y = 0;
+    var held_directions = [];
+
+    var speed = 1;
+    
+    var addNew = true;
+
+    
+    const placeIcon = () => {
+        
+        var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
+        
+        const held_direction = held_directions[0];
+        if (held_direction) {
+            if (held_direction === directions.right) {x += speed;}
+            if (held_direction === directions.left) {x -= speed;}
+            if (held_direction === directions.down) {y += speed;}
+            if (held_direction === directions.up) {y -= speed;}
+            icon.setAttribute("facing", held_direction);
+        }
+        icon.setAttribute("walking", held_direction ? "true" : "false");
+    /*   
+   var leftLimit = -72;
+   var rightLimit = 72;
+   var topLimit = -72;
+   var bottomLimit = 72;
+   if (x < leftLimit) { x = leftLimit; }
+   if (x > rightLimit) { x = rightLimit; }
+   if (y < topLimit) { y = topLimit; }
+   if (y > bottomLimit) { y = bottomLimit; }
+   */
+        
+/*if (animations = on) {
+    document
+}else{
+    document
+}*/
+        //map is 144 pixelsize wide
+        //144 - 64 = 80
+        //block is `1.25 grid cell = 20 pixelsize
+        
+        //72
+        var cx = pixelSize * 64;
+        var cy = pixelSize * 64;
+        
+        var convo = document.getElementById("type");
+        
+        wall.style.transform = `translate3d( ${76*pixelSize+cx}px, ${76*pixelSize+cy}px, 0)`;
+        
+        water.style.transform = `translate3d( ${0*pixelSize}px, ${-40*pixelSize}px, 0)`;
+        
+
+  if (x >= 50 && x <= 80 && y >= 50 && y <= 80)
+      //|| 
+      //(x >= 70 && x <= 100 && y >= 70 && y <= 100))
+     {
+    wall.style.background = 'red',
+        speed = 0;
+        if (addNew){
+            addNew=false,
+        document.getElementById("type").innerHTML = 'Go to next text line...',
+         document.getElementById("type").style.animation = 'typing 3s steps(30)',
+         setTimeout(function() {convo.innerHTML = '';}, 3000),
+         setTimeout(function() {convo.style.animation = 'none';}, 3000);
+        }
+         if (icon.getAttribute("facing") === "up") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             y = 81;
+         } else if (icon.getAttribute("facing") === "down") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             y = 49;
+         } else if (icon.getAttribute("facing") === "left") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             x = 81;
+         } else if (icon.getAttribute("facing") === "right") {
+             //setTimeout(function() {y = y + 1*pixelSize;}, 100);
+             x = 49;
+         }
+     }
+    else 
+     {
+         speed = 1,
+    wall.style.background = 'blue';
+  }
+        
+if (x <= -50 && x >= -80 && y <= -50 && y >= -80)
+      //|| 
+      //(x >= 70 && x <= 100 && y >= 70 && y <= 100))
+     {
+    water.style.background = 'purple',
+        speed = .5;
+     }
+    else 
+     {
+         speed = 1,
+    water.style.background = 'aqua';
+  }
+        
+        
+        char1.style.transform = `translate3d( ${-20*pixelSize+cx}px, ${-20*pixelSize+cy}px, 0)`;
+   
+         if ((x >= -30 && x <= -10 && y >= -15 && y <= 5)){
+        char1.style.background = 'white',
+        speed = 0,
+        setTimeout(function() { speed = 1;}, 2000),
+        document.getElementById("type").style.animation = 'none';
+     }
+    else 
+     {
+    char1.style.background = 'blue';
+         
+  }
+        
+        
+        map.style.transform = `translate3d( ${-x*pixelSize}px, ${-y*pixelSize}px, 0)`;
+        
+        icon.style.transform = `translate3d( ${x*pixelSize+cx}px, ${y*pixelSize+cy}px, 0)`;
+    }
+    
+    const step = () => {
+        placeIcon();
+        window.requestAnimationFrame(() => {
+            step();
+        })
+    }
+    step();
+    
+    
+    const directions = {
+        up: "up",
+        down: "down",
+        left: "left",
+        right: "right",
+    }
+    const keys = {
+        38: directions.up,
+        39: directions.right,
+        37: directions.left,
+        40: directions.down,
+    }    
+    
+    document.addEventListener("keydown", (e) => {
+        var dir = keys[e.which];
+        if (dir && held_directions.indexOf(dir) === -1) {
+            held_directions.unshift(dir)
+        }
+    })
+    document.addEventListener("keyup", (e) => {
+        var dir = keys[e.which];
+        var index = held_directions.indexOf(dir);
+        if (index > -1) {
+            held_directions.splice(index, 1)
+        }
+    });
+    
+
+var isPressed = false;
+const removePressedAll = () => {
+   document.querySelectorAll(".dpad-button").forEach(d => {
+      d.classList.remove("pressed")
+   })
+}
+document.body.addEventListener("mousedown", () => {
+   console.log('mouse is down')
+   isPressed = true;
+})
+document.body.addEventListener("mouseup", () => {
+   console.log('mouse is up')
+   isPressed = false;
+   held_directions = [];
+   removePressedAll();
+})
+const handleDpadPress = (direction, click) => {   
+   if (click) {
+      isPressed = true;
+   }
+   held_directions = (isPressed) ? [direction] : []
+   
+   if (isPressed) {
+      removePressedAll();
+      document.querySelector(".dpad-"+direction).classList.add("pressed");
+   }
+}
+
+document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handleDpadPress(directions.left, true));
+document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
+document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
+document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
+    
+</script>
+    
+
+    
+</html>
