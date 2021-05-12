@@ -43,6 +43,9 @@
         font-family: "boldpixel";
         src: url("/dogicabold.otf");
     }
+    html, body {
+        overflow: hidden;
+    }
     .splash {
         position: fixed;
         top: 0;
@@ -113,11 +116,10 @@
         border: none;
         z-index: 5;
         pointer-events: none;
-        /*overflow: hidden;*/
+        overflow: hidden;
     }
-    
     .grid {
-        position: absolute;
+        position: relative;
         z-index: 4;
         display: grid;
         width: calc(var(--grid-cell)*50);
@@ -134,6 +136,17 @@
         background-image: url("dungeon.png");
         background-size: 100%;
         background-position: center;
+    }
+    .layout {
+        position: fixed;
+        z-index: 5;
+        display: grid;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        color: transparent;
+        top: 0;
+        left: 0;
     }
     .main {
         display: none;
@@ -467,6 +480,8 @@
     </div>
         
     </div>
+        
+    
         
         
     <div class="textbox" id="textbox">
