@@ -481,19 +481,19 @@
         
     </div>
         
-    <div class="layout" id="layout">
+ <!--   <div class="layout" id="layout">
         <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
+        <div class="l00">hey</div>
+        <div class="l01">hey</div>
+        <div class="l02">hey</div>
+        <div class="l03">hey</div>
+        <div class="l04">hey</div>
+        <div class="l05">hey</div>
+        <div class="l06">hey</div>
+        <div class="l07">hey</div>
+        <div class="l08">hey</div>
+        <div class="l09">hey</div>
+        <div class="l010">hey</div>
         <div class="square">hey</div>
         <div class="square">hey</div>
         <div class="square">hey</div>
@@ -508,6 +508,7 @@
         <div class="square">hey</div>
         <div class="square">hey</div>
     </div>
+-->
         
         
     <div class="textbox" id="textbox">
@@ -859,5 +860,43 @@ function removeLoader(){
   });  
 }
 </script> <!--loader-->
+    
+<style>
+    
+    .bg {
+  position: fixed;
+  z-index: 999999;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200vh;
+  background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: bg-animation .2s infinite;
+  opacity: 100%;
+  visibility: visible;
+        pointer-events: none;
+}
+
+@keyframes bg-animation {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-5%,-5%) }
+    20% { transform: translate(-10%,5%) }
+    30% { transform: translate(5%,-10%) }
+    40% { transform: translate(-5%,15%) }
+    50% { transform: translate(-10%,5%) }
+    60% { transform: translate(15%,0) }
+    70% { transform: translate(0,10%) }
+    80% { transform: translate(-15%,0) }
+    90% { transform: translate(10%,5%) }
+    100% { transform: translate(5%,0) }
+}
+    
+</style> <!--grain overlay-->
+
+<div class="bg">
+</div>
     
 </html>
