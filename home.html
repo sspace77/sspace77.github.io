@@ -45,6 +45,8 @@
     }
     html, body {
         overflow: hidden;
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*3);
     }
     .splash {
         position: fixed;
@@ -86,6 +88,25 @@
         height: calc(var(--grid-cell)*10);
         opacity: 0%;
 }
+    .cover {
+        position: fixed;
+        z-index: 11;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: #000 solid;
+        border-width: calc(var(--grid-cell)*15);
+        margin: calc(var(--grid-cell)*-15);
+        pointer-events: none;
+        transition: .2s;
+    }
+    @keyframes shift {
+        0% {
+            opacity: 100%;
+        } 
+        100% {
+            opacity: 0%;
+        }
+    }
     body {
         touch-action: manipulation;
         user-select: none;
@@ -346,8 +367,9 @@
 .dpad {
    position: fixed;
    margin: auto;
-   z-index: 6;
+   z-index: 12;
    background: radial-gradient(rgb(0,0,0,0), red);
+   transition: 1s ease;
 }
 .dpad-button {
    appearance:none;
@@ -435,6 +457,8 @@
     
     <div id='swipeme'>
 </div>
+        
+        <div class="cover" id="cover"></div>
         
     <div class="shaded">
         <div class="shaded"></div>
@@ -530,6 +554,19 @@
     </div>
 
 </body>
+    
+<script>
+    
+    var backdrop = document.getElementsByClassName("square")[0];
+    
+    
+    window.setInterval(function() {
+    if (xcord==1 && ycord==0) {
+        backdrop.style.backgroundImage = "url('dungeon2.png')";
+    }
+    },200);
+    
+</script> <!--procedural gen-->
 
 <script>
     $(window).resize(function() {
@@ -603,18 +640,66 @@ $(window).on('load', () => {
     
     $('.dpad-right').click(function() {
         myright();
+        document.getElementById("dpad").style.display = "none";
+        document.getElementById("dpad").style.opacity = "0%";
+        document.getElementById("cover").style.right ="calc(var(--grid-cell)*-9)";
+        document.getElementById("cover").style.animation ="shift 1s ease forwards";
+        setTimeout(function() {
+            document.getElementById("cover").style.animation ="none";
+            document.getElementById("cover").style.right ="auto";
+            document.getElementById("dpad").style.display = "block";
+        },1000);
+        setTimeout(function() {
+            document.getElementById("dpad").style.opacity = "100%";
+        },1100);
     });
     
     $('.dpad-left').click(function() {
         myleft();
+        document.getElementById("dpad").style.display = "none";
+        document.getElementById("dpad").style.opacity = "0%";
+        document.getElementById("cover").style.left ="calc(var(--grid-cell)*-9)";
+        document.getElementById("cover").style.animation ="shift 1s ease forwards";
+        setTimeout(function() {
+            document.getElementById("cover").style.animation ="none";
+            document.getElementById("cover").style.left ="auto";
+            document.getElementById("dpad").style.display = "block";
+        },1000);
+        setTimeout(function() {
+            document.getElementById("dpad").style.opacity = "100%";
+        },1100);
     });
     
     $('.dpad-up').click(function() {
         myup();
+        document.getElementById("dpad").style.display = "none";
+        document.getElementById("dpad").style.opacity = "0%";
+        document.getElementById("cover").style.top ="calc(var(--grid-cell)*-6)";
+        document.getElementById("cover").style.animation ="shift 1s ease forwards";
+        setTimeout(function() {
+            document.getElementById("cover").style.animation ="none";
+            document.getElementById("cover").style.top ="auto";
+            document.getElementById("dpad").style.display = "block";
+        },1000);
+        setTimeout(function() {
+            document.getElementById("dpad").style.opacity = "100%";
+        },1100);
     });
     
     $('.dpad-down').click(function() {
         mydown();
+        document.getElementById("dpad").style.display = "none";
+        document.getElementById("dpad").style.opacity = "0%";
+        document.getElementById("cover").style.bottom ="calc(var(--grid-cell)*-6)";
+        document.getElementById("cover").style.animation ="shift 1s ease forwards";
+        setTimeout(function() {
+            document.getElementById("cover").style.animation ="none";
+            document.getElementById("cover").style.bottom ="auto";
+            document.getElementById("dpad").style.display = "block";
+        },1000);
+        setTimeout(function() {
+            document.getElementById("dpad").style.opacity = "100%";
+        },1100);
     });
     
     var msg = document.getElementById("textbox");
