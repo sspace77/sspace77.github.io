@@ -90,7 +90,7 @@
 }
     .cover {
         position: fixed;
-        z-index: 6;
+        z-index: 11;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
         border: #000 solid;
@@ -103,9 +103,6 @@
         0% {
             opacity: 0%;
         } 
-        10% {
-            opacity: 100%;
-        }
         70% {
             opacity: 100%;
         }
@@ -172,7 +169,7 @@
         z-index: 5;
         pointer-events: none;
         transition: .2s ease;
-        background-image: url(dungeon2.png);
+        background-image: url(dungeon.png);
         background-size: 100%;
     *overflow: hidden
     }
@@ -591,14 +588,18 @@
     
     var backdrop = document.getElementsByClassName("square");
     
+    var plus = document.getElementById("plus");
+    
     var rng = (Math.round(Math.random() * 100));
     
     
+    /*
     window.setInterval(function() {
     if (xcord==1 && ycord==0) {
-        backdrop[1].style.backgroundImage = "url('dungeon2.png')";
+        plus.style.backgroundImage = "url('dungeon2.png')";
     }
     },200);
+    */
     
 </script> <!--procedural gen-->
 
@@ -708,7 +709,7 @@ $(window).on('load', () => {
         myup();
         document.getElementById("dpad").style.display = "none";
         document.getElementById("dpad").style.opacity = "0%";
-        document.getElementById("cover").style.top ="calc(var(--grid-cell)*-6)";
+        document.getElementById("cover").style.top ="calc(var(--grid-cell)*-9)";
         document.getElementById("cover").style.animation ="shift 1s ease forwards";
         setTimeout(function() {
             document.getElementById("cover").style.animation ="none";
@@ -724,7 +725,7 @@ $(window).on('load', () => {
         mydown();
         document.getElementById("dpad").style.display = "none";
         document.getElementById("dpad").style.opacity = "0%";
-        document.getElementById("cover").style.bottom ="calc(var(--grid-cell)*-6)";
+        document.getElementById("cover").style.bottom ="calc(var(--grid-cell)*-9)";
         document.getElementById("cover").style.animation ="shift 1s ease forwards";
         setTimeout(function() {
             document.getElementById("cover").style.animation ="none";
