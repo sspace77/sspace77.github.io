@@ -90,7 +90,7 @@
 }
     .cover {
         position: fixed;
-        z-index: 11;
+        z-index: 6;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
         border: #000 solid;
@@ -98,13 +98,17 @@
         margin: calc(var(--grid-cell)*-15);
         pointer-events: none;
         transition: .2s;
-        
-        display: none;
     }
     @keyframes shift {
         0% {
-            opacity: 100%;
+            opacity: 0%;
         } 
+        10% {
+            opacity: 100%;
+        }
+        70% {
+            opacity: 100%;
+        }
         100% {
             opacity: 0%;
         }
@@ -137,9 +141,9 @@
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
         border: none;
-        z-index: 5;
+        /*z-index: 5;*/
         pointer-events: none;
-        /*overflow: hidden;*/
+        overflow: hidden;
     }
     .grid {
         position: relative;
@@ -164,10 +168,13 @@
         position: absolute;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
-        border: 2px solid red;
+        border: none;
         z-index: 5;
         pointer-events: none;
         transition: .2s ease;
+        background-image: url(dungeon2.png);
+        background-size: 100%;
+    *overflow: hidden
     }
     .layout {
         position: fixed;
@@ -191,6 +198,7 @@
         height: calc(var(--grid-cell)*1);
         background-image: url("icon.png");
         background-size: 100%;
+        box-shadow: inset 0 0 calc(var(--pixel-size)*5) #000;
     }
     @keyframes collision {
         0% {
@@ -485,6 +493,7 @@
         
         <div class="icon" id="icon"></div>
         <div class="shadow"></div>
+    
         
     <div class="plus" id="plus">
     <div class="plus" style="left: calc(var(--grid-cell)*-10)"></div>
@@ -573,7 +582,9 @@
             <button class="dpad-button dpad-down"></button>
         </div>
     </div>
-
+        
+        
+    </div>
 </body>
     
 <script>
@@ -795,37 +806,39 @@ $(window).on('load', () => {
             ycord = ycord-1,
             icon.style.backgroundImage = "url('back.png')",
             y=y-160,
-            map.style.top =
-        `${-y*pixelSize}px`,
+            map.style.top = "calc(var(--grid-cell)*-10)",
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
+            map.style.top = "0";
         },500);
         } else if (d == "u")
         {
             ycord = ycord+1,
             icon.style.backgroundImage = "url('icon.png')",
-            map.style.top =
-        `${-y*pixelSize}px`,
-            y=y+160;
+            map.style.top = "calc(var(--grid-cell)*10)",
+            y=y+160,
+            setTimeout(function() {
+            map.style.top = "0";
+        },500);
         } else if (d == "r")
         {
             xcord = xcord-1,
             icon.style.backgroundImage = "url('left.png')",
             x=x-160,
-            map.style.left =
-        `${-x*pixelSize}px`,
+            map.style.left = "calc(var(--grid-cell)*-10)",
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
+                map.style.left = "0";
         },500);
         } else
         {
             xcord = xcord+1,
             icon.style.backgroundImage = "url('right.png')",
             x=x+160,
-            map.style.left =
-        `${-x*pixelSize}px`,
+            map.style.left = "calc(var(--grid-cell)*10)",
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
+               map.style.left= "0";
         },500);
         }
         
@@ -854,11 +867,11 @@ $(window).on('load', () => {
             x=x+160,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
+                map.style.left = "0";
         },500);
         
        
-        map.style.left =
-        `${-x*pixelSize}px`;
+        map.style.left = "calc(var(--grid-cell)*-10)";
         map.style.transition = ".2s ease";
         
     }
@@ -869,11 +882,11 @@ $(window).on('load', () => {
             x=x-160,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
+                map.style.left = "0";
         },500);
         
     
-        map.style.left =
-        `${-x*pixelSize}px`;
+        map.style.left = "calc(var(--grid-cell)*10)";
         map.style.transition = ".2s ease";
         
     }
@@ -884,13 +897,12 @@ $(window).on('load', () => {
             y=y-160,
             setTimeout(function() {
             icon.style.backgroundImage = "url('icon.png')";
+                map.style.top = "0";
         },500);
         
     
        
-        map.style.top =
-        `${-y*pixelSize}px`;
-
+        map.style.top = "calc(var(--grid-cell)*10)";
         map.style.transition = ".2s ease";
         
     }
@@ -898,11 +910,13 @@ $(window).on('load', () => {
     function mydown(el,d) {
             ycord = ycord+1,
             icon.style.backgroundImage = "url('icon.png')",
-            y=y+160;
+            y=y+160,
+        setTimeout(function() {
+                map.style.top = "0";
+        },500);
         
        
-        map.style.top =
-        `${-y*pixelSize}px`;
+        map.style.top = "calc(var(--grid-cell)*-10)";
         map.style.transition = ".2s ease";
         
     }
