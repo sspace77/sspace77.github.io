@@ -150,7 +150,7 @@
         height: calc(var(--grid-cell)*50);
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         color: transparent;
-        transition: .2s ease;
+        /*transition: .2s ease;*/
         top: 0;
         left: 0;
     }
@@ -584,24 +584,7 @@
     </div>
 </body>
     
-<script>
-    
-    var backdrop = document.getElementsByClassName("square");
-    
-    var plus = document.getElementById("plus");
-    
-    var rng = (Math.round(Math.random() * 100));
-    
-    
-    /*
-    window.setInterval(function() {
-    if (xcord==1 && ycord==0) {
-        plus.style.backgroundImage = "url('dungeon2.png')";
-    }
-    },200);
-    */
-    
-</script> <!--procedural gen-->
+
 
 <script>
     $(window).resize(function() {
@@ -671,6 +654,7 @@ $(window).on('load', () => {
 </script> <!--main menu-->
     
 <script>
+    
 
     
     $('.dpad-right').click(function() {
@@ -846,7 +830,7 @@ $(window).on('load', () => {
         
 
         
-        map.style.transition = ".2s ease";
+        map.style.transition = "none";
         
     }
 
@@ -873,7 +857,7 @@ $(window).on('load', () => {
         
        
         map.style.left = "calc(var(--grid-cell)*-10)";
-        map.style.transition = ".2s ease";
+        //map.style.transition = ".2s ease";
         
     }
 
@@ -888,7 +872,7 @@ $(window).on('load', () => {
         
     
         map.style.left = "calc(var(--grid-cell)*10)";
-        map.style.transition = ".2s ease";
+        //map.style.transition = ".2s ease";
         
     }
 
@@ -904,7 +888,7 @@ $(window).on('load', () => {
     
        
         map.style.top = "calc(var(--grid-cell)*10)";
-        map.style.transition = ".2s ease";
+        //map.style.transition = ".2s ease";
         
     }
 
@@ -918,7 +902,7 @@ $(window).on('load', () => {
         
        
         map.style.top = "calc(var(--grid-cell)*-10)";
-        map.style.transition = ".2s ease";
+        //map.style.transition = ".2s ease";
         
     }
 </script> <!--animations-->
@@ -969,6 +953,82 @@ document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDp
 document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
 document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
 </script> <!--dpad commands-->
+
+<script>
+    
+    var backdrop = document.getElementsByClassName("square");
+    
+    var plus = document.getElementById("plus");
+    
+    var rng = (Math.round(Math.random() * 2));
+    
+    
+    var vaseroom = "url(dungeon2.png)";
+    var baseroom = "url(dungeon.png)";
+    
+    var rooms = [vaseroom, baseroom];
+    
+    var saved = ["0c0zurl(dungeon.png)"];
+    
+    var index, value, result;
+
+    
+    //dash to new room
+    
+    $('.dpad').click(function() {
+    
+        /*
+        for (index = 0; index < saved.length; ++index) {
+            value = saved[index];
+            
+            if (value.substring(0, 3) === (xcord + "c" + ycord)) {
+            result = value;
+            document.getElementById("cords").style.backgroundColor = "red";
+            //break;
+            } else {
+            document.getElementById("plus").style.backgroundImage = 
+                rooms[Math.floor(Math.random() * rooms.length)];
+            saved.push(xcord + "c" + ycord);
+            document.getElementById("cords").style.backgroundColor = "blue";
+            }
+        }
+        
+        */
+        
+        if (saved.find(a =>a.includes(xcord + "c" + ycord + "z"))) {
+            //already been in this room
+            document.getElementById("plus").style.backgroundImage = 
+            saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop();
+            
+            document.getElementById("cords").style.backgroundColor = "red";
+        } else {
+            //new room
+            document.getElementById("plus").style.backgroundImage = 
+                rooms[Math.floor(Math.random() * rooms.length)];
+            
+            saved.push(xcord + "c" + ycord + "z" + (document.getElementById("plus").style.backgroundImage));
+            
+            document.getElementById("cords").style.backgroundColor = "blue";
+        }
+        console.log(rooms[Math.floor(Math.random() * rooms.length)]);
+        console.log(saved);
+        console.log(saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop());
+        
+        
+    });
+    
+
+     
+    
+    /*
+    window.setInterval(function() {
+    if (xcord==1 && ycord==0) {
+        plus.style.backgroundImage = "url('dungeon2.png')";
+    }
+    },200);
+    */
+    
+</script> <!--procedural gen-->
     
 <script>
 $('body').append('<div style="" id="loading"><div class= "post"></div></div>');
