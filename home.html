@@ -744,7 +744,7 @@
             
         <div class="pointer" id="pointer"></div>
             
-        <div id="secondblock" class="secondblock"></div>
+        <div class="secondblock" id="secondblock"></div>
     
             
         <p id="tt1" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*3.7); right: calc(var(--grid-cell)*6);font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
@@ -1071,6 +1071,7 @@
         document.getElementById("secondblock").style.pointerEvents = "none";
         document.getElementById("pointer").style.pointerEvents = "none";
         document.getElementById("pointer").style.display = "none";
+        document.getElementById("helper").style.display = "none";
         },15500);
     });
     
