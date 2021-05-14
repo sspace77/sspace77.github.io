@@ -555,7 +555,7 @@
 .dpad {
    position: fixed;
    margin: auto;
-   z-index: 20; /*12*/
+   z-index: 12; /*12*/
    background: radial-gradient(rgb(0,0,0,0), red);
    transition: 1s ease;
    transform: translate3d(calc(var(--grid-cell)*5),calc(var(--grid-cell)*-5), 0);
@@ -890,6 +890,7 @@
     var yaxis = 0;
     
     var blinking = 1;
+    var quickblink = 0;
     
     let icon = document.getElementById("icon");
     var shadow = document.getElementById("shadow").style;
@@ -897,17 +898,28 @@
     
     window.setInterval(function() {
         if (blinking == 1) {
+            quickblink = quickblink+1;
+            if (quickblink == 3) {
+                quickblink = 0;
+                setTimeout(function() {
+                icon.style.backgroundPosition = "80%";
+            },500);
+            setTimeout(function() {
+                icon.style.backgroundPosition = "0%";
+            },750);
+            }
             icon.style.backgroundPosition = "80%";
             setTimeout(function() {
                 icon.style.backgroundPosition = "0%";
             },250);
-    }},5000);
+            
+    }},5000); //blinking animation
     
     $('.joyup').click(function() {
         blinking = 0;
         yaxis = yaxis - 1;
-        if (yaxis <= -5) {
-        yaxis = -4;
+        if (yaxis <= -4) {
+        yaxis = -3;
     }
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
@@ -917,8 +929,8 @@
     $('.joydown').click(function() {
         blinking = 1;
         yaxis = yaxis + 1;
-        if (yaxis >= 5) {
-        yaxis = 4;
+        if (yaxis >= 4) {
+        yaxis = 3;
     }
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
@@ -928,8 +940,8 @@
     $('.joyleft').click(function() {
         blinking = 0;
         xaxis = xaxis - 1;
-        if (xaxis <= -5) {
-        xaxis = -4;
+        if (xaxis <= -4) {
+        xaxis = -3;
     }
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
@@ -939,8 +951,8 @@
     $('.joyright').click(function() {
         blinking = 0;
         xaxis = xaxis + 1;
-        if (xaxis >= 5) {
-        xaxis = 4;
+        if (xaxis >= 4) {
+        xaxis = 3;
     }
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
@@ -1066,7 +1078,7 @@
         document.getElementById("gear").style.backgroundImage = "url(gear.png)";
         document.getElementById("gear").style.opacity = "100%";
     });
-</script> <!--start button and pause menu-->
+</script> <!--start button pause menu tutorial-->
   
 <script>
 const $element = $('.anim');
