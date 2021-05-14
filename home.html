@@ -230,8 +230,8 @@
         font-size: calc(var(--pixel-size)*2);
     }
     .start {
-        width: calc(var(--grid-cell)*3);
-        height: calc(var(--grid-cell)*2);
+        width: calc(var(--grid-cell)*4);
+        height: calc(var(--grid-cell)*1);
         position: fixed;
         z-index: 21;
         font-family: boldpixel;
@@ -239,6 +239,28 @@
         border: none;
         background: transparent;
         color: #fff;
+        transition: .2s ease;
+        border: rgb(0,0,0,0) solid 0px;
+    }
+    .start:hover {
+        border: calc(var(--pixel-size)*1) solid #fff;
+    }
+    .intro {
+        margin-top: calc(var(--grid-cell)*-2);
+        width: calc(var(--grid-cell)*4);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        z-index: 21;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*5);
+        border: none;
+        background: transparent;
+        color: #fff;
+        transition: .2s ease;
+        border: rgb(0,0,0,0) solid 0px;
+    }
+    .intro:hover {
+        border: calc(var(--pixel-size)*1) solid #fff;
     }
     .resize {
         font-family: boldpixel;
@@ -284,6 +306,20 @@
         background-color: transparent;
         transition: 1s;
     }
+    .secondblock {
+        position: fixed;
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        top: calc(var(--grid-cell)*1);
+        right: calc(var(--grid-cell)*1);
+        border: solid #000;
+        border-width: calc(var(--grid-cell)*50);
+        margin: calc(var(--grid-cell)*-50);
+        z-index: 15;
+        opacity: 0%;
+        background-color: transparent;
+        transition: 1s;
+    }
     .emit {
         position: absolute;
         transform: translate(calc(var(--grid-cell)*-.5), calc(var(--grid-cell)*-.8));
@@ -311,6 +347,107 @@
         }
         100% {
             opacity: 80%;
+        }
+    }
+    .blocker {
+        position: fixed;
+        bottom: calc(var(--grid-cell)*1);
+        right: calc(var(--grid-cell)*1);
+        z-index: 15;
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*3);
+        background: #000;
+        border: #000 solid;
+        border-width: calc(var(--grid-cell)*50);
+        margin: calc(var(--grid-cell)*-50);
+        opacity: 80%;
+        display: block;
+        transition: 2s ease forwards;
+    }
+    .tutorial {
+        position: fixed;
+        z-index: 16;
+        color: #fff;
+        font-size: calc(var(--pixel-size)*3);
+        display: block;
+    }
+    .helper {
+        display: block;
+    }
+    @keyframes slideright {
+        0% {
+            right: 0;
+            opacity: 0%;
+            transform: scale(0.1);
+        }
+        100% {
+            opacity: 100%;
+            transform: scale(1);
+        }
+    }
+    @keyframes slideleft {
+        0% {
+            opacity: 0%;
+            transform: scale(0.1) translate(calc(var(--grid-cell)*-20),calc(var(--grid-cell)*-2));
+        }
+        100% {
+            opacity: 100%;
+            transform: scale(1) translate(calc(var(--grid-cell)*-1.7),calc(var(--grid-cell)*-1.8));
+        }
+    }
+    @keyframes appear {
+        0% {
+            opacity: 0%;
+            transform: scale(0.1);
+        }
+        100% {
+            opacity: 100%;
+            transform: scale(1);
+        }
+    }
+    @keyframes reappear {
+        0% {
+            opacity: 0%;
+            transform: scale(0.1) translate(calc(var(--grid-cell)*-10),calc(var(--grid-cell)*-1.5));
+        }
+        100% {
+            opacity: 100%;
+            transform: scale(1) translate(calc(var(--grid-cell)*-1),calc(var(--grid-cell)*-1.5));
+        }
+    }
+    .blocker2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 51;
+        background: #000;
+    }
+    @keyframes blocky {
+        0% {
+            opacity: 80%;
+        }
+        99% {
+            opacity: 0%;
+        }
+        100% {
+            opacity: 0%;
+            display: none;
+            pointer-events: none;
+        }
+    }
+    @keyframes blocky2 {
+        0% {
+            opacity: 100%;
+        }
+        99% {
+            opacity: 0%;
+        }
+        100% {
+            opacity: 0%;
+            display: none;
+            pointer-events: none;
         }
     }
 </style>
@@ -443,6 +580,7 @@
    padding:0;
    cursor:pointer;
    opacity: 15%;
+   transition: 1s ease;
 }
 .dpad-button.pressed { opacity: 90%; }
 
@@ -527,6 +665,7 @@
         background-size: 100%;
         border: none;
         opacity: 30%;
+        transition: 1s ease;
     }
     .joyup:active {
         transition: .2s ease;
@@ -543,6 +682,7 @@
         background-size: 100%;
         border: none;
         opacity: 30%;
+        transition: 1s ease;
     }
     .joydown:active {
         transition: .2s ease;
@@ -559,6 +699,7 @@
         background-size: 100%;
         border: none;
         opacity: 30%;
+        transition: 1s ease;
     }
     .joyleft:active {
         transition: .2s ease;
@@ -575,6 +716,7 @@
         background-size: 100%;
         border: none;
         opacity: 30%;
+        transition: 1s ease;
     }
     .joyright:active {
         transition: .2s ease;
@@ -587,6 +729,7 @@
     <div class="fade" id="fade"></div>
     <div class="vignette" id="vignette"></div>
     
+    <button class="intro" id="intro">Tutorial</button>
     <button class="start" id="start">New</button>
     
     <div class="splash" id="splash">
@@ -601,6 +744,27 @@
     </div>
     
     <div class="main" id="main">
+        
+        <div class="helper" id="helper">
+            
+        <div id="secondblock" class="secondblock"></div>
+            
+        <!--<div class="blocker2" id="blocker2"></div>-->
+            
+        <p id="tt1" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*3.7); right: calc(var(--grid-cell)*6);font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
+        <p id="tt2" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4.3); right: calc(var(--grid-cell)*1);">Use the direction controls</p>
+        <p id="tt3" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4); right: calc(var(--grid-cell)*1);">to move inside each room</p>
+            
+        <p id="tt4" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
+        <p id="tt5" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; transform: translate(calc(var(--grid-cell)*-1),calc(var(--grid-cell)*-1.5));">Use the map direction controls</p>
+        <p id="tt6" class="tutorial" style="pointer-events: none;padding-top:calc(var(--grid-cell)*.3);transition: 1s;opacity: 0%; transform: translate(calc(var(--grid-cell)*-1),calc(var(--grid-cell)*-1.2));">to dash between rooms</p>
+            
+        <p id="tt7" class="tutorial" style="top:calc(var(--grid-cell)*2); right: calc(var(--grid-cell)*6.4); pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
+        <p id="tt8" class="tutorial" style="top:calc(var(--grid-cell)*2.5); right: calc(var(--grid-cell)*1.5); pointer-events: none;transition: 1s;opacity: 0%;">Adjust your settings here</p>
+            
+        <div class="blocker" id="blocker"></div>
+            
+        </div>
         
         <button class="gear" id="gear"></button>
     
@@ -707,10 +871,10 @@
     
     <div class="dpad" id="dpad">
         <div class="DemoDirectionUI flex-center">
-            <button class="dpad-button dpad-left"></button>
-            <button class="dpad-button dpad-up"></button>
-            <button class="dpad-button dpad-right"></button>
-            <button class="dpad-button dpad-down"></button>
+            <button id="dpad-left" class="dpad-button dpad-left"></button>
+            <button id="dpad-up" class="dpad-button dpad-up"></button>
+            <button id="dpad-right" class="dpad-button dpad-right"></button>
+            <button id="dpad-down" class="dpad-button dpad-down"></button>
         </div>
     </div>
         
@@ -804,14 +968,94 @@
 </script> <!--resize-->
     
 <script>
+
+    
     $('.start').click(function() {
         document.getElementById("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        document.getElementById("helper").style.display = "none";
+        document.getElementById("vignette").style.animation = "scale 3s ease forwards";
+        },500);
+    });
+    
+    $('.intro').click(function() {
+        //document.getElementById("blocker2").style.animation = "blocky2 2s forwards";
+        document.getElementById("fade").style.animation = "fade 1s forwards";
+        setTimeout(function() {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("start").style.display = "none";
+        document.getElementById("intro").style.display = "none";
         document.getElementById("main").style.display = "block";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         },500);
+        setTimeout(function() {
+        document.getElementById("tt1").style.animation = "slideright 1.5s ease forwards";
+        },1500);
+        setTimeout(function() {
+        document.getElementById("tt2").style.animation = "appear 1s ease forwards";
+        document.getElementById("tt3").style.animation = "appear 1s ease forwards";
+        },2000);
+        setTimeout(function() {
+        document.getElementById("joyup").style.opacity = "100%";
+        document.getElementById("joydown").style.opacity = "100%";
+        document.getElementById("joyleft").style.opacity = "100%";
+        document.getElementById("joyright").style.opacity = "100%";
+        },3500);
+        setTimeout(function() {
+        document.getElementById("joyup").style.opacity = "30%";
+        document.getElementById("joydown").style.opacity = "30%";
+        document.getElementById("joyleft").style.opacity = "30%";
+        document.getElementById("joyright").style.opacity = "30%";
+        },5500);
+        setTimeout(function() {
+        document.getElementById("tt1").style.color = "transparent";
+        document.getElementById("tt2").style.color = "transparent";
+        document.getElementById("tt3").style.color = "transparent";
+        },6000);
+        setTimeout(function() {
+        document.getElementById("tt4").style.animation = "slideleft 1.5s ease forwards";
+        document.getElementById("blocker").style.animation = "blocky 2s forwards";
+        },6500);
+        setTimeout(function() {
+        document.getElementById("tt5").style.animation = "reappear 1s ease forwards";
+        document.getElementById("tt6").style.animation = "reappear 1s ease forwards";
+        },7000);
+        setTimeout(function() {
+        document.getElementById("dpad-up").style.opacity = "100%";
+        document.getElementById("dpad-down").style.opacity = "100%";
+        document.getElementById("dpad-left").style.opacity = "100%";
+        document.getElementById("dpad-right").style.opacity = "100%";
+        },8000);
+        setTimeout(function() {
+        document.getElementById("dpad-up").style.opacity = "15%";
+        document.getElementById("dpad-down").style.opacity = "15%";
+        document.getElementById("dpad-left").style.opacity = "15%";
+        document.getElementById("dpad-right").style.opacity = "15%";
+        },9500);
+        setTimeout(function() {
+        document.getElementById("tt4").style.color = "transparent";
+        document.getElementById("tt5").style.color = "transparent";
+        document.getElementById("tt6").style.color = "transparent";
+        },11000);
+        setTimeout(function() {
+        document.getElementById("secondblock").style.opacity = "80%";
+        document.getElementById("tt7").style.animation = "slideright 1.5s ease forwards";
+        },12000);
+        setTimeout(function() {
+        document.getElementById("tt8").style.animation = "appear 1s ease forwards";       },12500);
+        setTimeout(function() {
+        document.getElementById("secondblock").style.opacity = "0%";
+        document.getElementById("tt7").style.color = "transparent";
+        document.getElementById("tt8").style.color = "transparent";
+        },15000);
+        setTimeout(function() {
+        document.getElementById("secondblock").style.display = "none";
+        document.getElementById("secondblock").style.pointerEvents = "none";
+        },15500);
     });
     
     $('.gear').click(function() {
@@ -1253,6 +1497,9 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
     });
     
 
+    $('.joystick').click(function() {
+        
+    });
      
     
     /*
