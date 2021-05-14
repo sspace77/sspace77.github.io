@@ -193,10 +193,10 @@
         z-index: 10;
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
-        background-image: url("icon.png");
-        background-size: 100%;
+        background-image: url("sprite.png");
+        background-size: 600%;
         box-shadow: inset 0 0 calc(var(--pixel-size)*5) #000;
-        transition: .1s steps(3);
+        /*transition: .1s steps(3);*/
     }
     @keyframes collision {
         0% {
@@ -218,7 +218,7 @@
         background-image: url("req.png");
         background-size: 100%;
         opacity: 70%;
-        transition: .2s steps(3);
+        transition: .1s steps(3);
     }
     .cords {
         z-index: 11;
@@ -267,6 +267,49 @@
         opacity: 0%;
         transition: 1s;
         color: #42f569;
+    }
+    .gear {
+        position: fixed;
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        top: calc(var(--grid-cell)*1);
+        right: calc(var(--grid-cell)*1);
+        background-image: url(gearfill.png);
+        background-size: 100%;
+        z-index: 20;
+        opacity: 30%;
+        border: none;
+        background-color: transparent;
+        transition: 1s;
+    }
+    .emit {
+        position: absolute;
+        transform: translate(calc(var(--grid-cell)*-.5), calc(var(--grid-cell)*-.8));
+        mix-blend-mode: screen;
+        z-index: 9;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        background-image: url("emit.png");
+        background-size: 100%;
+        opacity: 100%;
+        animation: reglow 5s ease infinite;
+    }
+    @keyframes reglow {
+        0% {
+            opacity: 80%;
+        }
+        35% {
+            opacity: 100%;
+        }
+        50% {
+            opacity: 70%;
+        }
+        65% {
+            opacity: 90%;
+        }
+        100% {
+            opacity: 80%;
+        }
     }
 </style>
     
@@ -457,40 +500,83 @@
 <style>
     .joystick {
         position: fixed;
-        bottom: 0;
-        right: 0;
+        bottom: calc(var(--grid-cell)*1);
+        right: calc(var(--grid-cell)*1);
         z-index: 15;
         width: calc(var(--grid-cell)*4);
         height: calc(var(--grid-cell)*4);
-        background: red;
+        background: rgb(0,0,0,.8);
         display: flex;
         align-items: center;
         justify-content: center;
+        /*
+        border: solid #fff;
+        border-width: calc(var(--grid-cell)*.1);
+        */
     }
     .joyup {
         position: absolute;
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
-        top: 0;
+        top: calc(var(--pixel-size)*1);
+        background: url("ub.png") no-repeat;
+        background-position: center;
+        image-rendering: pixelated;
+        background-size: 100%;
+        border: none;
+        opacity: 30%;
+    }
+    .joyup:active {
+        transition: .2s ease;
+        opacity: 100%;
     }
     .joydown {
         position: absolute;
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
         bottom: 0;
+        background: url("db.png") no-repeat;
+        background-position: center;
+        image-rendering: pixelated;
+        background-size: 100%;
+        border: none;
+        opacity: 30%;
+    }
+    .joydown:active {
+        transition: .2s ease;
+        opacity: 100%;
     }
     .joyleft {
         position: absolute;
         left: 0;
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
-        
+        background: url("lb.png") no-repeat;
+        background-position: center;
+        image-rendering: pixelated;
+        background-size: 100%;
+        border: none;
+        opacity: 30%;
+    }
+    .joyleft:active {
+        transition: .2s ease;
+        opacity: 100%;
     }
     .joyright {
         position: absolute;
         right: 0;
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
+        background: url("rb.png") no-repeat;
+        background-position: center;
+        image-rendering: pixelated;
+        background-size: 100%;
+        border: none;
+        opacity: 30%;
+    }
+    .joyright:active {
+        transition: .2s ease;
+        opacity: 100%;
     }
 </style> <!--joystick-->
     
@@ -513,6 +599,8 @@
     </div>
     
     <div class="main" id="main">
+        
+        <button class="gear" id="gear"></button>
     
     <div id='swipeme'>
 </div>
@@ -530,7 +618,9 @@
     
     <div class="camera">
         
-        <div class="icon" id="icon"></div>
+        <div class="icon" id="icon">
+            <div class="emit" id="emit"></div>
+        </div>
         <div class="shadow" id="shadow"></div>
     
         
@@ -637,47 +727,62 @@
     var xaxis = 0;
     var yaxis = 0;
     
+    var blinking = 1;
+    
     let icon = document.getElementById("icon");
     var shadow = document.getElementById("shadow").style;
     
+    
+    window.setInterval(function() {
+        if (blinking == 1) {
+            icon.style.backgroundPosition = "80%";
+            setTimeout(function() {
+                icon.style.backgroundPosition = "0%";
+            },250);
+    }},5000);
+    
     $('.joyup').click(function() {
+        blinking = 0;
         yaxis = yaxis - 1;
         if (yaxis <= -5) {
         yaxis = -4;
     }
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
-        icon.style.backgroundImage = "url('back.png')";
+        icon.style.backgroundPosition = "20%";
     });
     
     $('.joydown').click(function() {
+        blinking = 1;
         yaxis = yaxis + 1;
         if (yaxis >= 5) {
         yaxis = 4;
     }
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
-        icon.style.backgroundImage = "url('icon.png')";
+        icon.style.backgroundPosition = "0%";
     });
     
     $('.joyleft').click(function() {
+        blinking = 0;
         xaxis = xaxis - 1;
         if (xaxis <= -5) {
         xaxis = -4;
     }
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
-        icon.style.backgroundImage = "url('left.png')";
+        icon.style.backgroundPosition = "40%";
     });
     
     $('.joyright').click(function() {
+        blinking = 0;
         xaxis = xaxis + 1;
         if (xaxis >= 5) {
         xaxis = 4;
     }
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
-        icon.style.backgroundImage = "url('right.png')";
+        icon.style.backgroundPosition = "60%";
     });
     
 </script> <!--movement-->
@@ -706,7 +811,12 @@
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         },500);
     });
-</script> <!--start button-->
+    
+    $('.gear').click(function() {
+        document.getElementById("gear").style.backgroundImage = "url(gear.png)";
+        document.getElementById("gear").style.opacity = "100%";
+    });
+</script> <!--start button and pause menu-->
   
 <script>
 const $element = $('.anim');
@@ -754,7 +864,9 @@ $(window).on('load', () => {
 
     
     $('.dpad-right').click(function() {
+        blinking = 0;
         myright();
+        icon.style.backgroundPosition = "60%";
         setTimeout(function() {
         icon.style.top = "auto";
         shadow.top = "auto";
@@ -777,7 +889,9 @@ $(window).on('load', () => {
     });
     
     $('.dpad-left').click(function() {
+        blinking = 0;
         myleft();
+        icon.style.backgroundPosition = "40%";
         setTimeout(function() {
         icon.style.top = "auto";
         shadow.top = "auto";
@@ -800,7 +914,9 @@ $(window).on('load', () => {
     });
     
     $('.dpad-up').click(function() {
+        blinking = 0;
         myup();
+        icon.style.backgroundPosition = "20%";
         setTimeout(function() {
         icon.style.left = "auto";
         shadow.left = "auto";
@@ -823,7 +939,9 @@ $(window).on('load', () => {
     });
     
     $('.dpad-down').click(function() {
+        blinking = 1;
         mydown();
+        icon.style.backgroundPosition = "0%";
         setTimeout(function() {
         icon.style.left = "auto";
         shadow.left = "auto";
@@ -957,7 +1075,7 @@ $(window).on('load', () => {
     }
 
     
-    detectswipe('swipeme',myfunction);
+    //detectswipe('swipeme',myfunction);                    important
     
     window.setInterval(function() {
         document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis;
@@ -970,10 +1088,8 @@ $(window).on('load', () => {
 <script>
     function myright(el,d) {
             xcord = xcord+1,
-            icon.style.backgroundImage = "url('right.png')",
             x=x+160,
             setTimeout(function() {
-            icon.style.backgroundImage = "url('icon.png')";
                 map.style.left = "0";
         },500);
         
@@ -985,10 +1101,8 @@ $(window).on('load', () => {
 
     function myleft(el,d) {
             xcord = xcord-1,
-            icon.style.backgroundImage = "url('left.png')",
             x=x-160,
             setTimeout(function() {
-            icon.style.backgroundImage = "url('icon.png')";
                 map.style.left = "0";
         },500);
         
@@ -1000,10 +1114,8 @@ $(window).on('load', () => {
 
     function myup(el,d) {
             ycord = ycord-1,
-            icon.style.backgroundImage = "url('back.png')",
             y=y-160,
             setTimeout(function() {
-            icon.style.backgroundImage = "url('icon.png')";
                 map.style.top = "0";
         },500);
         
@@ -1016,7 +1128,6 @@ $(window).on('load', () => {
 
     function mydown(el,d) {
             ycord = ycord+1,
-            icon.style.backgroundImage = "url('icon.png')",
             y=y+160,
         setTimeout(function() {
                 map.style.top = "0";
