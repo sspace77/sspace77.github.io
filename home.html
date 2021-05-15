@@ -398,7 +398,7 @@
         }
         100%{
             opacity:0%;
-            transform: translateY(calc(var(--grid-cell)*20));
+            transform: scale(.8) translateY(calc(var(--grid-cell)*30));
         }
     }
     .slide1 {
@@ -426,7 +426,7 @@
         white-space: nowrap;
         overflow: hidden;
         width: 0%;
-        transition: 1s ease;
+        transition: 3s ease;
     }
     .ttype2 {
         font-size: calc(var(--pixel-size)*4);
@@ -436,7 +436,7 @@
         white-space: nowrap;
         overflow: hidden;
         width: 0%;
-        transition: 1s ease;
+        transition: 3s ease;
     }
     @keyframes typing {
         0% {
@@ -738,7 +738,7 @@
     <button class="start" id="start">New Game</button>
     <button class="intro" id="intro">Tutorial</button>
     
-    <p class="copytag">Beta Version 1.2.2 &copy; 2021 ARR</p>
+    <p class="copytag" id="copy">Beta Version 1.2.2 &copy; 2021 ARR</p>
     
     <div class="splash" id="splash">
     <img class="anim" src="lights/lights0.png"/>
@@ -779,7 +779,8 @@
             <p class="ttype1" id="ttype6">the gear icon in the top right...</p>
             </div>
             <div style="padding-top:calc(var(--pixel-size)*10);">
-            <p class="ttype1" id="ttype7">Survive for as long as possible...</p>
+            <p class="ttype1" id="ttype7">Find a way out before falling prey</p>
+            <p class="ttype1" id="ttype8">to the strangeness of the depths..</p>
             </div>
             </div>
         </div>
@@ -1033,6 +1034,7 @@
         document.getElementById("intro").style.display = "none";
         document.getElementById("main").style.display = "block";
         document.getElementById("helper").style.display = "none";
+        document.getElementById("copy").style.display = "none";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         },500);
     });
@@ -1046,6 +1048,7 @@
         document.getElementById("start").style.display = "none";
         document.getElementById("intro").style.display = "none";
         document.getElementById("main").style.display = "block";
+        document.getElementById("copy").style.display = "none";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         },500);
         setTimeout(function() {
@@ -1082,13 +1085,25 @@
         },13000);
         setTimeout(function() {
             document.getElementById("ttype7").style.animation = "typing 1s steps(35) forwards";
-            document.getElementById("ttype7").style.color = "red";
+            document.getElementById("ttype7").style.color = "#4751ff";
+            document.getElementById("ttype8").style.color = "#4751ff";
         },14000);
         setTimeout(function() {
-        document.getElementById("champion").style.animation = "out 2s steps(40) forwards";
+            document.getElementById("ttype8").style.animation = "typing 1s steps(35) forwards";
+        },14800);
+        setTimeout(function() {
+        document.getElementById("ttype7").style.color = "#ff40b9";
+        document.getElementById("ttype8").style.color = "#ff40b9";
+        },15500);
+        setTimeout(function() {
+        document.getElementById("ttype7").style.color = "#ffba42";
+        document.getElementById("ttype8").style.color = "#ffba42";
+        },17000);
+        setTimeout(function() {
+            document.getElementById("champion").style.animation = "out 2s steps(40) forwards";
         },18000);
         setTimeout(function() {
-        document.getElementById("helper").style.display = "none"; //also catches pointer div
+            document.getElementById("helper").style.display = "none"; //also catches pointer div
         },20000);
         
         /*
