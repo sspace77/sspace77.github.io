@@ -603,6 +603,7 @@
     image-rendering: pixelated;
     background-size: 100%;
     transform: translateX(-50%);
+    pointer-events: none;
 }
 .dpad-down {
     position: absolute;
@@ -615,6 +616,7 @@
     image-rendering: pixelated;
     background-size: 100%;
     transform: translateX(-50%);
+    pointer-events: none;
 }
 .dpad-left {
     position: absolute;
@@ -627,6 +629,7 @@
     image-rendering: pixelated;
     background-size: 100%;
     transform: translateY(-50%);
+    pointer-events: none;
 }
 .dpad-right {
     position: absolute;
@@ -639,6 +642,7 @@
     image-rendering: pixelated;
     background-size: 100%;
     transform: translateY(-50%);
+    pointer-events: none;
 }
 .dpad {
    user-select:none;
@@ -1005,6 +1009,40 @@
         icon.style.backgroundPosition = "60%";
     });
     
+    window.setInterval(function() {
+    if (yaxis==0 && xaxis==-3){
+        document.getElementById("dpad-left").style.opacity = "100%";
+        document.getElementById("dpad-left").style.pointerEvents = "all";
+    } else {
+        document.getElementById("dpad-left").style.opacity = "15%";
+        document.getElementById("dpad-left").style.pointerEvents = "none";
+    }
+        
+    if (yaxis==0 && xaxis==3){
+        document.getElementById("dpad-right").style.opacity = "100%";
+        document.getElementById("dpad-right").style.pointerEvents = "all";
+    } else {
+        document.getElementById("dpad-right").style.opacity = "15%";
+        document.getElementById("dpad-right").style.pointerEvents = "none";
+    }
+        
+    if (yaxis==-3 && xaxis==0){
+        document.getElementById("dpad-up").style.opacity = "100%";
+        document.getElementById("dpad-up").style.pointerEvents = "all";
+    } else {
+        document.getElementById("dpad-up").style.opacity = "15%";
+        document.getElementById("dpad-up").style.pointerEvents = "none";
+    }
+        
+    if (yaxis==3 && xaxis==0){
+        document.getElementById("dpad-down").style.opacity = "100%";
+        document.getElementById("dpad-down").style.pointerEvents = "all";
+    } else {
+        document.getElementById("dpad-down").style.opacity = "15%";
+        document.getElementById("dpad-down").style.pointerEvents = "none";
+    }
+    },200);
+    
 </script> <!--movement-->
 
 <script>
@@ -1236,8 +1274,6 @@ $(window).on('load', () => {
 </script> <!--main menu-->
     
 <script>
-    
-
     
     $('.dpad-right').click(function() {
         blinking = 0;
