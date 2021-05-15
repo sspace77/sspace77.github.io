@@ -170,7 +170,7 @@
         border: none;
         z-index: 5;
         pointer-events: none;
-        transition: .2s ease;
+        /*transition: .2s ease;*/
         background-image: url(dungeon.png);
         background-size: 100%;
         overflow: hidden
@@ -230,6 +230,7 @@
         font-size: calc(var(--pixel-size)*2);
     }
     .start {
+        margin-top: calc(var(--grid-cell)*-2);
         width: calc(var(--grid-cell)*4);
         height: calc(var(--grid-cell)*1);
         position: fixed;
@@ -246,7 +247,6 @@
         border: calc(var(--pixel-size)*1) solid #fff;
     }
     .intro {
-        margin-top: calc(var(--grid-cell)*-2);
         width: calc(var(--grid-cell)*4);
         height: calc(var(--grid-cell)*1);
         position: fixed;
@@ -306,20 +306,6 @@
         background-color: transparent;
         transition: 1s;
     }
-    .secondblock {
-        position: fixed;
-        width: calc(var(--grid-cell)*1);
-        height: calc(var(--grid-cell)*1);
-        top: calc(var(--grid-cell)*1);
-        right: calc(var(--grid-cell)*1);
-        border: solid #000;
-        border-width: calc(var(--grid-cell)*50);
-        margin: calc(var(--grid-cell)*-50);
-        z-index: 15;
-        opacity: 0%;
-        background-color: transparent;
-        transition: 1s;
-    }
     .emit {
         position: absolute;
         transform: translate(calc(var(--grid-cell)*-.5), calc(var(--grid-cell)*-.8));
@@ -360,9 +346,9 @@
         border: #000 solid;
         border-width: calc(var(--grid-cell)*50);
         margin: calc(var(--grid-cell)*-50);
-        opacity: 80%;
+        opacity: 100%;
         display: block;
-        transition: 2s ease forwards;
+        transition: 2s steps(10);
     }
     .tutorial {
         position: fixed;
@@ -373,47 +359,6 @@
     }
     .helper {
         display: block;
-    }
-    @keyframes slideright {
-        0% {
-            right: 0;
-            opacity: 0%;
-            transform: scale(0.1);
-        }
-        100% {
-            opacity: 100%;
-            transform: scale(1);
-        }
-    }
-    @keyframes slideleft {
-        0% {
-            opacity: 0%;
-            transform: scale(0.1) translate(calc(var(--grid-cell)*-20),calc(var(--grid-cell)*-2));
-        }
-        100% {
-            opacity: 100%;
-            transform: scale(1) translate(calc(var(--grid-cell)*-.7),calc(var(--grid-cell)*-2.8));
-        }
-    }
-    @keyframes appear {
-        0% {
-            opacity: 0%;
-            transform: scale(0.1);
-        }
-        100% {
-            opacity: 100%;
-            transform: scale(1);
-        }
-    }
-    @keyframes reappear {
-        0% {
-            opacity: 0%;
-            transform: scale(0.1) translate(calc(var(--grid-cell)*-10),calc(var(--grid-cell)*-1.5));
-        }
-        100% {
-            opacity: 100%;
-            transform: scale(1) translate(calc(var(--grid-cell)*-0),calc(var(--grid-cell)*-2.5));
-        }
     }
     @keyframes blocky {
         0% {
@@ -438,7 +383,80 @@
         height: 100%;
         z-index: 60;
     }
-</style>
+    .champion {
+        position: fixed;
+        z-index: 20;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: #fff solid;
+        border-width: calc(var(--grid-cell)*.1);
+        background: #000;
+    }
+    @keyframes out {
+        0%{
+            opacity:100%;
+        }
+        100%{
+            opacity:0%;
+            transform: translateY(calc(var(--grid-cell)*20));
+        }
+    }
+    .slide1 {
+        font-size: calc(var(--pixel-size)*5);
+        color: #fff;
+        padding: calc(var(--pixel-size)*10);
+        line-height: calc(var(--pixel-size)*7);
+        opacity: 0%;
+    }
+    @keyframes slide1 {
+        0% {
+            opacity: 0%;
+            transform: scale(.1);
+        }
+        100% {
+            opacity: 100%;
+            transform: scale(1);
+        }
+    }
+    .ttype1 {
+        font-size: calc(var(--pixel-size)*4);
+        color: #fff;
+        margin-left: calc(var(--pixel-size)*10);
+        line-height: calc(var(--pixel-size)*6);
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0%;
+        transition: 1s ease;
+    }
+    .ttype2 {
+        font-size: calc(var(--pixel-size)*4);
+        color: #fff;
+        margin-left: calc(var(--pixel-size)*10);
+        line-height: calc(var(--pixel-size)*6);
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0%;
+        transition: 1s ease;
+    }
+    @keyframes typing {
+        0% {
+            width: 0%;
+        }
+        100% { 
+            width: 100%;
+        }
+    }
+    .copytag {
+        color: #fff;
+        z-index: 21;
+        position: fixed;
+        text-align: center;
+        bottom: calc(var(--grid-cell)*.7);
+        font-size: calc(var(--pixel-size)*3);
+        opacity: 40%;
+        text-shadow: 0 0 calc(var(--pixel-size)*3) #000;
+    }
+</style> <!--style layout-->
     
 <style>
     .fade {
@@ -524,7 +542,7 @@
             width: 100%;
         }
     }
-</style>
+</style> <!--fade and textbox-->
     
 <style>
     .loader,
@@ -717,8 +735,10 @@
     <div class="fade" id="fade"></div>
     <div class="vignette" id="vignette"></div>
     
+    <button class="start" id="start">New Game</button>
     <button class="intro" id="intro">Tutorial</button>
-    <button class="start" id="start">New</button>
+    
+    <p class="copytag">Beta Version 1.2.2 &copy; 2021 ARR</p>
     
     <div class="splash" id="splash">
     <img class="anim" src="lights/lights0.png"/>
@@ -740,13 +760,31 @@
         <p class="reload" id="reload">Applying changes...</p>
         </div>
         
+        
+        
         <div class="helper" id="helper">
             
         <div class="pointer" id="pointer"></div>
             
-        <div class="secondblock" id="secondblock"></div>
+        <div class="champion" id="champion">
+            <div style="padding-top:calc(var(--pixel-size)*10);">
+            <p class="ttype1" id="ttype1">Use the direction controls to move</p>
+            <p class="ttype2" id="ttype2">within each rooms terrain...</p>
+            <div style="padding-top:calc(var(--pixel-size)*10);">
+            <p class="ttype1" id="ttype3">Use the axis controls to find and</p>
+            <p class="ttype2" id="ttype4">discover new rooms...</p>
+            </div>
+            <div style="padding-top:calc(var(--pixel-size)*10);">
+            <p class="ttype1" id="ttype5">You can adjust your settings from</p>
+            <p class="ttype1" id="ttype6">the gear icon in the top right...</p>
+            </div>
+            <div style="padding-top:calc(var(--pixel-size)*10);">
+            <p class="ttype1" id="ttype7">Survive for as long as possible...</p>
+            </div>
+            </div>
+        </div>
     
-            
+        <!--  
         <p id="tt1" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*3.7); right: calc(var(--grid-cell)*6);font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
         <p id="tt2" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4.3); right: calc(var(--grid-cell)*1);">Use the direction controls</p>
         <p id="tt3" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4); right: calc(var(--grid-cell)*1);">to move inside each room</p>
@@ -760,6 +798,7 @@
            
         <p id="tt7" class="tutorial" style="top:calc(var(--grid-cell)*2); right: calc(var(--grid-cell)*6.35); pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
         <p id="tt8" class="tutorial" style="top:calc(var(--grid-cell)*2.5); right: calc(var(--grid-cell)*1.5); pointer-events: none;transition: 1s;opacity: 0%;">Adjust your settings here</p>
+-->
             
         <div class="blocker" id="blocker"></div>
             
@@ -1000,7 +1039,59 @@
     
     $('.intro').click(function() {
         started = true;
-        //document.getElementById("blocker2").style.animation = "blocky2 2s forwards";
+        document.getElementById("joystick").style.opacity = "0%";
+        document.getElementById("fade").style.animation = "fade 1s forwards";
+        setTimeout(function() {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("start").style.display = "none";
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        document.getElementById("vignette").style.animation = "scale 3s ease forwards";
+        },500);
+        setTimeout(function() {
+        document.getElementById("ttype1").style.animation = "typing 1s steps(35) forwards";
+        },1500);
+        setTimeout(function() {
+            document.getElementById("ttype2").style.animation = "typing 1s steps(35) forwards";
+        },2300);
+        setTimeout(function() {
+            document.getElementById("joystick").style.animation = "slide1 1s steps(15) forwards";
+        },3000);
+        setTimeout(function() {
+            document.getElementById("ttype1").style.opacity = "30%";
+            document.getElementById("ttype2").style.opacity = "30%";
+            document.getElementById("ttype3").style.animation = "typing 1s steps(35) forwards";
+        },6000);
+        setTimeout(function() {
+            document.getElementById("blocker").style.opacity = "0%";
+            document.getElementById("ttype4").style.animation = "typing 1s steps(35) forwards";
+        },6800);
+        setTimeout(function() {
+            document.getElementById("ttype3").style.opacity = "30%";
+            document.getElementById("ttype4").style.opacity = "30%";
+        },9000);
+        setTimeout(function() {
+            document.getElementById("ttype5").style.animation = "typing 1s steps(35) forwards";
+        },10000);
+        setTimeout(function() {
+            document.getElementById("ttype6").style.animation = "typing 1s steps(35) forwards";
+        },10800);
+        setTimeout(function() {
+            document.getElementById("ttype5").style.opacity = "30%";
+            document.getElementById("ttype6").style.opacity = "30%";
+        },13000);
+        setTimeout(function() {
+            document.getElementById("ttype7").style.animation = "typing 1s steps(35) forwards";
+            document.getElementById("ttype7").style.color = "red";
+        },14000);
+        setTimeout(function() {
+        document.getElementById("champion").style.animation = "out 2s steps(40) forwards";
+        },18000);
+        setTimeout(function() {
+        document.getElementById("helper").style.display = "none"; //also catches pointer div
+        },20000);
+        
+        /*
         document.getElementById("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
@@ -1076,6 +1167,7 @@
         document.getElementById("pointer").style.display = "none";
         document.getElementById("helper").style.display = "none";
         },15500);
+        */
     });
     
     $('.gear').click(function() {
