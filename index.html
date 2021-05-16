@@ -17,12 +17,12 @@
     
 <style>
     :root {
-        --pixel-size: 5px;
+        --pixel-size: 4px;
         --grid-cell: calc(var(--pixel-size)*16);
     }
     @media (max-width: 1400px) {
         :root {
-            --pixel-size: 4px;
+            --pixel-size: 3px;
         }
     }
     @media (max-width: 900px) {
@@ -33,6 +33,11 @@
     @media (max-width: 700px) {
         :root {
             --pixel-size: 2px;
+        }
+    }
+    @media (min-width: 1500px) {
+        :root {
+            --pixel-size: 3px;
         }
     }
     @font-face {
@@ -59,9 +64,9 @@
     }
     .anim {
         position: fixed;
-        width: calc(var(--grid-cell)*12);
+        width: calc(var(--grid-cell)*14);
         image-rendering: pixelated;
-        height: auto;
+        background-image: url("lights/lights0.png");
         margin: auto;
         bottom: 0;
         left: 0;
@@ -459,7 +464,6 @@
         text-shadow: 0 0 calc(var(--pixel-size)*3) #000;
     }
 </style> <!--style layout-->
-    
 <style>
     .fade {
         position: fixed;
@@ -544,8 +548,7 @@
             width: 100%;
         }
     }
-</style> <!--fade and textbox-->
-    
+</style> <!--fade and textbox-->  
 <style>
     .loader,
     .loader:after {
@@ -570,7 +573,6 @@
         z-index: 999;
 }
 </style> <!--loader-->
-    
 <style>
 .dpad {
    position: fixed;
@@ -648,7 +650,6 @@
    user-select:none;
 }
 </style> <!--dpad-->
-   
 <style>
     .joystick {
         position: fixed;
@@ -747,17 +748,14 @@
     <p class="copytag" id="copy">Beta Version 1.2.2 &copy; 2021 ARR</p>
     
     <div class="splash" id="splash">
-    <img class="anim" src="lights/lights0.png"/>
+    <img class="anim"/>
+    <img class="anim" style="left:calc(var(--grid-cell)*14);">
+    <img class="anim" style="left:calc(var(--grid-cell)*28);">
+        <!--
     <img class="anim" src="lights/lights0.png"/ style="left:calc(var(--grid-cell)*12);">
     <img class="anim" src="lights/lights0.png"/ style="right:calc(var(--grid-cell)*12);">
+    -->
     </div>
-    
-    <!--
-    <div class="resize" id="resize">
-        <p>Resizing window proportions</p>
-        <p class="reload" id="reload">Applying changes...</p>
-    </div>
--->
     
     <div class="main" id="main">
         
@@ -765,8 +763,6 @@
         <p>Resizing window proportions ... Please wait</p>
         <p class="reload" id="reload">Applying changes...</p>
         </div>
-        
-        
         
         <div class="helper" id="helper">
             
@@ -824,24 +820,21 @@
     </div>
         
  <div class="cords" id="cords">hey</div> 
-    
-    <div class="lens">
-    
-    <div class="camera">
         
+    <div class="lens">
+    <div class="camera">
+    
         <div class="icon" id="icon">
             <div class="emit" id="emit"></div>
         </div>
         <div class="shadow" id="shadow"></div>
-    
         
     <div class="plus" id="plus">
     <div class="plus" style="left: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="right: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="top: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="bottom: calc(var(--grid-cell)*-10)"></div>
-    </div>
-      
+    </div> 
 <!--
     <div class="grid" id="grid">
         <div class="square">hey</div>
@@ -871,10 +864,8 @@
         <div class="square">hey</div>
     </div>
     </div>
-        -->
-        
-    </div>
-        
+        -->    
+    </div>      
  <!--   <div class="layout" id="layout">
         <div class="square">hey</div>
         <div class="l00">hey</div>
@@ -902,18 +893,13 @@
         <div class="square">hey</div>
         <div class="square">hey</div>
     </div>
--->
-        
-        
+-->           
     <div class="textbox" id="textbox">
         <p id="type1"></p>
         <p id="type2"></p>
         <p id="type3"></p>
-        </div> 
-        
-        
+        </div>
     </div>
-    
     <div class="dpad" id="dpad">
         <div class="DemoDirectionUI flex-center">
             <button id="dpad-left" class="dpad-button dpad-left"></button>
@@ -929,15 +915,14 @@
         <button class="joyleft" id="joyleft"></button>
         <button class="joyright" id="joyright"></button>
     </div>
-        
-        
     </div>
-    
 </body>
     
 <script>
     var xaxis = 0;
     var yaxis = 0;
+    
+    var facing = "down";
     
     var blinking = 1;
     var quickblink = 0;
@@ -967,6 +952,7 @@
     
     $('.joyup').click(function() {
         blinking = 0;
+        facing = "up";
         yaxis = yaxis - 1;
         if (yaxis <= -4) {
         yaxis = -3;
@@ -978,6 +964,7 @@
     
     $('.joydown').click(function() {
         blinking = 1;
+        facing = "down";
         yaxis = yaxis + 1;
         if (yaxis >= 4) {
         yaxis = 3;
@@ -989,6 +976,7 @@
     
     $('.joyleft').click(function() {
         blinking = 0;
+        facing = "left";
         xaxis = xaxis - 1;
         if (xaxis <= -4) {
         xaxis = -3;
@@ -1000,6 +988,7 @@
     
     $('.joyright').click(function() {
         blinking = 0;
+        facing = "right";
         xaxis = xaxis + 1;
         if (xaxis >= 4) {
         xaxis = 3;
@@ -1659,13 +1648,16 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         console.log(saved);
         console.log(saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop());
         
+        /*if (document.getElementById("plus").style.backgroundImage = "url(dungeon2.png)") {
+            if (yaxis==2 && xaxis==0){
+                if()
+            }
+        }*/
+        
         
     });
-    
+                
 
-    $('.joystick').click(function() {
-        
-    });
      
     
     /*
