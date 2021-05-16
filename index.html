@@ -20,9 +20,10 @@
     
 <style>
     :root {
-        --pixel-size: 4px;
+        --pixel-size: 2px;
         --grid-cell: calc(var(--pixel-size)*16);
     }
+    /*
     @media (max-width: 1400px) {
         :root {
             --pixel-size: 3px;
@@ -33,6 +34,7 @@
             --pixel-size: 2px;
         }
     }
+    */
     @media (max-width: 700px) {
         :root {
             --pixel-size: 2px;
@@ -796,16 +798,13 @@
     <img class="anim"/>
     <img class="anim" style="left:calc(var(--grid-cell)*14);">
     <img class="anim" style="left:calc(var(--grid-cell)*28);">
-        <!--
-    <img class="anim" src="lights/lights0.png"/ style="left:calc(var(--grid-cell)*12);">
-    <img class="anim" src="lights/lights0.png"/ style="right:calc(var(--grid-cell)*12);">
-    -->
+    <img class="anim" style="left:calc(var(--grid-cell)*42);">
     </div>
     
     <div class="main" id="main">
         
         <div class="resize" id="resize">
-        <p>Resizing window proportions ... Please wait</p>
+        <p>Resizing proportions ... Please wait</p>
         <p class="reload" id="reload">Applying changes...</p>
         </div>
         
@@ -1081,6 +1080,7 @@
 </script> <!--movement-->
 
 <script>
+    /*
     $(window).resize(function() {
         if (started == true) {
     document.getElementById("resize").style.opacity = "100%";
@@ -1094,7 +1094,8 @@
         },6000);
         }
 });
-</script> <!--resize-->
+*/
+</script> <!--resize--> <!--temp disabled-->
     
 <script>
     
@@ -1668,7 +1669,7 @@ document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handle
 document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
 document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
 document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
-</script> <!--dpad commands-->
+</script> <!--dpad compatability-->
 
 <script>
     
