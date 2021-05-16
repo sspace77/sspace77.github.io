@@ -267,6 +267,52 @@
     .intro:hover {
         border: calc(var(--pixel-size)*1) solid #fff;
     }
+    .introdone {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        z-index: 21;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*8);
+        border: none;
+        background: transparent;
+        color: #fff;
+        transition: .2s ease;
+        animation: blinky 1s infinite;
+        margin-left: calc(var(--pixel-size)*135);
+    }
+    @keyframes blinky {
+        0% {
+            opacity: 0%;
+        }
+        50% {
+            opacity: 0%;
+        }
+        51% {
+            opacity: 100%;
+        }
+        100% {
+            opacity: 100%;
+        }
+    }
+    @keyframes rcolorloop {
+        0% {
+            color: #4751ff;
+            text-shadow: 0 0 calc(var(--pixel-size)*3) #4751ff;
+        }
+        30% {
+            color: #ff40b9;
+            text-shadow: 0 0 calc(var(--pixel-size)*3) #ff40b9;
+        }
+        60% {
+            color: #ffba42;
+            text-shadow: 0 0 calc(var(--pixel-size)*3)  #ffba42;
+        }
+        100% {
+            color: #4751ff;
+            text-shadow: 0 0 calc(var(--pixel-size)*3) #4751ff;
+        }
+    }
     .resize {
         font-family: boldpixel;
         font-size: calc(var(--pixel-size)*3);
@@ -396,6 +442,7 @@
         border: #fff solid;
         border-width: calc(var(--grid-cell)*.1);
         background: #000;
+        text-shadow: 0 0 calc(var(--pixel-size)*2) rgb(255,255,255,0.5);
     }
     @keyframes out {
         0%{
@@ -741,7 +788,7 @@
     <div class="vignette" id="vignette"></div>
     
     <button class="start" id="start">New Game</button>
-    <button class="intro" id="intro">Tutorial</button>
+    <button class="intro" id="intro">Controls</button>
     
     <p class="copytag" id="copy">Beta Version 1.2.2 &copy; 2021 ARR</p>
     
@@ -779,9 +826,10 @@
             <p class="ttype1" id="ttype6">the gear icon in the top right...</p>
             </div>
             <div style="padding-top:calc(var(--pixel-size)*10);">
-            <p class="ttype1" id="ttype7">Locate a ravine to descend into</p>
+            <p class="ttype1" id="ttype7">Locate a <span style="animation: rcolorloop 3s infinite;">ravine</span> to descend into</p>
             <p class="ttype1" id="ttype8">deeper levels of the depths...</p>
             </div>
+            <button class="introdone" id="introdone">></button>
             </div>
         </div>
     
@@ -1064,6 +1112,7 @@
         document.getElementById("helper").style.display = "none";
         document.getElementById("copy").style.display = "none";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
+        document.getElementById("joystick").style.opacity = "100%";
         },500);
     });
     
@@ -1077,7 +1126,9 @@
         document.getElementById("intro").style.display = "none";
         document.getElementById("main").style.display = "block";
         document.getElementById("copy").style.display = "none";
+        document.getElementById("introdone").style.display = "none";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
+        document.getElementById("helper").style.display = "block";
         },500);
         setTimeout(function() {
         document.getElementById("ttype1").style.animation = "typing 1s steps(35) forwards";
@@ -1087,6 +1138,7 @@
         },2300);
         setTimeout(function() {
             document.getElementById("joystick").style.animation = "slide1 1s steps(15) forwards";
+            document.getElementById("joystick").style.pointerEvents = "none";
         },3000);
         setTimeout(function() {
             document.getElementById("ttype1").style.opacity = "30%";
@@ -1113,26 +1165,21 @@
         },13000);
         setTimeout(function() {
             document.getElementById("ttype7").style.animation = "typing 1s steps(35) forwards";
-            document.getElementById("ttype7").style.color = "#4751ff";
-            document.getElementById("ttype8").style.color = "#4751ff";
         },14000);
         setTimeout(function() {
             document.getElementById("ttype8").style.animation = "typing 1s steps(35) forwards";
         },14800);
         setTimeout(function() {
-        document.getElementById("ttype7").style.color = "#ff40b9";
-        document.getElementById("ttype8").style.color = "#ff40b9";
+        document.getElementById("fade").style.animation = "none";
+        document.getElementById("introdone").style.display = "block";
         },15500);
         setTimeout(function() {
-        document.getElementById("ttype7").style.color = "#ffba42";
-        document.getElementById("ttype8").style.color = "#ffba42";
-        },17000);
-        setTimeout(function() {
-            document.getElementById("champion").style.animation = "out 2s steps(40) forwards";
+            document.getElementById("pointer").style.display = "none";
+            //document.getElementById("champion").style.animation = "out 2s steps(40) forwards";
         },18000);
-        setTimeout(function() {
-            document.getElementById("helper").style.display = "none"; //also catches pointer div
-        },20000);
+        /* setTimeout(function() {
+            //document.getElementById("helper").style.display = "none"; //also catches pointer div
+        },20000); */
         
         /*
         document.getElementById("fade").style.animation = "fade 1s forwards";
@@ -1211,6 +1258,43 @@
         document.getElementById("helper").style.display = "none";
         },15500);
         */
+    });
+    
+    $('.introdone').click(function() {
+        started = false;
+        document.getElementById("joystick").style.opacity = "0%";
+        document.getElementById("fade").style.animation = "fade 1s forwards";
+        setTimeout(function() {
+        document.getElementById("splash").style.display = "block";
+        document.getElementById("start").style.display = "block";
+        document.getElementById("intro").style.display = "block";
+        document.getElementById("main").style.display = "block";
+        document.getElementById("copy").style.display = "block";
+        document.getElementById("helper").style.display = "none";
+        document.getElementById("vignette").style.animation = "none";
+
+        document.getElementById("ttype1").style.animation = "none";
+        document.getElementById("ttype2").style.animation = "none";
+        document.getElementById("ttype3").style.animation = "none";
+        document.getElementById("ttype4").style.animation = "none";
+        document.getElementById("ttype5").style.animation = "none";
+        document.getElementById("ttype6").style.animation = "none";
+        document.getElementById("ttype7").style.animation = "none";
+        document.getElementById("ttype8").style.animation = "none";
+        },500);
+        setTimeout(function() {
+        document.getElementById("fade").style.animation = "none";
+        document.getElementById("ttype1").style.opacity = "100%";
+        document.getElementById("ttype2").style.opacity = "100%";
+        document.getElementById("ttype3").style.opacity = "100%";
+        document.getElementById("ttype4").style.opacity = "100%";
+        document.getElementById("ttype5").style.opacity = "100%";
+        document.getElementById("ttype6").style.opacity = "100%";
+        document.getElementById("ttype7").style.opacity = "100%";
+        document.getElementById("ttype8").style.opacity = "100%";
+        document.getElementById("blocker").style.opacity = "100%";
+        document.getElementById("joystick").style.animation = "none";
+        },1000);
     });
     
     $('.gear').click(function() {
