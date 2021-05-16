@@ -1111,9 +1111,11 @@
         document.getElementById("intro").style.display = "none";
         document.getElementById("main").style.display = "block";
         document.getElementById("helper").style.display = "none";
+         document.getElementById("helper").style.pointerEvents = "none";
         document.getElementById("copy").style.display = "none";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         document.getElementById("joystick").style.opacity = "100%";
+        document.getElementById("joystick").style.pointerEvents = "all";
         },500);
     });
     
