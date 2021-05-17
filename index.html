@@ -580,7 +580,7 @@
         border: #000 solid;
         border-width: calc(var(--grid-cell)*.1);
         opacity: 100%;
-        transition: 2s ease;
+        transition: 1s ease;
     }
 </style> <!--style layout-->
 <style>
@@ -1414,6 +1414,7 @@
     $('.introdone').click(function() {
         started = false;
         document.getElementById("joystick").style.opacity = "0%";
+        document.getElementById("mapper").style.opacity = "100%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
         document.getElementById("splash").style.display = "block";
