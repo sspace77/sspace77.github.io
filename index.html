@@ -2027,9 +2027,6 @@ function duplicate() {
     }
     return arr;
 }
-
-    var newx;
-    var newy;
     
     //dash to new room
     var spikecount = 0;
@@ -2066,12 +2063,12 @@ function duplicate() {
             
             roomrn = saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop();
             
-            if (roomrn != spikeroom) {
-                document.getElementById("spike").style.display = "none";
-                document.getElementById("spikeshadow").style.display = "none";
-            } else {
+            if (roomrn == 'url("dungeonx.png")') {
                 document.getElementById("spike").style.display = "block";
                 document.getElementById("spikeshadow").style.display = "block";
+            } else {
+                document.getElementById("spike").style.display = "none";
+                document.getElementById("spikeshadow").style.display = "none";
             }
             
         } else {
@@ -2092,7 +2089,7 @@ function duplicate() {
                 //removes room from array
             }
             
-            if (roomrn != spikeroom) {
+            if (roomrn != 'url("dungeonx.png")') {
                 document.getElementById("spike").style.display = "none";
                 document.getElementById("spikeshadow").style.display = "none";
             } else {
@@ -2243,6 +2240,7 @@ function duplicate() {
     
             
             attackwalls = [(rng+1 + ',0'),(rng-1 + ',0'),(rng + ',1'),(rng + ',-1'),(rng+1 + ',1'),(rng+1 + ',-1'),(rng-1 + ',-1'),(rng-1 + ',1')];
+            
             if ((warningwalls.indexOf(xaxis + "," + yaxis))>-1){
                 
                 document.getElementById("spike").style.animation = "charge 1s steps(1) infinite";
@@ -2265,6 +2263,12 @@ function duplicate() {
         } else {
             document.getElementById("spike").style.display = "none";
             document.getElementById("spikeshadow").style.display = "none";
+        }
+        if (roomrn == 'url("dungeonlava.png")') {
+            walls = ["-2,0","-1,0","0,0","1,0","2,0","0,-1","0,-2","0,1","0,2"];
+            if ((walls.indexOf(xaxis + "," + yaxis))>-1){
+                detect();
+            }
         }
     });
     
