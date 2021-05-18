@@ -518,8 +518,8 @@
     .dmapshadow {
         top: calc(var(--grid-cell)*1);
         left: calc(var(--grid-cell)*1);
-        width: calc(var(--grid-cell)*4);
-        height: calc(var(--grid-cell)*4);
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*3);
         border: transparent solid;
         border-width: calc(var(--grid-cell)*.1);
         position: fixed;
@@ -531,9 +531,9 @@
     .dmap {
         top: calc(var(--grid-cell)*1);
         left: calc(var(--grid-cell)*1);
-        width: calc(var(--grid-cell)*4);
-        height: calc(var(--grid-cell)*4);
-        border: rgb(255,255,255, .3) solid;
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*3);
+        border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
         position: fixed;
         z-index: 16;
@@ -541,8 +541,8 @@
     }
     .loc {
         position: relative;
-        top: calc(var(--grid-cell)*1.85);
-        left: calc(var(--grid-cell)*1.85);
+        top: calc(var(--grid-cell)*1.4);
+        left: calc(var(--grid-cell)*1.4);
     }
     .cmap {
         width: calc(var(--grid-cell)*.25);
@@ -559,10 +559,11 @@
         height: calc(var(--grid-cell)*.25);
         background: transparent;
         border: #fff solid;
-        border-width: calc(var(--grid-cell)*.06);
+        border-width: calc(var(--grid-cell)*.05);
         position: fixed;
         z-index: 16;
-        margin: calc(var(--grid-cell)*-.06);;
+        margin: calc(var(--grid-cell)*-.1);
+        padding: calc(var(--grid-cell)*.05);
     }
     .minimapstarter {
         width: calc(var(--grid-cell)*.25);
