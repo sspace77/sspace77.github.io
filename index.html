@@ -855,6 +855,112 @@
         opacity: 100%;
     }
 </style> <!--joystick-->
+<style>
+    .spike {
+        display: none;
+        position: absolute;
+        z-index: 7;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        transform: translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4));
+        background-image: url("spike.png");
+        background-size: 1000%;
+        /*box-shadow: inset 0 0 calc(var(--pixel-size)*5) #000;
+        transition: .1s steps(3);
+        transform: translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4));*/
+        animation: spikeidle 2s steps(1) infinite;
+    }
+    .spikeshadow {
+        display: none;
+        position: absolute;
+        transform: translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4));
+        z-index: 6;
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*2);
+        background-image: url("req.png");
+        background-size: 100%;
+        opacity: 70%;
+        transition: .1s steps(3);
+    }
+    @keyframes attack {
+        0% {
+            background-position: 0;
+        }
+        10% {
+            background-position: calc(var(--grid-cell)*-8);
+        }
+        20% {
+            background-position: calc(var(--grid-cell)*-10);
+        }
+        30% {
+            background-position: calc(var(--grid-cell)*-12);
+        }
+        40% {
+            background-position: calc(var(--grid-cell)*-14);
+        }
+        50% {
+            background-position: calc(var(--grid-cell)*-16);
+        }
+        60% {
+            background-position: calc(var(--grid-cell)*-18);
+        }
+        70% {
+            background-position: calc(var(--grid-cell)*-20);
+        }
+        80% {
+            background-position: 0;
+        }
+    }
+    @keyframes charge {
+        0% {
+            background-position: calc(var(--grid-cell)*-6);
+        }
+        20% {
+            background-position: calc(var(--grid-cell)*-8);
+        }
+        40% {
+            background-position: calc(var(--grid-cell)*-10);
+        }
+        60% {
+            background-position: calc(var(--grid-cell)*-8);
+        }
+        80% {
+            background-position: calc(var(--grid-cell)*-4);
+        }
+    }
+    @keyframes spikeidle {
+        0% {
+            background-position: 0;
+        }
+        10% {
+            background-position: calc(var(--grid-cell)*-2);
+        }
+        20% {
+            background-position: 0;
+        }
+        30% {
+            background-position: calc(var(--grid-cell)*-4);
+        }
+        40% {
+            background-position: 0;
+        }
+        50% {
+            background-position: calc(var(--grid-cell)*-2);
+        }
+        60% {
+            background-position: 0;
+        }
+        70% {
+            background-position: calc(var(--grid-cell)*-6);
+        }
+        80% {
+            background-position: calc(var(--grid-cell)*-4);
+        }
+        100% {
+            background-position: 0;
+        }
+    }
+</style> <!--mobs-->
     
 <body>
     
@@ -945,6 +1051,10 @@
             <div class="emit" id="emit"></div>
         </div>
         <div class="shadow" id="shadow"></div>
+        
+        <div class="spike" id="spike"></div>
+        <div class="spikeshadow" id="spikeshadow"></div>
+        
         
     <div class="plus" id="plus">
     <div class="plus" style="left: calc(var(--grid-cell)*-10)"></div>
@@ -1848,7 +1958,10 @@ function duplicate() {
     
     var plus = document.getElementById("plus");
     
-    var rng = (Math.round(Math.random() * 10)+5);
+    var rngt = (Math.round(Math.random() * 10)+1);
+    
+    var rngspike = (Math.round(Math.random() * 5)+1); //1-5
+    var rng = Math.ceil(Math.random() * 2)*(Math.round(Math.random()) ? 1 : -1); //-2-2
     
     
     var vaseroom = 'url("dungeon2.png")';
@@ -1880,10 +1993,16 @@ function duplicate() {
     return arr;
 }
 
+    var newx;
+    var newy;
     
     //dash to new room
+    spikecount = 0;
+    spikewall = rng + ',0';
     
     $('.dpad').click(function() {
+        walls=[];
+        document.getElementById("spike").style.animation = "spikeidle 2s steps(1) infinite";
     
         /*
         for (index = 0; index < saved.length; ++index) {
@@ -1912,6 +2031,35 @@ function duplicate() {
             
             roomrn = saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop();
             
+            if (roomrn != baseroom) {
+                document.getElementById("spike").style.display = "none";
+                document.getElementById("spikeshadow").style.display = "none";
+            }
+            
+            if (roomrn == baseroom) {
+                if (spikecount <= 1) {
+                    newx = xcord;
+                    newy = ycord;
+                    spikecount = 2;
+                    document.getElementById("spike").style.display = "block";
+                document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
+                    document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
+                walls = [spikewall];
+                } else {
+                    if (newx == xcord && newy == ycord) {
+                document.getElementById("spike").style.display = "block";
+                document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
+                        document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
+                walls = [spikewall];
+                    }
+                }
+            } else {
+                document.getElementById("spike").style.display = "none";
+                document.getElementById("spikeshadow").style.display = "none";
+            }
+            
         } else {
             //new room
             roomcount = roomcount + 1;
@@ -1926,9 +2074,37 @@ function duplicate() {
             roomrn = randomer;
             
             if (roomrn != baseroom) {
+                document.getElementById("spike").style.display = "none";
+                document.getElementById("spikeshadow").style.display = "none";
                 removeA(rooms, roomrn);  //sets special rooms prevents re use
+                //removes room from array
+            }
+            if (roomrn == baseroom) {
+                if (spikecount <= 1) {
+                    newx = xcord;
+                    newy = ycord;
+                    spikecount = 2;
+                    document.getElementById("spike").style.display = "block";
+                document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
+                    document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
+                walls = [spikewall];
+                } else {
+                    if (newx == xcord && newy == ycord) {
+                document.getElementById("spike").style.display = "block";
+                document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
+                        document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
+                walls = [spikewall];
+                    }
+                }
+            } else {
+                document.getElementById("spike").style.display = "none";
+                document.getElementById("spikeshadow").style.display = "none";
             }
         }
+
+            
         console.log(rooms[Math.floor(Math.random() * rooms.length)]);
         console.log("room right now: " + roomrn);
         console.log(saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop());
@@ -1958,8 +2134,48 @@ function duplicate() {
                 icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
                     shadow.left = `calc(var(--grid-cell)*${xaxis})`;
     }
+    
+    walls = [];
+    hit = 0;
+    
+    window.setInterval(function() {
+        if (hit == 1) {
+            detect();
+            hit = 0;
+            /*icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
+            shadow.left = `calc(var(--grid-cell)*${xaxis})`;*/
+            icon.style.backgroundPosition = "100%";
+            setTimeout(function() {
+                 icon.style.backgroundPosition = "0%";      
+            },500);
+        }
+    },200);
+    
+    $('.joystick').click(function() {
+        if (xaxis > rng) {
+            document.getElementById("spike").style.transform = "translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4)) scaleX(-1)";
+        } else if (xaxis < rng) {
+            document.getElementById("spike").style.transform = "translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4)) scaleX(1)";
+        }
+        
+        if (newx == xcord && newy == ycord) {
+        if ((xaxis == rng+2  || xaxis == rng-2 ) && (yaxis < 2 && yaxis > -2)) {
+            document.getElementById("spike").style.animation = "charge 1s steps(1) infinite";
+        } else if ((xaxis == rng-1 || xaxis == rng+1 ) && (yaxis < 2 && yaxis > -2)) {
+            document.getElementById("spike").style.animation = "attack 1.5s steps(1) infinite";
+            hit = hit + 1;
+        } else {
+            document.getElementById("spike").style.animation = "spikeidle 2s steps(1) infinite";
+        }
+        }
+    });
 
     $('.joystick').click(function() {
+        
+        if ((walls.indexOf(xaxis + "," + yaxis))>-1){
+                detect();
+            }
+        
         if (roomrn == 'url("dungeon2.png")') {
             walls = ["0,2","-1,-3","0,-3","-1,0","-1,-1","-2,-1"];
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
