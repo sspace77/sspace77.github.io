@@ -552,6 +552,7 @@
         border-width: calc(var(--grid-cell)*.05);*/
         position: fixed;
         z-index: 15;
+        transition: .1s ease;
     }
     .minimapborder {
         width: calc(var(--grid-cell)*.25);
@@ -1824,7 +1825,7 @@ $(window).on('load', () => {
     //detectswipe('swipeme',myfunction);                    important
     
     window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: ";
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome;
     },200);
 
     let col = 0;
@@ -1934,6 +1935,8 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
 </script> <!--dpad compatability-->
     
 <script>
+    var biome = "dungeon";
+    
     var i = 0;
 
     $('.dpad').click(function() {
@@ -1941,6 +1944,20 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         document.getElementById("duplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
         document.getElementById("loc").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-5),calc(var(--pixel-size)*${ycord}*-5),0)`;
         document.getElementById("mmb").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
+        if (biome == "desert") {
+        document.getElementById("duplicater" + i).style.background = "#fae769";
+        } else if (biome == "water") {
+        document.getElementById("duplicater" + i).style.background = "#5ea1ff";
+        } else if (biome == "lava") {
+        document.getElementById("duplicater" + i).style.background = "#ff735e";
+        } else if (biome == "dungeon") {
+        document.getElementById("duplicater" + i).style.background = "#676180";
+            setTimeout(function() {
+             if (newx == xcord && newy == ycord) {
+                 document.getElementById("duplicater" + i).style.background = "#a463ff";
+             }
+            },100);
+        }
     });
     
 function duplicate() {
