@@ -558,7 +558,7 @@
         width: calc(var(--grid-cell)*.25);
         height: calc(var(--grid-cell)*.25);
         background: transparent;
-        border: #fff solid;
+        border: rgb(255,255,255, .5) solid;
         border-width: calc(var(--grid-cell)*.05);
         position: fixed;
         z-index: 16;
@@ -584,6 +584,18 @@
         border-width: calc(var(--grid-cell)*.1);
         opacity: 100%;
         transition: 1s ease;
+    }
+    .blood {
+        position: fixed;
+        z-index: 30;
+        background: red;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        mix-blend-mode: color;
+        opacity: 0%;
+        pointer-events: none;
     }
 </style> <!--style layout-->
 <style>
@@ -1046,6 +1058,8 @@
     </div>
         
  <div class="cords" id="cords">hey</div> 
+        
+        <div class="blood" id="blood"></div>
         
     <div class="lens">
     <div class="camera">
@@ -2078,10 +2092,9 @@ function duplicate() {
                 document.getElementById("spikeshadow").style.display = "none";
                     }
                 }
-            } else {
-                document.getElementById("spike").style.display = "none";
-                document.getElementById("spikeshadow").style.display = "none";
             }
+            
+            
             
         } else {
             //new room
@@ -2124,9 +2137,6 @@ function duplicate() {
                 document.getElementById("spikeshadow").style.display = "none";
                     }
                 }
-            } else {
-                document.getElementById("spike").style.display = "none";
-                document.getElementById("spikeshadow").style.display = "none";
             }
         }
 
@@ -2162,6 +2172,17 @@ function duplicate() {
     }
     
     function detrage() {
+        
+        document.getElementById("blood").style.opacity = "80%";
+        
+        setTimeout(function() {
+            document.getElementById("blood").style.transition = "1s ease";
+            document.getElementById("blood").style.opacity = "0%";
+        },100);
+        
+        setTimeout(function() {
+            document.getElementById("blood").style.transition = "none";
+        },1100);
         
         if (facing == "down") {
                     yaxis = yaxis-1;
