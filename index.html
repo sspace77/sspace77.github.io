@@ -1,10 +1,12 @@
 <html lang="en">
+<!--copyright 2021 all rights reserved-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content= "ie=edge">
     <title>UN 3.0</title>
     
+    <!--
     <script
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
@@ -13,8 +15,9 @@
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>   
+-->
     
-    <!--copyright 2021 all rights reserved-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     
 </head>
     
@@ -1875,16 +1878,30 @@ function duplicate() {
                 removeA(rooms, roomrn);  //sets special rooms prevents re use
             }
         }
+        
+        consoler();
+        /*
         console.log(rooms[Math.floor(Math.random() * rooms.length)]);
         console.log("room right now: " + roomrn);
         console.log(saved.find(a =>a.includes(xcord + "c" + ycord + "z")).split("z").pop());
         
-        /*if (document.getElementById("plus").style.backgroundImage = "url(dungeon2.png)") {
+        if (document.getElementById("plus").style.backgroundImage = "url(dungeon2.png)") {
             if (yaxis==2 && xaxis==0){
                 if()
             }
         }*/    
     });
+    
+    console.log('%c Copyright 2021 — All Rights Reserved', 'background: #ff3863; color: #fff; border-radius: 5%;');
+    /*
+    console.log('%c -> Experiencing Bugs? -> https://placeholder.ga', 'background: repeating-linear-gradient(30deg, rgba(0,0,0,1) 7%, rgba(255,132,28,1) 7%, rgba(255,212,43,1) 13%, rgba(0,0,0,1) 13%, rgba(0,0,0,1) 21%, rgba(255,212,43,1) 22%, rgba(255,212,43,1) 28%, rgba(0,0,0,1) 28%, rgba(0,0,0,1) 36%, rgba(255,236,58,1) 37%, rgba(255,212,43,1) 45%, rgba(0,0,0,1) 46%, rgba(0,0,0,1) 54%, rgba(255,212,43,1) 54%, rgba(255,212,43,1) 62%, rgba(0,0,0,1) 63%, rgba(0,0,0,1) 72%, rgba(255,212,43,1) 72%, rgba(255,212,43,1) 80%, rgba(0,0,0,1) 80%, rgba(0,0,0,1) 88%, rgba(255,212,43,1) 89%, rgba(255,132,28,1) 95%, rgba(0,0,0,1) 96%); color: #f6ffa3; text-shadow: 0 0 3px #000; border-radius: 5%;');
+    */
+    
+    function consoler() {
+        //console.clear();
+        console.log('%c Current', 'background: #534e80; color: #988cff; border-radius: 5%;');
+        console.log("Room source:: " + roomrn);
+    }
     
     function detect() {
         if (facing == "down") {
