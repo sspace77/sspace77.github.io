@@ -598,6 +598,19 @@
         opacity: 0%;
         pointer-events: none;
     }
+    .biomelens {
+        position: fixed;
+        z-index: 29;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        background: linear-gradient(#ff9873,#69beff,#989ba3,#9c69ff,#ff9873);
+        pointer-events: none;
+        transition: 1s ease-out;
+        mix-blend-mode: overlay;
+        opacity: 0%;
+        pointer-events: none;
+        display: none;
+    }
 </style> <!--style layout-->
 <style>
     .fade {
@@ -1052,6 +1065,8 @@
 </div>
         
         <div class="cover" id="cover"></div>
+        
+        <div class="biomelens"></div>
         
     <div class="shaded" id="shaded1">
         <div class="shaded" id="shaded2"></div>
