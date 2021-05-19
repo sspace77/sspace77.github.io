@@ -178,7 +178,7 @@
         z-index: 5;
         pointer-events: none;
         /*transition: .2s ease;*/
-        background-image: url(dungeon.png);
+        background-image: url(dungeon1.png);
         background-size: 100%;
         overflow: hidden
     }
@@ -551,7 +551,7 @@
         border-width: calc(var(--grid-cell)*.05);*/
         position: fixed;
         z-index: 15;
-        transition: .1s ease;
+        transition: .2s ease;
     }
     .minimapborder {
         width: calc(var(--grid-cell)*.25);
@@ -1772,9 +1772,9 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         document.getElementById("duplicater" + i).style.background = "#676180";
             setTimeout(function() {
              if (roomrn.includes("dungeon1")) {
-                 document.getElementById("duplicater" + i).style.background = "#a463ff";
+                 document.getElementById("duplicater" + i).style.background = "#2f2d3b"; //#a463ff
              }
-            },100);
+            },20);
         }
     });
     
