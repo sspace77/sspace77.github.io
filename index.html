@@ -1770,11 +1770,6 @@ $(window).on('load', () => {
     
     //detectswipe('swipeme',myfunction);                    important
     
-    window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome;
-    },200);
-
-    let col = 0;
     
 </script> <!--swipes misc-->
     
@@ -1834,8 +1829,7 @@ $(window).on('load', () => {
 </script> <!--animations-->
 
 <script>
-    
-    /* BONUS! Dpad functionality for mouse and touch */
+
 var isPressed = false;
 const removePressedAll = () => {
    document.querySelectorAll(".dpad-button").forEach(d => {
@@ -1915,6 +1909,12 @@ function duplicate() {
 }
     
 </script> <!--map-->
+    
+<script>
+    window.setInterval(function() {
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome + " room: " + roomrn;
+    },200);
+</script> <!--mission control-->
 
 <script>
     
