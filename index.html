@@ -1026,7 +1026,21 @@
             </div>
         </div>
     
-
+        <!--  
+        <p id="tt1" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*3.7); right: calc(var(--grid-cell)*6);font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
+        <p id="tt2" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4.3); right: calc(var(--grid-cell)*1);">Use the direction controls</p>
+        <p id="tt3" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4); right: calc(var(--grid-cell)*1);">to move inside each room</p>
+            
+           
+        <p id="tt4" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;margin-left:calc(var(--grid-cell)*-.6);margin-top:calc(var(--grid-cell)*-2);">?</p>
+            
+        <p id="tt5" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;margin-top:calc(var(--grid-cell)*-2);">Use the map direction controls</p>
+        <p id="tt6" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;margin-top:calc(var(--grid-cell)*-1.7);">to dash between rooms</p>
+        
+           
+        <p id="tt7" class="tutorial" style="top:calc(var(--grid-cell)*2); right: calc(var(--grid-cell)*6.35); pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
+        <p id="tt8" class="tutorial" style="top:calc(var(--grid-cell)*2.5); right: calc(var(--grid-cell)*1.5); pointer-events: none;transition: 1s;opacity: 0%;">Adjust your settings here</p>
+-->
             
         <div class="blocker" id="blocker"></div>
             
@@ -1058,16 +1072,73 @@
         
         <div class="spike" id="spike"></div>
         <div class="spikeshadow" id="spikeshadow"></div>
-
+        
+        
     <div class="plus" id="plus">
     <div class="plus" style="left: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="right: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="top: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="bottom: calc(var(--grid-cell)*-10)"></div>
-    </div>   
-    
-        </div>      
-       
+    </div> 
+<!--
+    <div class="grid" id="grid">
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+    </div>
+    </div>
+        -->    
+    </div>      
+ <!--   <div class="layout" id="layout">
+        <div class="square">hey</div>
+        <div class="l00">hey</div>
+        <div class="l01">hey</div>
+        <div class="l02">hey</div>
+        <div class="l03">hey</div>
+        <div class="l04">hey</div>
+        <div class="l05">hey</div>
+        <div class="l06">hey</div>
+        <div class="l07">hey</div>
+        <div class="l08">hey</div>
+        <div class="l09">hey</div>
+        <div class="l010">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+        <div class="square">hey</div>
+    </div>
+-->           
     <div class="textbox" id="textbox">
         <p id="type1"></p>
         <p id="type2"></p>
@@ -1090,8 +1161,9 @@
         <button class="joyright" id="joyright"></button>
     </div>
     </div>
+</body>
     
-     <div class="mapper" id="mapper"></div>
+<div class="mapper" id="mapper"></div>
     <div class="dmapshadow"></div>
     <div class="dmap">
         <div class="loc" id="loc">
@@ -1100,8 +1172,6 @@
     <div class="cmap" id="duplicater0"></div>  
         </div>
     </div>
-    
-</body>
     
     
 <script>
@@ -1770,6 +1840,11 @@ $(window).on('load', () => {
     
     //detectswipe('swipeme',myfunction);                    important
     
+    window.setInterval(function() {
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome;
+    },200);
+
+    let col = 0;
     
 </script> <!--swipes misc-->
     
@@ -1829,7 +1904,8 @@ $(window).on('load', () => {
 </script> <!--animations-->
 
 <script>
-
+    
+    /* BONUS! Dpad functionality for mouse and touch */
 var isPressed = false;
 const removePressedAll = () => {
    document.querySelectorAll(".dpad-button").forEach(d => {
@@ -1909,12 +1985,6 @@ function duplicate() {
 }
     
 </script> <!--map-->
-    
-<script>
-    window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome + " room: " + roomrn + newx + "v" + newy;
-    },200);
-</script> <!--mission control-->
 
 <script>
     
