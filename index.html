@@ -585,6 +585,7 @@
         transition: 1s ease;
     }
 </style> <!--style layout-->
+    
 <style>
     .fade {
         position: fixed;
@@ -905,22 +906,6 @@
             <button class="introdone" id="introdone">></button>
             </div>
         </div>
-    
-        <!--  
-        <p id="tt1" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*3.7); right: calc(var(--grid-cell)*6);font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
-        <p id="tt2" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4.3); right: calc(var(--grid-cell)*1);">Use the direction controls</p>
-        <p id="tt3" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%; bottom: calc(var(--grid-cell)*4); right: calc(var(--grid-cell)*1);">to move inside each room</p>
-            
-           
-        <p id="tt4" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;margin-left:calc(var(--grid-cell)*-.6);margin-top:calc(var(--grid-cell)*-2);">?</p>
-            
-        <p id="tt5" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;margin-top:calc(var(--grid-cell)*-2);">Use the map direction controls</p>
-        <p id="tt6" class="tutorial" style="pointer-events: none;transition: 1s;opacity: 0%;margin-top:calc(var(--grid-cell)*-1.7);">to dash between rooms</p>
-        
-           
-        <p id="tt7" class="tutorial" style="top:calc(var(--grid-cell)*2); right: calc(var(--grid-cell)*6.35); pointer-events: none;transition: 1s;opacity: 0%;font-size: calc(var(--pixel-size)*8);color: #4dffd3;">?</p>
-        <p id="tt8" class="tutorial" style="top:calc(var(--grid-cell)*2.5); right: calc(var(--grid-cell)*1.5); pointer-events: none;transition: 1s;opacity: 0%;">Adjust your settings here</p>
--->
             
         <div class="blocker" id="blocker"></div>
             
@@ -954,65 +939,9 @@
     <div class="plus" style="top: calc(var(--grid-cell)*-10)"></div>
     <div class="plus" style="bottom: calc(var(--grid-cell)*-10)"></div>
     </div> 
-<!--
-    <div class="grid" id="grid">
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-    </div>
-    </div>
-        -->    
+         
     </div>      
- <!--   <div class="layout" id="layout">
-        <div class="square">hey</div>
-        <div class="l00">hey</div>
-        <div class="l01">hey</div>
-        <div class="l02">hey</div>
-        <div class="l03">hey</div>
-        <div class="l04">hey</div>
-        <div class="l05">hey</div>
-        <div class="l06">hey</div>
-        <div class="l07">hey</div>
-        <div class="l08">hey</div>
-        <div class="l09">hey</div>
-        <div class="l010">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-        <div class="square">hey</div>
-    </div>
--->           
+           
     <div class="textbox" id="textbox">
         <p id="type1"></p>
         <p id="type2"></p>
@@ -1825,6 +1754,7 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
 </script> <!--dpad compatability-->
     
 <script>
+    var biome = "dungeon";
     var i = 0;
 
     $('.dpad').click(function() {
@@ -1832,6 +1762,20 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         document.getElementById("duplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
         document.getElementById("loc").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-5),calc(var(--pixel-size)*${ycord}*-5),0)`;
         document.getElementById("mmb").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
+        if (biome == "desert") {
+        document.getElementById("duplicater" + i).style.background = "#fae769";
+        } else if (biome == "water") {
+        document.getElementById("duplicater" + i).style.background = "#5ea1ff";
+        } else if (biome == "lava") {
+        document.getElementById("duplicater" + i).style.background = "#ff735e";
+        } else if (biome == "dungeon") {
+        document.getElementById("duplicater" + i).style.background = "#676180";
+            setTimeout(function() {
+             if (roomrn.includes("dungeon1")) {
+                 document.getElementById("duplicater" + i).style.background = "#a463ff";
+             }
+            },100);
+        }
     });
     
 function duplicate() {
@@ -1854,7 +1798,7 @@ function duplicate() {
     
     
     var vaseroom = 'url("dungeon2.png")';
-    var baseroom = 'url("dungeon.png")';
+    var baseroom = 'url("dungeon1.png")';
     var rock1 = 'url("dungeon3.png")';
     var rock2 = 'url("dungeon4.png")';
     var rock3 = 'url("dungeon5.png")';
@@ -1863,11 +1807,11 @@ function duplicate() {
     
     var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5];
     
-    var saved = ["0c0zurl(dungeon.png)"];
+    var saved = ["0c0zurl(dungeon1.png)"];
     
     var index, value, result;
     
-    var roomrn = 'url("dungeon.png")';
+    var roomrn = 'url("dungeon1.png")';
     
     var roomcount = 0;
     
@@ -1968,6 +1912,8 @@ function duplicate() {
                 detect();
             }
         }
+        
+        //if (roomrn.indexOf("dungeon3") >-1)
         if (roomrn.includes('dungeon3')) {
             walls = ["-2,0","-1,0","0,0","1,0","2,0","0,-1","0,-2","0,1","0,2"];
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
