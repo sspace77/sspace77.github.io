@@ -2188,23 +2188,7 @@ function duplicate() {
     }
     
     walls = [];
-    hit = 0;
     
-    window.setInterval(function() {
-        if (hit == 1) {
-            detect();
-            hit = 0;
-            /*icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
-            shadow.left = `calc(var(--grid-cell)*${xaxis})`;*/
-            icon.style.backgroundPosition = "100%";
-            setTimeout(function() {
-                 icon.style.backgroundPosition = "0%";      
-            },500);
-        }
-    },200);
-    
-
-
     $('.joystick').click(function() {
         
         if ((walls.indexOf(xaxis + "," + yaxis))>-1){
