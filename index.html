@@ -1867,7 +1867,7 @@ function duplicate() {
     
     var index, value, result;
     
-    var roomrn;
+    var roomrn = 'url("dungeon.png")';
     
     var roomcount = 0;
     
@@ -1962,13 +1962,13 @@ function duplicate() {
     }
 
     $('.joystick').click(function() {
-        if (roomrn == 'url("dungeon2.png")') {
+        if (roomrn.includes('url("dungeon2.png")')) {
             walls = ["0,2","-1,-3","0,-3","-1,0","-1,-1","-2,-1"];
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
                 detect();
             }
         }
-        if (roomrn == 'url("dungeon3.png")') {
+        if (roomrn.includes('url("dungeon3.png")')) {
             walls = ["-2,0","-1,0","0,0","1,0","2,0","0,-1","0,-2","0,1","0,2"];
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
                 detect();
