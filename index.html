@@ -2065,7 +2065,9 @@ function duplicate() {
             
             if (roomrn == 'url("dungeonx.png")') {
                 document.getElementById("spike").style.display = "block";
-                document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
+                    document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
             } else {
                 document.getElementById("spike").style.display = "none";
                 document.getElementById("spikeshadow").style.display = "none";
@@ -2094,7 +2096,9 @@ function duplicate() {
                 document.getElementById("spikeshadow").style.display = "none";
             } else {
                 document.getElementById("spike").style.display = "block";
-                document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
+                    document.getElementById("spikeshadow").style.display = "block";
+                document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
             }
             
         }
@@ -2214,10 +2218,12 @@ function duplicate() {
             document.getElementById("spike").style.transform = "translate(calc(var(--grid-cell)*4), calc(var(--grid-cell)*4)) scaleX(1)";
         }
 
+            /*
                     document.getElementById("spike").style.display = "block";
                 document.getElementById("spike").style.left = `calc(var(--grid-cell)*${rng})`;
                     document.getElementById("spikeshadow").style.display = "block";
                 document.getElementById("spikeshadow").style.left = `calc(var(--grid-cell)*${rng})`;
+                */
                 walls = [(rng + ',0')];
             
             warningwalls = [(rng+2 + ',0'),(rng-2 + ',0'),(rng + ',2'),(rng + ',-2'),(rng+2 + ',2'),(rng+2 + ',-2'),(rng-2 + ',-2'),(rng-2 + ',2'),(rng+2 + ',1'),(rng-2 + ',1'),(rng+2 + ',-1'),(rng-2 + ',-1')];
@@ -2248,6 +2254,7 @@ function duplicate() {
             document.getElementById("spike").style.display = "none";
             document.getElementById("spikeshadow").style.display = "none";
         }
+        
         if (roomrn == 'url("dungeonlava.png")') {
             walls = ["-2,0","-1,0","0,0","1,0","2,0","0,-1","0,-2","0,1","0,2"];
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
