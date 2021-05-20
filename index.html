@@ -879,6 +879,16 @@
     <img class="anim" style="left:calc(var(--grid-cell)*42);">
     </div>
     
+    <div id= "error" style="text-align: center;width: 50%;display:none;">
+        
+    <P style="font-size: calc(var(--pixel-size)*4);color: #fff; text-align: center;z-index:41;position:fixed;mix-blend-mode: exclusion;">An internal error has been detected</P>
+    
+    <P style="font-size: calc(var(--pixel-size)*4);color: #fff; text-align: center;z-index:41;position:fixed;margin-top:calc(var(--grid-cell)*1.5);mix-blend-mode: exclusion;">Please refresh the page</P>
+    
+    <div style="z-index: 40; position: fixed; color: #000; text-align: center;background: linear-gradient(#426cf5,#7c3ef0,#f03e5f,#7c3ef0,#426cf5);top: 0;bottom:0;left:0;right:0;animation: hues 10s infinite;">
+    </div>
+    </div>
+    
     <div class="main" id="main">
         
         <div class="resize" id="resize">
@@ -1544,6 +1554,7 @@ $(window).on('load', () => {
     var xcord = 0;
     var ycord = 0;
     
+/*
     function detectswipe(el,func) {
       swipe_det = new Object();
       swipe_det.sX = 0;
@@ -1586,12 +1597,14 @@ $(window).on('load', () => {
       },false);  
     }
     
+    */
+    
     var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
     
     //var map = document.getElementById("grid");
     var map = document.getElementById("plus");
         
-    
+    /*
     function myfunction(el,d) {
         
         //alert("you swiped on element with id '"+el+"' to "+d+" direction");
@@ -1642,6 +1655,8 @@ $(window).on('load', () => {
         map.style.transition = "none";
         
     }
+    
+    */
 
     
     //detectswipe('swipeme',myfunction);                    important
@@ -1797,7 +1812,8 @@ function duplicate() {
     
     var plus = document.getElementById("plus");
     
-    var rng = (Math.round(Math.random() * 10)+5);
+    var rngfive = (Math.round(Math.random() * 1)+5);
+    var rng = Math.ceil(Math.random() * 1)*(Math.round(Math.random()) ? 1 : -1); //-1-1
     
     
     var vaseroom = 'url("dungeon2.png")';
@@ -1808,7 +1824,9 @@ function duplicate() {
     var rock4 = 'url("dungeon6.png")';
     var rock5 = 'url("dungeon7.png")';
     
-    var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5];
+    var mob1 = 'url("dungeon8.png")';
+    
+    var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1];
     
     var saved = ["0c0zurl(dungeon1.png)"];
     
@@ -1937,7 +1955,19 @@ function duplicate() {
                 detect();
             }
         }
+        
+        if (roomrn.includes('dungeon8')) {
+            walls = [rng+","+rng];
+            if ((walls.indexOf(xaxis + "," + yaxis))>-1){
+                detect();
+            }
+        }
     });
+    
+    window.onerror = function(error, url, line) {
+    //$('.alert').fadeIn();
+        document.getElementById("error").style.display = "block";
+};
     
     //biomes
     /*
@@ -1950,15 +1980,6 @@ function duplicate() {
        rooms = [baseroom];
    }
     },1000);
-    */
-     
-    
-    /*
-    window.setInterval(function() {
-    if (xcord==1 && ycord==0) {
-        plus.style.backgroundImage = "url('dungeon2.png')";
-    }
-    },200);
     */
     
 </script> <!--procedural gen and collisions-->
