@@ -373,11 +373,11 @@
         right: calc(var(--grid-cell)*1);
         background-image: url(gearfill.png);
         background-size: 100%;
-        z-index: 20;
+        z-index: 14;
         opacity: 30%;
         border: none;
         background-color: transparent;
-        transition: 1s;
+        transition: 1s ease;
     }
     .emit {
         position: absolute;
@@ -1341,6 +1341,7 @@
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         document.getElementById("helper").style.display = "block";
         document.getElementById("mapper").style.opacity = "100%";
+        document.getElementById("gear").style.opacity = "0%";
         },500);
         setTimeout(function() {
         document.getElementById("ttype1").style.animation = "typing 1s steps(35) forwards";
@@ -1367,6 +1368,7 @@
         },9000);
         setTimeout(function() {
             document.getElementById("ttype5").style.animation = "typing 1s steps(35) forwards";
+            document.getElementById("gear").style.opacity = "30%";
         },10000);
         setTimeout(function() {
             document.getElementById("ttype6").style.animation = "typing 1s steps(35) forwards";
@@ -1482,7 +1484,7 @@
         document.getElementById("splash").style.display = "block";
         document.getElementById("start").style.display = "block";
         document.getElementById("intro").style.display = "block";
-        document.getElementById("main").style.display = "block";
+        document.getElementById("main").style.display = "none";
         document.getElementById("copy").style.display = "block";
         document.getElementById("helper").style.display = "none";
         document.getElementById("vignette").style.animation = "none";
@@ -1495,6 +1497,7 @@
         document.getElementById("ttype6").style.animation = "none";
         document.getElementById("ttype7").style.animation = "none";
         document.getElementById("ttype8").style.animation = "none";
+        document.getElementById("gear").style.opacity = "0%";
         },500);
         setTimeout(function() {
         document.getElementById("fade").style.animation = "none";
