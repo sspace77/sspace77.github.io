@@ -614,6 +614,7 @@
         overflow: hidden;
         box-shadow: inset 0 0 calc(var(--grid-cell)*.5) calc(var(--grid-cell)*.4) #000;
         background: transparent;
+        pointer-events: none;
     }
     .dmap2 {
         width: calc(var(--grid-cell)*10);
@@ -624,11 +625,13 @@
         z-index: 16;
         overflow: hidden;
         background: rgb(0,0,0, .8);
+        pointer-events: none;
     }
     .loc2 {
         position: relative;
         top: calc(var(--grid-cell)*4.6);
         left: calc(var(--grid-cell)*4.6);
+        pointer-events: none;
     }
     .cmap2 {
         width: calc(var(--grid-cell)*1);
@@ -640,6 +643,7 @@
         position: fixed;
         z-index: 15;
         transition: .2s ease;
+        pointer-events: none;
     }
     .minimapborder2 {
         width: calc(var(--grid-cell)*1);
@@ -651,6 +655,7 @@
         z-index: 16;
         margin: calc(var(--grid-cell)*-.1);
         padding: calc(var(--grid-cell)*.05);
+        pointer-events: none;
     }
     .minimapstarter2 {
         width: calc(var(--grid-cell)*1);
@@ -658,6 +663,7 @@
         background: #fff;
         position: fixed;
         z-index: 16;
+        pointer-events: none;
     }
 
     .mp {
@@ -1521,41 +1527,43 @@
     });
     
 
-    document.getElementById("mapcover").style.display = "none";
-    document.getElementById("dmapshadow2").style.display = "none";
-    document.getElementById("dmap2").style.display = "none";
-    document.getElementById("dduplicater0").style.display = "none";
-    document.getElementById("dduplicater" + j).style.display = "none";
-    document.getElementById("loc2").style.display = "none";
-    document.getElementById("mmb2").style.display = "none";
-    document.getElementById("minimapstarter2").style.display = "none";
 
+    document.getElementById("mp").style.display = "block";
+    document.getElementById("mpreturn").style.display = "none";
+    document.getElementById("mapcover").style.opacity = "0%";
+    document.getElementById("dmapshadow2").style.opacity = "0%";
+    document.getElementById("dmap2").style.opacity = "0%";
+    document.getElementById("dduplicater0").style.opacity = "0%";
+    document.getElementById("dduplicater" + j).style.opacity = "0%";
+    document.getElementById("loc2").style.opacity = "0%";
+    document.getElementById("mmb2").style.opacity = "0%";
+    document.getElementById("minimapstarter2").style.opacity = "0%";
     
     $('.mp').click(function() {
-    document.getElementById("mapcover").style.display = "block";
     document.getElementById("mp").style.display = "none";
     document.getElementById("mpreturn").style.display = "block";
-    document.getElementById("dmapshadow2").style.display = "block";
-    document.getElementById("dmap2").style.display = "block";
-    document.getElementById("dduplicater0").style.display = "block";
-    document.getElementById("dduplicater" + j).style.display = "block";
-    document.getElementById("loc2").style.display = "block";
-    document.getElementById("mmb2").style.display = "block";
-    document.getElementById("minimapstarter2").style.display = "block";
+    document.getElementById("mapcover").style.opacity = "100%";
+    document.getElementById("dmapshadow2").style.opacity = "100%";
+    document.getElementById("dmap2").style.opacity = "100%";
+    document.getElementById("dduplicater0").style.opacity = "100%";
+    document.getElementById("dduplicater" + j).style.opacity = "100%";
+    document.getElementById("loc2").style.opacity = "100%";
+    document.getElementById("mmb2").style.opacity = "100%";
+    document.getElementById("minimapstarter2").style.opacity = "100%";
     });
     
     $('.mpreturn').click(function() {
-    document.getElementById("mapcover").style.display = "none";
     document.getElementById("mp").style.display = "block";
     document.getElementById("mpreturn").style.display = "none";
-    document.getElementById("dmapshadow2").style.display = "none";
-    document.getElementById("dmap2").style.display = "none";
-    document.getElementById("dduplicater0").style.display = "none";
-    document.getElementById("dduplicater" + j).style.display = "none";
-    document.getElementById("loc2").style.display = "none";
-    document.getElementById("mmb2").style.display = "none";
-    document.getElementById("minimapstarter2").style.display = "none";
-    });
+    document.getElementById("mapcover").style.opacity = "0%";
+    document.getElementById("dmapshadow2").style.opacity = "0%";
+    document.getElementById("dmap2").style.opacity = "0%";
+    document.getElementById("dduplicater0").style.opacity = "0%";
+    document.getElementById("dduplicater" + j).style.opacity = "0%";
+    document.getElementById("loc2").style.opacity = "0%";
+    document.getElementById("mmb2").style.opacity = "0%";
+    document.getElementById("minimapstarter2").style.opacity = "0%";
+    }); //make mapcover
         
 </script> <!--start button pause menu tutorial-->
   
@@ -1941,7 +1949,9 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         document.getElementById("duplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
         document.getElementById("loc").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-5),calc(var(--pixel-size)*${ycord}*-5),0)`;
         document.getElementById("mmb").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
+        setTimeout(function() {
         document.getElementById("duplicater" + i).style.backgroundImage = roomrn;
+        },20);
         /*
         if (biome == "desert") {
         document.getElementById("duplicater" + i).style.background = "#fae769";
@@ -1962,10 +1972,13 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
     
     $('.dpad').click(function() {
         twinduplicate();
-        document.getElementById("dduplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
+        document.getElementById("dduplicater" + j).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
         document.getElementById("loc2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-15),calc(var(--pixel-size)*${ycord}*-15),0)`;
         document.getElementById("mmb2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
-        document.getElementById("dduplicater" + i).style.backgroundImage = roomrn;
+        setTimeout(function() {
+        document.getElementById("dduplicater" + j).style.backgroundImage = roomrn;
+        document.getElementById("dduplicater" + j).style.opacity= "100%";
+        },50);
     });
     
 function duplicate() {
@@ -2006,7 +2019,9 @@ function twinduplicate() {
     
     var mob1 = 'url("dungeon8.png")';
     
-    var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1];
+    var sea1 = 'url("coast.png")';
+    
+    var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1,sea1];
     
     var saved = ["0c0zurl(dungeon1.png)"];
     
@@ -2081,7 +2096,25 @@ function twinduplicate() {
             if (roomrn != baseroom) {
                 removeA(rooms, roomrn);  //sets special rooms prevents re use
             }
+            
+            
+            if (roomrn.includes('coast.png')) {
+                if (facing == "up") {
+                if (saved.find(a =>a.includes(xcord + "c" + (ycord-1) + "z")) || saved.find(a =>a.includes((xcord+1) + "c" +(ycord-2) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord-2) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes(xcord + "c" +(ycord-3) + "z"))
+               ) {
+                return;
+            } else {
+                saved.push(xcord + "c" + (ycord-1) + "z" + (document.getElementById("plus").style.backgroundImage));
+                saved.push(xcord + "c" + (ycord-2) + "z" + (document.getElementById("plus").style.backgroundImage));
+                saved.push((xcord+1) + "c" + (ycord-2) + "z" + (document.getElementById("plus").style.backgroundImage));
+                saved.push((xcord-1) + "c" + (ycord-2) + "z" + (document.getElementById("plus").style.backgroundImage));
+                saved.push((xcord+1) + "c" + (ycord-1) + "z" + (document.getElementById("plus").style.backgroundImage));
+                saved.push((xcord-1) + "c" + (ycord-1) + "z" + (document.getElementById("plus").style.backgroundImage));
+                saved.push(xcord + "c" + (ycord-3) + "z" + (document.getElementById("plus").style.backgroundImage));
+                }
+            }
         }
+    }
         
         consoler();
         /*
@@ -2095,6 +2128,7 @@ function twinduplicate() {
             }
         }*/    
     });
+        
     
     console.log('%c Copyright 2021 — All Rights Reserved', 'background: #ff3863; color: #fff; border-radius: 5%;');
     /*
