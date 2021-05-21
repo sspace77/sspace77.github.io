@@ -1666,7 +1666,7 @@ $(window).on('load', () => {
     //detectswipe('swipeme',myfunction);                    important
     
     window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: ";
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome;
     },200);
 
     let col = 0;
@@ -1784,7 +1784,9 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         document.getElementById("duplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
         document.getElementById("loc").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-5),calc(var(--pixel-size)*${ycord}*-5),0)`;
         document.getElementById("mmb").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
-        document.getElementById("duplicater" + i).style.backgroundImage = roomrn;
+        setTimeout(function() {
+            document.getElementById("duplicater" + i).style.backgroundImage = roomrn;
+        },100);
         /*
         if (biome == "desert") {
         document.getElementById("duplicater" + i).style.background = "#fae769";
@@ -1833,7 +1835,66 @@ function duplicate() {
     
     var mob1 = 'url("dungeon8.png")';
     
+    var sea1 = 'url("coast.png")';
+    var tree1 = 'url("jungle.png")';
+    
+    var biomes = ["dungeon", "coral", "jungle"];
+    
+    /*
+    
+    var biomes2 = ["dungeoncoral", "dungeonjungle"];
+    
+    var firstfade = biomes2[Math.floor(Math.random() * biomes2.length)];
+    
+    var firstbiome = biomes[Math.floor(Math.random() * biomes.length)];
+    var secondbiome = biomes[Math.floor(Math.random() * biomes.length)];
+    
+    
+    
+    $('.dpad').click(function() {
+        if (xcord >= -3 && xcord <= 3 && ycord >= -3 && ycord <= 3) {
+            biome = "dungeon";
+            rooms = dungeonrooms;
+        } else {
+            dungeonrooms.push(rooms);
+        }
+        
+        if (ycord <= -3) {
+            biome = firstfade;
+        }
+        if (ycord <= -6) {
+            if (firstfade == "dungeoncoral") {
+            biome = "coral";
+            } else
+            if (firstfade == "dungeonjungle") {
+            biome = "jungle";
+            }
+        }
+        
+        
+        if (biome == "dungeoncoral") {
+            rooms = [baseroom, sea1];
+        }
+        if (biome == "dungeonjungle") {
+            rooms = [baseroom, tree1];
+        }
+        if (biome == "coral") {
+            rooms = [sea1];
+        }
+        if (biome == "jungle") {
+            rooms = [tree1];
+        }
+        /*
+        if (biome == "dungeon") {
+            rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1];
+        }
+        
+    });
+    */
+    
+    
     var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1];
+
     
     var saved = ["0c0zurl(dungeon1.png)"];
     
