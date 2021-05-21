@@ -375,7 +375,7 @@
         right: calc(var(--grid-cell)*1);
         background-image: url(gearfill.png);
         background-size: 100%;
-        z-index: 14;
+        z-index: 14; /*22?*/
         opacity: 30%;
         border: none;
         background-color: transparent;
@@ -693,7 +693,29 @@
     }
     
 </style> <!--style layout-->
-    
+   
+<style>
+    .settings {
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+        position: fixed;
+        z-index: 26;
+        overflow: hidden;
+        background: rgb(0,0,0, .8);
+    }
+    .option1 {
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*1);
+        color: #fff;
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*4);
+        background: #000;
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+    }
+</style> <!--settings-->
 <style>
     .fade {
         position: fixed;
@@ -1032,6 +1054,32 @@
         </div>
         
         <button class="gear" id="gear"></button>
+        <div class="settings" id="settings">
+        <div style="padding: calc(var(--grid-cell)*.625);padding-top: calc(var(--grid-cell)*1);">
+        <button class="option1" id="set1">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.625);">
+        <button class="option1" id="set1">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.625);">
+        <button class="option1" id="set1">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.625);">
+        <button class="option1" id="set1">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        <button class="option1" id="set2">hey</button>
+        </div>
+        </div>
         
         <button class="mp" id="mp"></button>
         <button class="mpreturn" id="mpreturn"></button>
@@ -1524,12 +1572,17 @@
     });
     
     $('.gear').click(function() {
+        document.getElementById("mapcover").style.pointerEvents = "all";
+        document.getElementById("mapcover").style.opacity = "100%";
+        document.getElementById("settings").style.display = "block";
         document.getElementById("gear").style.backgroundImage = "url(gear.png)";
         document.getElementById("gear").style.opacity = "100%";
     });
     
 
 
+    document.getElementById("settings").style.display = "none";
+    
     document.getElementById("mp").style.display = "block";
     document.getElementById("mpreturn").style.display = "none";
     document.getElementById("mapcover").style.opacity = "0%";
@@ -1555,6 +1608,10 @@
     });
     
     $('.mapcover').click(function() {
+    document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
+    document.getElementById("gear").style.opacity = "30%";
+    document.getElementById("settings").style.display = "none";
+        
     document.getElementById("mapcover").style.pointerEvents = "none";
     document.getElementById("mp").style.display = "block";
     document.getElementById("mapcover").style.opacity = "0%";
