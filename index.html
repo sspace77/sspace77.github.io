@@ -107,6 +107,17 @@
         pointer-events: none;
         transition: .2s;
     }
+    .mapcover {
+        position: fixed;
+        z-index: 21;
+        width: calc(var(--grid-cell)*10.2);
+        height: calc(var(--grid-cell)*10.2);
+        border: #000 solid;
+        border-width: calc(var(--grid-cell)*49.9);
+        margin: calc(var(--grid-cell)*-50);
+        pointer-events: none;
+        transition: .2s;
+    }
     @keyframes shift {
         0% {
             opacity: 0%;
@@ -144,6 +155,8 @@
         height: calc(var(--grid-cell)*10);
         box-shadow: inset 0 0 calc(var(--grid-cell)*5) #000;
         pointer-events: none;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000;
+        transition: .5s ease;
     }
     .lens {
         position: relative;
@@ -517,6 +530,7 @@
         opacity: 40%;
         text-shadow: 0 0 calc(var(--pixel-size)*3) #000;
     }
+
     .dmapshadow {
         top: calc(var(--grid-cell)*1);
         left: calc(var(--grid-cell)*1);
@@ -540,6 +554,7 @@
         position: fixed;
         z-index: 16;
         overflow: hidden;
+        background: rgb(0,0,0, .8);
     }
     .loc {
         position: relative;
@@ -588,6 +603,87 @@
         opacity: 100%;
         transition: 1s ease;
     }
+    
+    .dmapshadow2 {
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: transparent solid;
+        border-width: calc(var(--grid-cell)*.1);
+        position: fixed;
+        z-index: 17;
+        overflow: hidden;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*.5) calc(var(--grid-cell)*.4) #000;
+        background: transparent;
+    }
+    .dmap2 {
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+        position: fixed;
+        z-index: 16;
+        overflow: hidden;
+        background: rgb(0,0,0, .8);
+    }
+    .loc2 {
+        position: relative;
+        top: calc(var(--grid-cell)*4.6);
+        left: calc(var(--grid-cell)*4.6);
+    }
+    .cmap2 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background: #707070;
+        background-size: 100%;
+        /*border: #fff solid;
+        border-width: calc(var(--grid-cell)*.05);*/
+        position: fixed;
+        z-index: 15;
+        transition: .2s ease;
+    }
+    .minimapborder2 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background: transparent;
+        border: rgb(255,255,255, .5) solid;
+        border-width: calc(var(--grid-cell)*.05);
+        position: fixed;
+        z-index: 16;
+        margin: calc(var(--grid-cell)*-.1);
+        padding: calc(var(--grid-cell)*.05);
+    }
+    .minimapstarter2 {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background: #fff;
+        position: fixed;
+        z-index: 16;
+    }
+
+    .mp {
+        position: fixed;
+        width: calc(var(--grid-cell)*3.2);
+        height: calc(var(--grid-cell)*3.2);
+        z-index: 18;
+        background: transparent;
+        top: calc(var(--grid-cell)*1);
+        left: calc(var(--grid-cell)*1);
+        border: none;
+    }
+    .mpreturn {
+        position: fixed;
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        z-index: 22;
+        background-image: url(lb.png);
+        background-size: 100%;
+        background-color: transparent;
+        top: calc(var(--grid-cell)*3);
+        left: calc(var(--grid-cell)*3);
+        border: none;
+        display: none;
+    }
+    
 </style> <!--style layout-->
     
 <style>
@@ -928,17 +1024,20 @@
         </div>
         
         <button class="gear" id="gear"></button>
+        
+        <button class="mp" id="mp"></button>
+        <button class="mpreturn" id="mpreturn"></button>
  
-
+<!--
     <div id='swipeme'>
 </div>
+-->
+        
+        <div class="mapcover" id="mapcover"></div>
         
         <div class="cover" id="cover"></div>
         
-    <div class="shaded">
-        <div class="shaded"></div>
-        <div class="shaded"></div>
-    </div>
+    <div class="shaded" id="shaded"></div>
         
  <div class="cords" id="cords">hey</div> 
         
@@ -983,15 +1082,25 @@
     </div>
 </body>
     
+    <div class="dmapshadow2" id="dmapshadow2"></div>
+    <div class="dmap2" id="dmap2">
+        <div class="loc2" id="loc2">
+        <div class="minimapstarter2" id="minimapstarter2"></div>
+        <div class="minimapborder2" id="mmb2"></div>
+    <div class="cmap2" id="dduplicater0"></div>  
+        </div>
+    </div>
+    
 <div class="mapper" id="mapper"></div>
-    <div class="dmapshadow"></div>
-    <div class="dmap">
+    <div class="dmapshadow" id="dmapshadow"></div>
+    <div class="dmap" id="dmap">
         <div class="loc" id="loc">
-        <div class="minimapstarter"></div>
+        <div class="minimapstarter" id="minimapstarter"></div>
         <div class="minimapborder" id="mmb"></div>
     <div class="cmap" id="duplicater0"></div>  
         </div>
     </div>
+    
     
     
 <script>
@@ -1193,6 +1302,8 @@
 <script>
     
     var started = false;
+    
+    var j = 0;
 
     
     $('.start').click(function() {
@@ -1210,11 +1321,14 @@
         document.getElementById("joystick").style.opacity = "100%";
         document.getElementById("joystick").style.pointerEvents = "all";
         document.getElementById("mapper").style.opacity = "0%";
+        document.getElementById("mapper").style.display = "none";
+        document.getElementById("mp").style.display = "block";
         },500);
     });
     
     $('.intro').click(function() {
         started = true;
+        document.getElementById("mp").style.display = "none";
         document.getElementById("joystick").style.opacity = "0%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
@@ -1401,6 +1515,44 @@
         document.getElementById("gear").style.backgroundImage = "url(gear.png)";
         document.getElementById("gear").style.opacity = "100%";
     });
+    
+
+    document.getElementById("mapcover").style.display = "none";
+    document.getElementById("dmapshadow2").style.display = "none";
+    document.getElementById("dmap2").style.display = "none";
+    document.getElementById("dduplicater0").style.display = "none";
+    document.getElementById("dduplicater" + j).style.display = "none";
+    document.getElementById("loc2").style.display = "none";
+    document.getElementById("mmb2").style.display = "none";
+    document.getElementById("minimapstarter2").style.display = "none";
+
+    
+    $('.mp').click(function() {
+    document.getElementById("mapcover").style.display = "block";
+    document.getElementById("mp").style.display = "none";
+    document.getElementById("mpreturn").style.display = "block";
+    document.getElementById("dmapshadow2").style.display = "block";
+    document.getElementById("dmap2").style.display = "block";
+    document.getElementById("dduplicater0").style.display = "block";
+    document.getElementById("dduplicater" + j).style.display = "block";
+    document.getElementById("loc2").style.display = "block";
+    document.getElementById("mmb2").style.display = "block";
+    document.getElementById("minimapstarter2").style.display = "block";
+    });
+    
+    $('.mpreturn').click(function() {
+    document.getElementById("mapcover").style.display = "none";
+    document.getElementById("mp").style.display = "block";
+    document.getElementById("mpreturn").style.display = "none";
+    document.getElementById("dmapshadow2").style.display = "none";
+    document.getElementById("dmap2").style.display = "none";
+    document.getElementById("dduplicater0").style.display = "none";
+    document.getElementById("dduplicater" + j).style.display = "none";
+    document.getElementById("loc2").style.display = "none";
+    document.getElementById("mmb2").style.display = "none";
+    document.getElementById("minimapstarter2").style.display = "none";
+    });
+        
 </script> <!--start button pause menu tutorial-->
   
 <script>
@@ -1666,7 +1818,7 @@ $(window).on('load', () => {
     //detectswipe('swipeme',myfunction);                    important
     
     window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + biome;
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: ";
     },200);
 
     let col = 0;
@@ -1778,15 +1930,14 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
 <script>
     var biome = "dungeon";
     var i = 0;
+    
 
     $('.dpad').click(function() {
         duplicate();
         document.getElementById("duplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
         document.getElementById("loc").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-5),calc(var(--pixel-size)*${ycord}*-5),0)`;
         document.getElementById("mmb").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*5),calc(var(--pixel-size)*${ycord}*5),0)`;
-        setTimeout(function() {
-            document.getElementById("duplicater" + i).style.backgroundImage = roomrn;
-        },100);
+        document.getElementById("duplicater" + i).style.backgroundImage = roomrn;
         /*
         if (biome == "desert") {
         document.getElementById("duplicater" + i).style.background = "#fae769";
@@ -1805,12 +1956,28 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         */
     });
     
+    $('.dpad').click(function() {
+        twinduplicate();
+        document.getElementById("dduplicater" + i).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
+        document.getElementById("loc2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-15),calc(var(--pixel-size)*${ycord}*-15),0)`;
+        document.getElementById("mmb2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
+        document.getElementById("dduplicater" + i).style.backgroundImage = roomrn;
+    });
+    
 function duplicate() {
     var original = document.getElementById('duplicater' + i);
     var clone = original.cloneNode(true); // "deep" clone
    clone.id = "duplicater" + ++i; // there can only be one element with an ID
     clone.onclick = duplicate; // event handlers are not cloned
     original.parentNode.appendChild(clone);
+}
+    
+function twinduplicate() {
+    var originaly = document.getElementById('dduplicater' + j);
+    var cloney = originaly.cloneNode(true); // "deep" clone
+   cloney.id = "dduplicater" + ++j; // there can only be one element with an ID
+    cloney.onclick = twinduplicate; // event handlers are not cloned
+    originaly.parentNode.appendChild(cloney);
 }
     
 </script> <!--map-->
@@ -1835,66 +2002,7 @@ function duplicate() {
     
     var mob1 = 'url("dungeon8.png")';
     
-    var sea1 = 'url("coast.png")';
-    var tree1 = 'url("jungle.png")';
-    
-    var biomes = ["dungeon", "coral", "jungle"];
-    
-    /*
-    
-    var biomes2 = ["dungeoncoral", "dungeonjungle"];
-    
-    var firstfade = biomes2[Math.floor(Math.random() * biomes2.length)];
-    
-    var firstbiome = biomes[Math.floor(Math.random() * biomes.length)];
-    var secondbiome = biomes[Math.floor(Math.random() * biomes.length)];
-    
-    
-    
-    $('.dpad').click(function() {
-        if (xcord >= -3 && xcord <= 3 && ycord >= -3 && ycord <= 3) {
-            biome = "dungeon";
-            rooms = dungeonrooms;
-        } else {
-            dungeonrooms.push(rooms);
-        }
-        
-        if (ycord <= -3) {
-            biome = firstfade;
-        }
-        if (ycord <= -6) {
-            if (firstfade == "dungeoncoral") {
-            biome = "coral";
-            } else
-            if (firstfade == "dungeonjungle") {
-            biome = "jungle";
-            }
-        }
-        
-        
-        if (biome == "dungeoncoral") {
-            rooms = [baseroom, sea1];
-        }
-        if (biome == "dungeonjungle") {
-            rooms = [baseroom, tree1];
-        }
-        if (biome == "coral") {
-            rooms = [sea1];
-        }
-        if (biome == "jungle") {
-            rooms = [tree1];
-        }
-        /*
-        if (biome == "dungeon") {
-            rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1];
-        }
-        
-    });
-    */
-    
-    
     var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1];
-
     
     var saved = ["0c0zurl(dungeon1.png)"];
     
@@ -1919,6 +2027,12 @@ function duplicate() {
     //dash to new room
     
     $('.dpad').click(function() {
+        
+        document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
+        
+        setTimeout(function() {
+            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
+        },500);
     
         /*
         for (index = 0; index < saved.length; ++index) {
