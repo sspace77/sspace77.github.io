@@ -707,12 +707,43 @@
         overflow: hidden;
         background: rgb(0,0,0, .8);
     }
-    .option1 {
+    .sub {
         width: calc(var(--grid-cell)*2);
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: pixel;
         font-size: calc(var(--pixel-size)*4);
+        background:transparent;
+        border: none;
+    }
+    .option1 {
+        width: calc(var(--grid-cell)*2);
+        height: calc(var(--grid-cell)*1);
+        color: #fff;
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+    }
+    .option2 {
+        width: calc(var(--grid-cell)*2.5);
+        height: calc(var(--grid-cell)*1);
+        color: #fff;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        border: rgb(255,255,255, .4) solid;
+        border-width: calc(var(--grid-cell)*.1);
+        margin-left: calc(var(--grid-cell)*.1);
+        margin-right: calc(var(--grid-cell)*.1);
+    }
+    .option3 {
+        width: calc(var(--grid-cell)*4);
+        height: calc(var(--grid-cell)*1);
+        color: #fff;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
         background: #000;
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
@@ -1057,29 +1088,39 @@
         
         <button class="gear" id="gear"></button>
         <div class="settings" id="settings">
-        <div style="padding: calc(var(--grid-cell)*.625);padding-top: calc(var(--grid-cell)*1);">
-        <button class="option1" id="set1">hey</button>
+        <p style="color: #fff; text-align: center; padding:calc(var(--grid-cell)*.2);font-family: boldpixel;opacity: 30%;font-size:calc(var(--pixel-size)*4);">Settings</p>
+        <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
+        <button class="option2" id="set2">Main Menu</button>
+        <button class="option2" id="set2">Restart</button>
+        <button class="option2" id="set2">Reset</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);"> <!--.625-->
+        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Size:</button>
+        <button class="option1" id="set2">Low</button>
+        <button class="option1" id="set2">Medium</button>
+        <button class="option1" id="set2">High</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
+        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Display:</button>
+        <button class="option1" id="set2">Left</button>
+        <button class="option1" id="set2">Center</button>
+        <button class="option1" id="set2">Right</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
+        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Controls:</button>
         <button class="option1" id="set2">hey</button>
         <button class="option1" id="set2">hey</button>
         <button class="option1" id="set2">hey</button>
         </div>
-        <div style="padding: calc(var(--grid-cell)*.625);">
-        <button class="option1" id="set1">hey</button>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
+        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Controls:</button>
         <button class="option1" id="set2">hey</button>
         <button class="option1" id="set2">hey</button>
         <button class="option1" id="set2">hey</button>
         </div>
-        <div style="padding: calc(var(--grid-cell)*.625);">
-        <button class="option1" id="set1">hey</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
-        </div>
-        <div style="padding: calc(var(--grid-cell)*.625);">
-        <button class="option1" id="set1">hey</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.85);">
+        <button class="option3" id="set2">Hide Controls</button>
+        <button class="option3" id="set2">Restore Options</button>
         </div>
         </div>
         
