@@ -38,11 +38,18 @@
         }
     }
     */
-    @media (max-width: 700px) {
+    @media (max-width: 500px) {
         :root {
-            --pixel-size: 2px;
+            --pixel-size: 1.5px;
         }
     }
+    
+    @media (min-width: 1400px) {
+        :root {
+            --pixel-size: 3px;
+        }
+    }
+    
     @font-face {
         font-family: "pixel";
         src: url("/dogica.otf");
@@ -1588,8 +1595,7 @@
     document.getElementById("mapcover").style.opacity = "0%";
     document.getElementById("dmapshadow2").style.opacity = "0%";
     document.getElementById("dmap2").style.opacity = "0%";
-    document.getElementById("dduplicater0").style.opacity = "0%";
-    document.getElementById("dduplicater" + j).style.opacity = "0%";
+
     document.getElementById("loc2").style.opacity = "0%";
     document.getElementById("mmb2").style.opacity = "0%";
     document.getElementById("minimapstarter2").style.opacity = "0%";
@@ -1600,8 +1606,7 @@
     document.getElementById("mapcover").style.opacity = "100%";
     document.getElementById("dmapshadow2").style.opacity = "100%";
     document.getElementById("dmap2").style.opacity = "100%";
-    document.getElementById("dduplicater0").style.opacity = "100%";
-    document.getElementById("dduplicater" + j).style.opacity = "100%";
+
     document.getElementById("loc2").style.opacity = "100%";
     document.getElementById("mmb2").style.opacity = "100%";
     document.getElementById("minimapstarter2").style.opacity = "100%";
@@ -1617,8 +1622,7 @@
     document.getElementById("mapcover").style.opacity = "0%";
     document.getElementById("dmapshadow2").style.opacity = "0%";
     document.getElementById("dmap2").style.opacity = "0%";
-    document.getElementById("dduplicater0").style.opacity = "0%";
-    document.getElementById("dduplicater" + j).style.opacity = "0%";
+
     document.getElementById("loc2").style.opacity = "0%";
     document.getElementById("mmb2").style.opacity = "0%";
     document.getElementById("minimapstarter2").style.opacity = "0%";
@@ -2037,7 +2041,7 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
         setTimeout(function() {
         document.getElementById("dduplicater" + j).style.backgroundImage = roomrn;
         document.getElementById("dduplicater" + j).style.opacity= "100%";
-        },50);
+        },100);
     });
     
 function duplicate() {
