@@ -699,20 +699,22 @@
 <style>
     .settings {
         width: calc(var(--grid-cell)*10);
-        height: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*12);
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
         position: fixed;
         z-index: 26;
         overflow: hidden;
-        background: rgb(0,0,0, .8);
+        background: rgb(0,0,0,1);
+        margin-top: calc(var(--grid-cell)*-1);
     }
     .sub {
         width: calc(var(--grid-cell)*2);
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: pixel;
-        font-size: calc(var(--pixel-size)*4);
+        font-size: calc(var(--pixel-size)*3.5);
+        margin-right: calc(var(--pixel-size)*3);
         background:transparent;
         border: none;
     }
@@ -743,6 +745,27 @@
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        background-size: 100%;
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+    }
+    .option4 {
+        width: calc(var(--grid-cell)*2.875);
+        height: calc(var(--grid-cell)*1);
+        color: #fff;
+        font-family: pixel;
+        font-size: calc(var(--pixel-size)*3);
+        background: #000;
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+    }
+    .option5 {
+        width: calc(var(--grid-cell)*8.75);
+        height: calc(var(--grid-cell)*1);
+        color: #fff;
+        font-family: pixel;
         font-size: calc(var(--pixel-size)*3);
         background: #000;
         border: rgb(255,255,255, .2) solid;
@@ -1088,39 +1111,47 @@
         
         <button class="gear" id="gear"></button>
         <div class="settings" id="settings">
-        <p style="color: #fff; text-align: center; padding:calc(var(--grid-cell)*.2);font-family: boldpixel;opacity: 30%;font-size:calc(var(--pixel-size)*4);">Settings</p>
+        <p style="color: #fff; text-align: center; padding:calc(var(--grid-cell)*.1);font-family: boldpixel;opacity: 30%;font-size:calc(var(--pixel-size)*5);">Options</p>
         <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
-        <button class="option2" id="set2">Main Menu</button>
+        <button class="option5" id="set2" style="border-color: rgb(255,255,255,.6);font-size: calc(var(--pixel-size)*4)">Quit to Title</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
         <button class="option2" id="set2">Restart</button>
         <button class="option2" id="set2">Reset</button>
+        <button class="option2" id="set2">Fullscreen</button>
+        </div>
+        <div style="padding-left: calc(var(--grid-cell)*7.5);margin-bottom:calc(var(--grid-cell)*-1.15);"> 
+        <button class="option1" id="scalerauto" >Auto</button> <!--default-->
         </div>
         <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);"> <!--.625-->
-        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Size:</button>
+        <button class="sub" id="set1" style="width:calc(var(--pixel-size)*60);font-size:calc(var(--pixel-size)*4);font-family: boldpixel;">Adjust Scale:</button>
+        <button class="option1" id="scalerdown" style="height:20px;width:calc(var(--pixel-size)*20);border:none; font-size: calc(var(--pixel-size)*8);">-</button>
+        <button class="option1" id="scalerup" style="height:20px;width:calc(var(--pixel-size)*20);border: none;font-size: calc(var(--pixel-size)*8);">+</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
+
+        <button class="option4" id="set2">Visibility</button>
+        <button class="option4" id="set2">Perspective</button>
+        <button class="option4" id="set2">Disable Map</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
+        <button class="sub" id="set1" style="font-family: boldpixel;">Graphics:</button>
         <button class="option1" id="set2">Low</button>
-        <button class="option1" id="set2">Medium</button>
+        <button class="option1" id="set2" style="border-color: rgb(255,255,255, 1)">Medium</button>
         <button class="option1" id="set2">High</button>
         </div>
-        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
-        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Display:</button>
-        <button class="option1" id="set2">Left</button>
-        <button class="option1" id="set2">Center</button>
-        <button class="option1" id="set2">Right</button>
-        </div>
-        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
-        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Controls:</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
-        </div>
-        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
-        <button class="sub" id="set1" style="margin-right: calc(var(--grid-cell)*.4);margin-left: calc(var(--grid-cell)*-.4);font-family: boldpixel;">Controls:</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
-        <button class="option1" id="set2">hey</button>
+        <div style="padding: calc(var(--grid-cell)*.1);padding-left: calc(var(--grid-cell)*.5);">
+        <button class="sub" id="set1" style="font-family: boldpixel;">Controls:</button>
+        <button class="option1" id="l-control">Left</button>
+        <button class="option1" id="c-control">Center</button>
+        <button class="option1" id="r-control" style="border-color: rgb(255,255,255, 1)">Right</button>
         </div>
         <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.85);">
-        <button class="option3" id="set2">Hide Controls</button>
-        <button class="option3" id="set2">Restore Options</button>
+        <button class="option3" id="hidecontrols">Hide Controls</button>
+        <button class="option3" id="restoreoptions">Restore Options</button>
+        </div>
+        <div style="padding: calc(var(--grid-cell)*.1);padding-left: calc(var(--grid-cell)*.65);">
+        <button class="option5" id="set2" style="font-family: boldpixel; font-size:calc(var(--pixel-size)*4);color: rgb(255,255,255,.4);">Report Bug</button>
         </div>
         </div>
         
@@ -1622,6 +1653,22 @@
         document.getElementById("gear").style.opacity = "100%";
     });
     
+    $('#scalerup').click(function() {
+        document.documentElement.style.setProperty('--pixel-size', `${pixelSize+.1}px`);
+        pixelSize = pixelSize + .1;
+    });
+    
+    $('#scalerdown').click(function() {
+        document.documentElement.style.setProperty('--pixel-size', `${pixelSize-.1}px`);
+        pixelSize = pixelSize - .1;
+    });
+    
+    $('#scalerauto').click(function() {
+        document.documentElement.style.setProperty('--pixel-size', "2px");
+        setTimeout(function() {
+        pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
+        },20);
+    });
 
 
     document.getElementById("settings").style.display = "none";
