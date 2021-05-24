@@ -1,6 +1,5 @@
 <html lang="en">
 <!--copyright 2021 all rights reserved-->
-    <!--rooms save state-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,13 +107,13 @@
         border-width: calc(var(--grid-cell)*50);
         margin: calc(var(--grid-cell)*-50);
         pointer-events: none;
-        transition: .2s;
+        transition: .1s;
     }
     .mapcover {
         position: fixed;
         z-index: 21;
-        width: calc(var(--grid-cell)*10.2);
-        height: calc(var(--grid-cell)*10.2);
+        width: calc(var(--grid-cell)*12.2);
+        height: calc(var(--grid-cell)*11.2);
         border: #000 solid;
         border-width: calc(var(--grid-cell)*48.5);
         margin: calc(var(--grid-cell)*-49);
@@ -161,7 +160,8 @@
         box-shadow: inset 0 0 calc(var(--grid-cell)*5) #000;
         pointer-events: none;
         box-shadow: inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000;
-        transition: .5s ease;
+        transition: .1s steps(2);
+        opacity: 99%;
     }
     .lens {
         position: relative;
@@ -215,6 +215,7 @@
         right: calc(var(--grid-cell)*5);
     }
     .main {
+        overflow: hidden;
         display: none;
     }
     .icon {
@@ -466,10 +467,11 @@
         z-index: 20;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
-        border: #fff solid;
-        border-width: calc(var(--grid-cell)*.1);
+        border: #000 solid;
+        border-width: 0;
         background: #000;
         text-shadow: 0 0 calc(var(--pixel-size)*2) rgb(255,255,255,0.5);
+        transition: 1s ease;
     }
     @keyframes out {
         0%{
@@ -622,20 +624,20 @@
         pointer-events: none;
     }
     .dmap2 {
-        width: calc(var(--grid-cell)*10);
-        height: calc(var(--grid-cell)*10);
+        width: calc(var(--grid-cell)*12);
+        height: calc(var(--grid-cell)*11);
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
         position: fixed;
-        z-index: 16;
+        z-index: 22;
         overflow: hidden;
         background: rgb(0,0,0, .8);
         pointer-events: none;
     }
     .loc2 {
         position: relative;
-        top: calc(var(--grid-cell)*4.6);
-        left: calc(var(--grid-cell)*4.6);
+        top: calc(var(--grid-cell)*5);
+        left: calc(var(--grid-cell)*5.6);
         pointer-events: none;
     }
     .cmap2 {
@@ -665,7 +667,8 @@
     .minimapstarter2 {
         width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*1);
-        background: #fff;
+        background-image: url(dungeon1.png);
+        background-size: 100%;
         position: fixed;
         z-index: 16;
         pointer-events: none;
@@ -1088,19 +1091,19 @@
             
         <div class="champion" id="champion">
             <div style="padding-top:calc(var(--pixel-size)*10);">
-            <p class="ttype1" id="ttype1">Use the direction controls to move</p>
-            <p class="ttype2" id="ttype2">within each rooms terrain...</p>
+            <p class="ttype1" id="ttype1">Traverse the world using the four</p>
+            <p class="ttype2" id="ttype2">directional axis-control buttons...</p>
             <div style="padding-top:calc(var(--pixel-size)*10);">
-            <p class="ttype1" id="ttype3">Use the axis controls to find and</p>
-            <p class="ttype2" id="ttype4">discover new rooms...</p>
+            <p class="ttype1" id="ttype3">Seek new paths by passing through</p>
+            <p class="ttype2" id="ttype4">the edges of the field of view...</p>
             </div>
             <div style="padding-top:calc(var(--pixel-size)*10);">
-            <p class="ttype1" id="ttype5">You can adjust your settings from</p>
+            <p class="ttype1" id="ttype5">You can adjust all settings from</p>
             <p class="ttype1" id="ttype6">the gear icon in the top right...</p>
             </div>
             <div style="padding-top:calc(var(--pixel-size)*10);">
-            <p class="ttype1" id="ttype7">Locate a <span style="animation: rcolorloop ease 2s infinite;">ravine</span> using the map to</p>
-            <p class="ttype1" id="ttype8">descend further into the depths...</p>
+            <p class="ttype1" id="ttype7">Discover <span style="animation: rcolorloop ease 2s infinite;">new regions</span> to explore</p>
+            <p class="ttype1" id="ttype8">using the map in the top left...</p>
             </div>
             <button class="introdone" id="introdone">></button>
             </div>
@@ -1154,7 +1157,7 @@
         <div style="padding: calc(var(--grid-cell)*.1);padding-left: calc(var(--grid-cell)*.65);">
         <button class="option5" id="set2" style="font-family: boldpixel; font-size:calc(var(--pixel-size)*4);color: rgb(255,255,255,.4);">Report Bug</button>
         </div>
-        </div>
+        </div> <!--big one-->
         
         <button class="mp" id="mp"></button>
         <button class="mpreturn" id="mpreturn"></button>
@@ -1195,7 +1198,8 @@
         <p id="type3"></p>
         </div>
     </div>
-    <div class="dpad" id="dpad">
+    
+<div class="dpad" id="dpad" style="z-index: -10;">
         <div class="DemoDirectionUI flex-center">
             <button id="dpad-left" class="dpad-button dpad-left"></button>
             <button id="dpad-up" class="dpad-button dpad-up"></button>
@@ -1270,8 +1274,12 @@
         blinking = 0;
         facing = "up";
         yaxis = yaxis - 1;
+        /*
         if (yaxis <= -4) {
         yaxis = -3;
+    }*/
+        if (yaxis <= -4) {
+        $('.dpad-up').click();
     }
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
@@ -1283,7 +1291,7 @@
         facing = "down";
         yaxis = yaxis + 1;
         if (yaxis >= 4) {
-        yaxis = 3;
+        $('.dpad-down').click();
     }
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
@@ -1295,7 +1303,7 @@
         facing = "left";
         xaxis = xaxis - 1;
         if (xaxis <= -4) {
-        xaxis = -3;
+        $('.dpad-left').click();
     }
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
@@ -1307,7 +1315,7 @@
         facing = "right";
         xaxis = xaxis + 1;
         if (xaxis >= 4) {
-        xaxis = 3;
+        $('.dpad-right').click();
     }
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
@@ -1383,6 +1391,7 @@
                 break;
         }
     });
+        /*
      $(document).keydown(function(e) {
         switch (e.which) {
             case 13: //enter key
@@ -1408,6 +1417,7 @@
         }
         }
     });
+    */
 });
         
 </script> <!--dekstop keyboard controls-->
@@ -1491,6 +1501,8 @@
             document.getElementById("ttype3").style.animation = "typing 1s steps(35) forwards";
         },6000);
         setTimeout(function() {
+            document.getElementById("champion").style.borderWidth = "calc(var(--grid-cell)*.1)";
+            document.getElementById("champion").style.borderColor = "#fff";
             document.getElementById("blocker").style.opacity = "0%";
             document.getElementById("ttype4").style.animation = "typing 1s steps(35) forwards";
         },6800);
@@ -1761,100 +1773,36 @@ $(window).on('load', () => {
         blinking = 0;
         myright();
         icon.style.backgroundPosition = "60%";
-        setTimeout(function() {
-        icon.style.top = "auto";
-        shadow.top = "auto";
         xaxis = -3;
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
-        },600);
-        document.getElementById("dpad").style.display = "none";
-        document.getElementById("dpad").style.opacity = "0%";
-        document.getElementById("cover").style.right ="calc(var(--grid-cell)*-9)";
-        document.getElementById("cover").style.animation ="shift 1s ease forwards";
-        setTimeout(function() {
-            document.getElementById("cover").style.animation ="none";
-            document.getElementById("cover").style.right ="auto";
-            document.getElementById("dpad").style.display = "block";
-        },1000);
-        setTimeout(function() {
-            document.getElementById("dpad").style.opacity = "100%";
-        },1100);
     });
     
     $('.dpad-left').click(function() {
         blinking = 0;
         myleft();
         icon.style.backgroundPosition = "40%";
-        setTimeout(function() {
-        icon.style.top = "auto";
-        shadow.top = "auto";
         xaxis = 3;
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
-        },600);
-        document.getElementById("dpad").style.display = "none";
-        document.getElementById("dpad").style.opacity = "0%";
-        document.getElementById("cover").style.left ="calc(var(--grid-cell)*-9)";
-        document.getElementById("cover").style.animation ="shift 1s ease forwards";
-        setTimeout(function() {
-            document.getElementById("cover").style.animation ="none";
-            document.getElementById("cover").style.left ="auto";
-            document.getElementById("dpad").style.display = "block";
-        },1000);
-        setTimeout(function() {
-            document.getElementById("dpad").style.opacity = "100%";
-        },1100);
     });
     
     $('.dpad-up').click(function() {
         blinking = 0;
         myup();
         icon.style.backgroundPosition = "20%";
-        setTimeout(function() {
-        icon.style.left = "auto";
-        shadow.left = "auto";
         yaxis = 3;
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
-        },600);
-        document.getElementById("dpad").style.display = "none";
-        document.getElementById("dpad").style.opacity = "0%";
-        document.getElementById("cover").style.top ="calc(var(--grid-cell)*-9)";
-        document.getElementById("cover").style.animation ="shift 1s ease forwards";
-        setTimeout(function() {
-            document.getElementById("cover").style.animation ="none";
-            document.getElementById("cover").style.top ="auto";
-            document.getElementById("dpad").style.display = "block";
-        },1000);
-        setTimeout(function() {
-            document.getElementById("dpad").style.opacity = "100%";
-        },1100);
     });
     
     $('.dpad-down').click(function() {
         blinking = 1;
         mydown();
         icon.style.backgroundPosition = "0%";
-        setTimeout(function() {
-        icon.style.left = "auto";
-        shadow.left = "auto";
         yaxis = -3;
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
-        },600);
-        document.getElementById("dpad").style.display = "none";
-        document.getElementById("dpad").style.opacity = "0%";
-        document.getElementById("cover").style.bottom ="calc(var(--grid-cell)*-9)";
-        document.getElementById("cover").style.animation ="shift 1s ease forwards";
-        setTimeout(function() {
-            document.getElementById("cover").style.animation ="none";
-            document.getElementById("cover").style.bottom ="auto";
-            document.getElementById("dpad").style.display = "block";
-        },1000);
-        setTimeout(function() {
-            document.getElementById("dpad").style.opacity = "100%";
-        },1100);
     });
     
     var msg = document.getElementById("textbox");
@@ -1990,24 +1938,35 @@ $(window).on('load', () => {
             x=x+160,
             setTimeout(function() {
                 map.style.left = "0";
-        },500);
+        },50);
         
        
         map.style.left = "calc(var(--grid-cell)*-10)";
-        //map.style.transition = ".2s ease";
+       map.style.transition = ".05s steps(4)";
+        
+        document.getElementById("shaded").style.boxShadow = "inset calc(var(--grid-cell)*-5) 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
+        
+        setTimeout(function() {
+            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
+        },100);
         
     }
 
     function myleft(el,d) {
             xcord = xcord-1,
             x=x-160,
-            setTimeout(function() {
-                map.style.left = "0";
-        },500);
+        map.style.left = "calc(var(--grid-cell)*-10)",
+                setTimeout(function() {
+                    map.style.left = "0";
+                },50),
+
+        map.style.transition = ".05s steps(4)";
         
-    
-        map.style.left = "calc(var(--grid-cell)*10)";
-        //map.style.transition = ".2s ease";
+        document.getElementById("shaded").style.boxShadow = "inset calc(var(--grid-cell)*5) 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
+        
+        setTimeout(function() {
+            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
+        },100);
         
     }
 
@@ -2016,12 +1975,18 @@ $(window).on('load', () => {
             y=y-160,
             setTimeout(function() {
                 map.style.top = "0";
-        },500);
+        },50);
         
     
        
         map.style.top = "calc(var(--grid-cell)*10)";
-        //map.style.transition = ".2s ease";
+        map.style.transition = ".05s steps(4)";
+        
+        document.getElementById("shaded").style.boxShadow = "inset 0 calc(var(--grid-cell)*5) calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
+        
+        setTimeout(function() {
+            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
+        },100);
         
     }
 
@@ -2030,11 +1995,17 @@ $(window).on('load', () => {
             y=y+160,
         setTimeout(function() {
                 map.style.top = "0";
-        },500);
+        },50);
         
        
         map.style.top = "calc(var(--grid-cell)*-10)";
-        //map.style.transition = ".2s ease";
+        map.style.transition = ".05s steps(4)";
+        
+        document.getElementById("shaded").style.boxShadow = "inset 0 calc(var(--grid-cell)*-5) calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
+        
+        setTimeout(function() {
+            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
+        },100);
         
     }
 </script> <!--animations-->
@@ -2119,9 +2090,9 @@ document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handle
     
     $('.dpad').click(function() {
         twinduplicate();
-        document.getElementById("dduplicater" + j).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
-        document.getElementById("loc2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-15),calc(var(--pixel-size)*${ycord}*-15),0)`;
-        document.getElementById("mmb2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*15),calc(var(--pixel-size)*${ycord}*15),0)`;
+        document.getElementById("dduplicater" + j).style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*16),calc(var(--pixel-size)*${ycord}*16),0)`;
+        document.getElementById("loc2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*-16),calc(var(--pixel-size)*${ycord}*-16),0)`;
+        document.getElementById("mmb2").style.transform = `translate3d(calc(var(--pixel-size)*${xcord}*16),calc(var(--pixel-size)*${ycord}*16),0)`;
         setTimeout(function() {
         document.getElementById("dduplicater" + j).style.backgroundImage = roomrn;
         document.getElementById("dduplicater" + j).style.opacity= "100%";
@@ -2194,11 +2165,6 @@ function twinduplicate() {
     
     $('.dpad').click(function() {
         
-        document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
-        
-        setTimeout(function() {
-            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
-        },500);
     
         /*
         for (index = 0; index < saved.length; ++index) {
