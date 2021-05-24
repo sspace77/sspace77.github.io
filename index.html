@@ -1120,9 +1120,9 @@
         <button class="option5" id="set2" style="border-color: rgb(255,255,255,.6);font-size: calc(var(--pixel-size)*4)">Quit to Title</button>
         </div>
         <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
-        <button class="option2" id="set2">Restart</button>
-        <button class="option2" id="set2">Reset</button>
         <button class="option2" id="fullscreen">Fullscreen</button>
+        <button class="option2" id="set2">Restart</button>
+        <button class="option2" id="set2">Refresh</button>
         </div>
         <div style="padding-left: calc(var(--grid-cell)*7.5);margin-bottom:calc(var(--grid-cell)*-1.15);"> 
         <button class="option1" id="scalerauto" >Auto</button> <!--default-->
@@ -1140,9 +1140,9 @@
         </div>
         <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
         <button class="sub" id="set1" style="color: rgb(255,255,255,.6);font-family: boldpixel;font-size:calc(var(--pixel-size)*5);">GUI:<p style="font-family: pixel;line-height: calc(var(--pixel-size)*4);font-size:calc(var(--pixel-size)*3);color: rgb(255,255,255,.3);">Interface Dimension</p></button>
-        <button class="option1" id="set2">Small</button>
-        <button class="option1" id="set2" style="border-color: rgb(255,255,255, 1)">Medium</button>
-        <button class="option1" id="set2">Large</button>
+        <button class="option1" id="small" style="border-color: rgb(255,255,255, 1)">Small</button>
+        <button class="option1" id="medium">Medium</button>
+        <button class="option1" id="large">Large</button>
         </div>
         <div style="padding: calc(var(--grid-cell)*.1);padding-left: calc(var(--grid-cell)*.5);">
         <button class="sub" id="set1" style="color: rgb(255,255,255,.6);font-family: boldpixel;font-size:calc(var(--pixel-size)*5);">Loc:<p style="font-family: pixel;line-height: calc(var(--pixel-size)*4);font-size:calc(var(--pixel-size)*3);color: rgb(255,255,255,.3);">Controls Location</p></button>
@@ -1712,6 +1712,78 @@
     
     $('#fullscreen').click(function() {
         openFullscreen();
+});
+    
+    $('#small').click(function() {
+        document.getElementById('small').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('medium').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('large').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.width = "calc(var(--grid-cell)*3)";
+        document.getElementById('joystick').style.height = "calc(var(--grid-cell)*3)";
+});
+    $('#medium').click(function() {
+        document.getElementById('small').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('medium').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('large').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.width = "calc(var(--grid-cell)*3.5)";
+        document.getElementById('joystick').style.height = "calc(var(--grid-cell)*3.5)";
+});
+    $('#large').click(function() {
+        document.getElementById('small').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('medium').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('large').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('joystick').style.width = "calc(var(--grid-cell)*4)";
+        document.getElementById('joystick').style.height = "calc(var(--grid-cell)*4)";
+});
+    
+    $('#l-control').click(function() {
+        document.getElementById('l-control').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('c-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('r-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.right = "auto";
+        document.getElementById('joystick').style.left = "calc(var(--grid-cell)*1)";
+        document.getElementById('joystick').style.transform = "none";
+});
+    $('#r-control').click(function() {
+        document.getElementById('r-control').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('c-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('l-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.left = "auto";
+        document.getElementById('joystick').style.right = "calc(var(--grid-cell)*1)";
+        document.getElementById('joystick').style.transform = "none";
+});
+    $('#c-control').click(function() {
+        document.getElementById('c-control').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('r-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('l-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.left = "50%";
+        document.getElementById('joystick').style.transform = "translateX(-50%)";
+});
+    $('#hidecontrols').click(function() {
+        document.getElementById('hidecontrols').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('joystick').style.pointerEvents = "none";
+        document.getElementById('joystick').style.opacity = "0%";
+});
+    $('#restoreoptions').click(function() {
+        document.getElementById('small').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('medium').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('large').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.width = "calc(var(--grid-cell)*3)";
+        document.getElementById('joystick').style.height = "calc(var(--grid-cell)*3)";
+        document.getElementById('r-control').style.borderColor = "rgb(255,255,255, 1)";
+        document.getElementById('c-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('l-control').style.borderColor = "rgb(255,255,255, .2)";
+        document.getElementById('joystick').style.left = "auto";
+        document.getElementById('joystick').style.right = "calc(var(--grid-cell)*1)";
+        document.getElementById('joystick').style.transform = "none";
+        noise = 100;
+        brightness = 1;
+        document.getElementById('bg').style.opacity = "100%";
+        document.getElementById('plus').style.filter = "brightness(1)";
+        document.getElementById('settings').style.filter = "brightness(1)";
+        document.getElementById('joystick').style.pointerEvents = "all";
+        document.getElementById('joystick').style.opacity = "100%";
+        document.getElementById('hidecontrols').style.borderColor = "rgb(255,255,255, .2)";
 });
 
     var elem = document.documentElement;
