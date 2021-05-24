@@ -794,15 +794,16 @@
     }
     .zoom {
         position: fixed;
-        width: calc(var(--grid-cell)*3);
+        width: calc(var(--grid-cell)*1);
         height: calc(var(--grid-cell)*2);
         bottom: calc(var(--grid-cell)*2);
         background: #000;
         z-index: 25;
         border: none;
+        background: transparent;
         color: rgb(255,255,255, .5);
         display: none;
-        font-size: calc(var(--pixel-size)*20);
+        font-size: calc(var(--pixel-size)*10);
         font-family: boldpixel;
     }
     .mapback {
@@ -814,6 +815,43 @@
         display: none;
     }
 </style> <!--style layout-->
+    
+<style>
+    .slidecontainer {
+        position: fixed;
+        z-index: 25;
+        width: calc(var(--grid-cell)*7);
+        display: none;
+        bottom: calc(var(--grid-cell)*2.9);
+}
+
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: calc(var(--grid-cell)*.1); /* Specified height */
+  background: linear-gradient(90deg, #000, #424242, grey, #fff, grey, #424242, #000); /* Grey background */
+  outline: none; /* Remove outline */
+}
+
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: calc(var(--grid-cell)*.6); 
+  height: calc(var(--grid-cell)*.6); 
+  background-image: url(magnify.png);
+ background-size: 100%;
+}
+
+.slider::-moz-range-thumb {
+   width: calc(var(--grid-cell)*.6); 
+  height: calc(var(--grid-cell)*.6); 
+  background-image: url(magnify.png);
+ background-size: 100%;
+}
+</style>
    
 <style>
     .settings {
@@ -1326,8 +1364,13 @@
     </div>
     </div>
     
-    <button class="zoom" id="zoomin" style="margin-left:calc(var(--grid-cell)*4);">+</button>
-    <button class="zoom" id="zoomout" style="margin-left:calc(var(--grid-cell)*-4);">-</button>
+    <div class="slidecontainer" id="zoomslider">
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <p style="color:red;" id="czoom"></p>
+</div>
+    
+    <button class="zoom" id="zoomin" style="margin-left:calc(var(--grid-cell)*8);">+</button>
+    <button class="zoom" id="zoomout" style="margin-left:calc(var(--grid-cell)*-8);">-</button>
     
     <div class="dmap3" id="dmap3"></div>
     <div class="dmapshadow2" id="dmapshadow2"></div>
@@ -1556,6 +1599,18 @@
     
 <script>
     
+    var slider = document.getElementById("myRange");
+var output = document.getElementById("czoom");
+    var zoomy;
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+    zoomy = this.value;
+    document.getElementById("dmap2").style.transform = "scale(1."+zoomy+")";
+}
+    
     var started = false;
     var opt = false;
     
@@ -1573,7 +1628,7 @@
         document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
         }
     },10000);
-    
+
     var zoom = 1;
     
     $('#zoomin').click(function() {
@@ -1584,6 +1639,9 @@
     $('#zoomout').click(function() {
         zoom = zoom - .3;
         document.getElementById("dmap2").style.transform = "scale("+zoom+")";
+        if (zoom <= .1) {
+            zoom = .1;
+        }
     });
     
     $('.story').click(function() {
@@ -1981,6 +2039,7 @@
     document.getElementById("minimapstarter2").style.opacity = "0%";
     
     $('.mp').click(function() {
+    document.getElementById("zoomslider").style.display = "block";
     document.getElementById("mapback").style.display = "block";
     document.getElementById("dmap3").style.display = "block";
     document.getElementById("zoomin").style.display = "block";
@@ -2002,6 +2061,7 @@
         },500);
         opt = false;
         document.getElementById("mapback").style.display = "none";
+        document.getElementById("zoomslider").style.display = "none";
         document.getElementById("dmap3").style.display = "none";
         document.getElementById("zoomin").style.display = "none";
         document.getElementById("zoomout").style.display = "none";
