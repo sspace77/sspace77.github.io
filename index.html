@@ -87,16 +87,17 @@
         left: 0;
         animation: hues 10s linear infinite;
         animation-delay: 5s;
+        filter: hue-rotate(-30deg) brightness(1.5);
     }
     @keyframes hues {
         0% {
-            filter: hue-rotate(-30deg);
+            filter: hue-rotate(-30deg) brightness(1.5);
         }
-        50% {
-            filter: hue-rotate(180deg);
+        40% {
+            filter: hue-rotate(190deg) brightness(1);
         }
         100% {
-            filter: hue-rotate(-30deg);
+            filter: hue-rotate(-30deg) brightness(1.5);
         }
     }
     #swipeme {
@@ -674,13 +675,26 @@
     .dmap2 {
         width: calc(var(--grid-cell)*12);
         height: calc(var(--grid-cell)*11);
-        border: rgb(255,255,255, .2) solid;
-        border-width: calc(var(--grid-cell)*.1);
         position: fixed;
         z-index: 22;
         overflow: hidden;
-        background: rgb(0,0,0, .8);
+        background: transparent;
         pointer-events: none;
+        /*transform: scale(1.1);*/
+    }
+    .dmap3 {
+        width: calc(var(--grid-cell)*12);
+        height: calc(var(--grid-cell)*11);
+        border: rgb(255,255,255, .2) solid;
+        border-width: calc(var(--grid-cell)*.1);
+        position: fixed;
+        z-index: 23;
+        overflow: hidden;
+        background: transparent;
+        pointer-events: none;
+        overflow: hidden;
+        display: none;
+        /*transform: scale(1.1);*/
     }
     .loc2 {
         position: relative;
@@ -777,12 +791,33 @@
             left: 0;
         }
     }
+    .zoom {
+        position: fixed;
+        width: calc(var(--grid-cell)*3);
+        height: calc(var(--grid-cell)*2);
+        margin-top: calc(var(--grid-cell)*14);
+        background: #000;
+        z-index: 22;
+        border: none;
+        color: rgb(255,255,255, .5);
+        display: none;
+        font-size: calc(var(--pixel-size)*20);
+        font-family: boldpixel;
+    }
+    .mapback {
+        position: fixed;
+        background: rgb(0,0,0, .5);
+        width: calc(var(--grid-cell)*12);
+        height: calc(var(--grid-cell)*11);
+        z-index: 19;
+        display: none;
+    }
 </style> <!--style layout-->
    
 <style>
     .settings {
         width: calc(var(--grid-cell)*10);
-        height: calc(var(--grid-cell)*12);
+        height: calc(var(--grid-cell)*13);
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
         position: fixed;
@@ -1290,7 +1325,7 @@
     </div>
     </div>
     
-    
+    <div class="dmap3" id="dmap3"></div>
     <div class="dmapshadow2" id="dmapshadow2"></div>
     <div class="dmap2" id="dmap2">
         <div class="loc2" id="loc2">
@@ -1299,6 +1334,11 @@
     <div class="cmap2" id="dduplicater0"></div>  
         </div>
     </div>
+    <div class="mapback" id="mapback"></div>
+    
+    
+    <button class="zoom" id="zoomin" style="margin-left:calc(var(--grid-cell)*4);">+</button>
+    <button class="zoom" id="zoomout" style="margin-left:calc(var(--grid-cell)*-4);">-</button>
     
 <div class="mapper" id="mapper"></div>
     <div class="dmapshadow" id="dmapshadow"></div>
@@ -1310,9 +1350,7 @@
         </div>
     </div>
 </body>
-    
-    
-    
+   
 <script>
     var xaxis = 0;
     var yaxis = 0;
@@ -1518,13 +1556,28 @@
 <script>
     
     var started = false;
+    var opt = false;
     
     var j = 0;
 
     window.setInterval(function() {
+        if ( opt == false) {
         document.getElementById("gear").style.opacity = "10%";
         document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
+        }
     },10000);
+    
+    var zoom = 1;
+    
+    $('#zoomin').click(function() {
+        zoom = zoom + .3;
+        document.getElementById("dmap2").style.transform = "scale("+zoom+")";
+    });
+    
+    $('#zoomout').click(function() {
+        zoom = zoom - .3;
+        document.getElementById("dmap2").style.transform = "scale("+zoom+")";
+    });
     
     $('.story').click(function() {
         
@@ -1769,6 +1822,7 @@
     });
     
     $('.gear').click(function() {
+        opt = true;
         document.getElementById("gear").style.pointerEvents = "none";
         document.getElementById("mapcover").style.pointerEvents = "all";
         document.getElementById("mapcover").style.opacity = "100%";
@@ -1905,6 +1959,7 @@
 
     document.getElementById("settings").style.display = "none";
     
+    
     document.getElementById("mp").style.display = "block";
     document.getElementById("mpreturn").style.display = "none";
     document.getElementById("mapcover").style.opacity = "0%";
@@ -1916,6 +1971,10 @@
     document.getElementById("minimapstarter2").style.opacity = "0%";
     
     $('.mp').click(function() {
+    document.getElementById("mapback").style.display = "block";
+    document.getElementById("dmap3").style.display = "block";
+    document.getElementById("zoomin").style.display = "block";
+    document.getElementById("zoomout").style.display = "block";
     document.getElementById("mapcover").style.pointerEvents = "all";
     document.getElementById("mp").style.display = "none";
     document.getElementById("mapcover").style.opacity = "100%";
@@ -1931,6 +1990,11 @@
         setTimeout(function() {
     document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
         },500);
+        opt = false;
+        document.getElementById("mapback").style.display = "none";
+        document.getElementById("dmap3").style.display = "none";
+        document.getElementById("zoomin").style.display = "none";
+        document.getElementById("zoomout").style.display = "none";
         document.getElementById("gear").style.pointerEvents = "all";
     document.getElementById("gear").style.opacity = "30%";
     document.getElementById("settings").style.display = "none";
