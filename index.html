@@ -1611,6 +1611,7 @@ slider.oninput = function() {
   output.innerHTML = this.value;
     zoomy = this.value;
     document.getElementById("dmap2").style.transform = "scale(1."+zoomy+")";
+    slider.style.filter = "blur(0)";
 }
     
     var started = false;
@@ -1622,6 +1623,7 @@ slider.oninput = function() {
         document.getElementById("gear").style.filter = "blur(0)";
         document.getElementById("icon").style.filter = "blur(0)";
         document.getElementById("plus").style.filter = "blur(0)";
+        slider.style.filter = "blur(0)";
     },100);
 
     window.setInterval(function() {
