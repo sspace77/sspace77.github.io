@@ -843,6 +843,7 @@
   height: calc(var(--grid-cell)*.6); 
   background-image: url(magnify.png);
  background-size: 100%;
+    background-color: transparent;
 }
 
 .slider::-moz-range-thumb {
@@ -850,6 +851,7 @@
   height: calc(var(--grid-cell)*.6); 
   background-image: url(magnify.png);
  background-size: 100%;
+    background-color: transparent;
 }
 </style>
    
@@ -1369,8 +1371,8 @@
         <p style="color:red;" id="czoom"></p>
 </div>
     
-    <button class="zoom" id="zoomin" style="margin-left:calc(var(--grid-cell)*8);">+</button>
-    <button class="zoom" id="zoomout" style="margin-left:calc(var(--grid-cell)*-8);">-</button>
+    <button class="zoom" id="zoomin" style="margin-left:calc(var(--grid-cell)*5);">+</button>
+    <button class="zoom" id="zoomout" style="margin-left:calc(var(--grid-cell)*-5);">-</button>
     
     <div class="dmap3" id="dmap3"></div>
     <div class="dmapshadow2" id="dmapshadow2"></div>
