@@ -1122,7 +1122,7 @@
         <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
         <button class="option2" id="set2">Restart</button>
         <button class="option2" id="set2">Reset</button>
-        <button class="option2" id="set2">Fullscreen</button>
+        <button class="option2" id="fullscreen">Fullscreen</button>
         </div>
         <div style="padding-left: calc(var(--grid-cell)*7.5);margin-bottom:calc(var(--grid-cell)*-1.15);"> 
         <button class="option1" id="scalerauto" >Auto</button> <!--default-->
@@ -1132,20 +1132,20 @@
         <button class="option1" id="scalerdown" style="height:20px;width:calc(var(--pixel-size)*20);border:none; font-size: calc(var(--pixel-size)*8);">-</button>
         <button class="option1" id="scalerup" style="height:20px;width:calc(var(--pixel-size)*20);border: none;font-size: calc(var(--pixel-size)*8);">+</button>
         </div>
-        <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
+        <div style="padding: calc(var(--grid-cell)*.1);padding-left: calc(var(--grid-cell)*.5);">
 
-        <button class="option4" id="set2">Visibility</button>
-        <button class="option4" id="set2">Perspective</button>
-        <button class="option4" id="set2">Disable Map</button>
+        <button class="option4" id="reducenoise">Reduce Noise</button>
+        <button class="option4" id="nonebutton" style="width:calc(var(--grid-cell)*2);">Clear </button>
+        <button class="option4" id="highbrightness" style="width:calc(var(--grid-cell)*3.7);">Raise Brightness</button>
         </div>
         <div style="padding: calc(var(--grid-cell)*.2);padding-left: calc(var(--grid-cell)*.5);">
-        <button class="sub" id="set1" style="font-family: boldpixel;">Graphics:</button>
-        <button class="option1" id="set2">Low</button>
+        <button class="sub" id="set1" style="color: rgb(255,255,255,.6);font-family: boldpixel;font-size:calc(var(--pixel-size)*5);">GUI:<p style="font-family: pixel;line-height: calc(var(--pixel-size)*4);font-size:calc(var(--pixel-size)*3);color: rgb(255,255,255,.3);">Interface Dimension</p></button>
+        <button class="option1" id="set2">Small</button>
         <button class="option1" id="set2" style="border-color: rgb(255,255,255, 1)">Medium</button>
-        <button class="option1" id="set2">High</button>
+        <button class="option1" id="set2">Large</button>
         </div>
         <div style="padding: calc(var(--grid-cell)*.1);padding-left: calc(var(--grid-cell)*.5);">
-        <button class="sub" id="set1" style="font-family: boldpixel;">Controls:</button>
+        <button class="sub" id="set1" style="color: rgb(255,255,255,.6);font-family: boldpixel;font-size:calc(var(--pixel-size)*5);">Loc:<p style="font-family: pixel;line-height: calc(var(--pixel-size)*4);font-size:calc(var(--pixel-size)*3);color: rgb(255,255,255,.3);">Controls Location</p></button>
         <button class="option1" id="l-control">Left</button>
         <button class="option1" id="c-control">Center</button>
         <button class="option1" id="r-control" style="border-color: rgb(255,255,255, 1)">Right</button>
@@ -1510,6 +1510,7 @@
         setTimeout(function() {
             document.getElementById("ttype3").style.opacity = "30%";
             document.getElementById("ttype4").style.opacity = "30%";
+            document.getElementById("champion").style.borderColor = "rgb(255,255,255, .3)";
         },9000);
         setTimeout(function() {
             document.getElementById("ttype5").style.animation = "typing 1s steps(35) forwards";
@@ -1686,7 +1687,44 @@
         pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
         },20);
     });
+    
+    
+    var noise = 100;
+    $('#reducenoise').click(function() {
+        noise = noise - 10;
+        document.getElementById('bg').style.opacity = noise + "%";
+    });
+    
+    $('#nonebutton').click(function() {
+        noise = 100;
+        brightness = 1;
+        document.getElementById('bg').style.opacity = "100%";
+        document.getElementById('plus').style.filter = "brightness(1)";
+        document.getElementById('settings').style.filter = "brightness(1)";
+    });
+    
+    var brightness = 1;
+    $('#highbrightness').click(function() {
+        brightness = brightness + .1;
+        document.getElementById('plus').style.filter = "brightness("+brightness+")";
+        document.getElementById('settings').style.filter = "brightness("+brightness+")";
+    });
+    
+    $('#fullscreen').click(function() {
+        openFullscreen();
+});
 
+    var elem = document.documentElement;
+    
+    function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
 
     document.getElementById("settings").style.display = "none";
     
@@ -2378,7 +2416,7 @@ function removeLoader(){
     
 </style> <!--grain overlay-->
 
-<div class="bg">
+<div class="bg" id="bg">
 </div>
     
 </html>
