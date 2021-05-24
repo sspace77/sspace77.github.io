@@ -211,7 +211,7 @@
         /*transition: .2s ease;*/
         background-image: url(dungeon1.png);
         background-size: 100%;
-        overflow: hidden; /*visible*/
+        overflow: visible; /*hidden*/
     }
     .layout {
         position: fixed;
@@ -707,7 +707,38 @@
         border: none;
         display: none;
     }
-    
+    @keyframes upper {
+        0% {
+            top: calc(var(--grid-cell)*-10);
+        }
+        100% {
+            top: 0;
+        }
+    }
+    @keyframes downer {
+        0% {
+            top: calc(var(--grid-cell)*10);
+        }
+        100% {
+            top: 0;
+        }
+    }
+    @keyframes lefter {
+        0% {
+            left: calc(var(--grid-cell)*-10);
+        }
+        100% {
+            left: 0;
+        }
+    }
+    @keyframes righter {
+        0% {
+            left: calc(var(--grid-cell)*10);
+        }
+        100% {
+            left: 0;
+        }
+    }
 </style> <!--style layout-->
    
 <style>
@@ -1089,6 +1120,7 @@
         <div class="pointer" id="pointer"></div>
             
         <div class="champion" id="champion">
+            
             <div style="padding-top:calc(var(--pixel-size)*10);">
             <p class="ttype1" id="ttype1">Traverse the world using the four</p>
             <p class="ttype2" id="ttype2">directional axis-control buttons...</p>
@@ -1114,6 +1146,7 @@
         
         <button class="gear" id="gear"></button>
         <div class="settings" id="settings">
+            
         <p style="color: #fff; text-align: center; padding:calc(var(--grid-cell)*.1);font-family: pixel2;opacity: 30%;font-size:calc(var(--pixel-size)*5);">Options</p>
         <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
         <button class="option5" id="quit" style="border-color: rgb(255,255,255,.6);font-size: calc(var(--pixel-size)*4)">Quit to Title</button>
@@ -1183,10 +1216,10 @@
         <div class="shadow" id="shadow"></div>
         
     <div class="plus" id="plus">
-    <div class="plus" style="left: calc(var(--grid-cell)*-10)"></div>
-    <div class="plus" style="right: calc(var(--grid-cell)*-10)"></div>
-    <div class="plus" style="top: calc(var(--grid-cell)*-10)"></div>
-    <div class="plus" style="bottom: calc(var(--grid-cell)*-10)"></div>
+    <div class="plus" style="left: calc(var(--grid-cell)*-10)" id="plusleft"></div>
+    <div class="plus" style="right: calc(var(--grid-cell)*-10)" id="plusright"></div>
+    <div class="plus" style="top: calc(var(--grid-cell)*-10)" id="plustop"></div>
+    <div class="plus" style="bottom: calc(var(--grid-cell)*-10)" id="plusbottom"></div>
     </div> 
          
     </div>      
@@ -1849,6 +1882,7 @@
 </script> <!--start button pause menu tutorial-->
   
 <script>
+    
 const $element = $('.anim');
 const imagePath = '/lights';
 const totalFrames = 39;
@@ -1896,6 +1930,10 @@ $(window).on('load', () => {
         myright();
         icon.style.backgroundPosition = "60%";
         xaxis = -3;
+        icon.style.transition = ".1s ease";
+        setTimeout(function() {
+            icon.style.transition = "none";
+         },100);
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
     });
@@ -1905,6 +1943,10 @@ $(window).on('load', () => {
         myleft();
         icon.style.backgroundPosition = "40%";
         xaxis = 3;
+        icon.style.transition = ".1s ease";
+        setTimeout(function() {
+            icon.style.transition = "none";
+         },100);
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
     });
@@ -1914,6 +1956,10 @@ $(window).on('load', () => {
         myup();
         icon.style.backgroundPosition = "20%";
         yaxis = 3;
+        icon.style.transition = ".1s ease";
+        setTimeout(function() {
+            icon.style.transition = "none";
+         },100);
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
     });
@@ -1923,6 +1969,10 @@ $(window).on('load', () => {
         mydown();
         icon.style.backgroundPosition = "0%";
         yaxis = -3;
+        icon.style.transition = ".1s ease";
+        setTimeout(function() {
+            icon.style.transition = "none";
+         },100);
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
     });
@@ -2059,36 +2109,24 @@ $(window).on('load', () => {
             xcord = xcord+1,
             x=x+160,
             setTimeout(function() {
-                map.style.left = "0";
-        },50);
+                map.style.animation = "none";
+        },100);
         
        
-        map.style.left = "calc(var(--grid-cell)*-10)";
-       map.style.transition = ".05s steps(4)";
-        
-        document.getElementById("shaded").style.boxShadow = "inset calc(var(--grid-cell)*-5) 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
-        
-        setTimeout(function() {
-            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
-        },100);
+        map.style.animation = "righter .1s ease";
+        document.getElementById("plusleft").style.backgroundImage = roomrn;
         
     }
 
     function myleft(el,d) {
             xcord = xcord-1,
             x=x-160,
-        map.style.left = "calc(var(--grid-cell)*-10)",
                 setTimeout(function() {
-                    map.style.left = "0";
-                },50),
+                    map.style.animation = "none";
+                },100),
 
-        map.style.transition = ".05s steps(4)";
-        
-        document.getElementById("shaded").style.boxShadow = "inset calc(var(--grid-cell)*5) 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
-        
-        setTimeout(function() {
-            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
-        },100);
+       map.style.animation = "lefter .1s ease";
+        document.getElementById("plusright").style.backgroundImage = roomrn;
         
     }
 
@@ -2096,19 +2134,24 @@ $(window).on('load', () => {
             ycord = ycord-1,
             y=y-160,
             setTimeout(function() {
-                map.style.top = "0";
-        },50);
+                map.style.animation = "none";
+        },100);
         
     
-       
-        map.style.top = "calc(var(--grid-cell)*10)";
-        map.style.transition = ".05s steps(4)";
+        map.style.animation = "upper .1s ease";
+        document.getElementById("plusbottom").style.backgroundImage = roomrn;
+
+        
+        
+        /*
         
         document.getElementById("shaded").style.boxShadow = "inset 0 calc(var(--grid-cell)*5) calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
         
         setTimeout(function() {
             document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
-        },100);
+            
+        },100);*/
+        
         
     }
 
@@ -2116,18 +2159,12 @@ $(window).on('load', () => {
             ycord = ycord+1,
             y=y+160,
         setTimeout(function() {
-                map.style.top = "0";
-        },50);
-        
-       
-        map.style.top = "calc(var(--grid-cell)*-10)";
-        map.style.transition = ".05s steps(4)";
-        
-        document.getElementById("shaded").style.boxShadow = "inset 0 calc(var(--grid-cell)*-5) calc(var(--grid-cell)*1) calc(var(--grid-cell)*6) #000";
-        
-        setTimeout(function() {
-            document.getElementById("shaded").style.boxShadow = "inset 0 0 calc(var(--grid-cell)*1) calc(var(--grid-cell)*1) #000";
+                map.style.animation = "none";
         },100);
+       
+        map.style.animation = "downer .1s ease";
+        document.getElementById("plustop").style.backgroundImage = roomrn;
+
         
     }
 </script> <!--animations-->
