@@ -1560,6 +1560,12 @@
     var opt = false;
     
     var j = 0;
+    
+    window.setInterval(function() {
+        document.getElementById("gear").style.filter = "blur(0)";
+        document.getElementById("icon").style.filter = "blur(0)";
+        document.getElementById("plus").style.filter = "blur(0)";
+    },100);
 
     window.setInterval(function() {
         if ( opt == false) {
@@ -1586,7 +1592,9 @@
     
     $('.start').click(function() {
         started = true;
-        document.getElementById("fade").style.animation = "fade 1s forwards";
+        opt = false;
+        document.getElementById
+        ("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
@@ -1614,6 +1622,7 @@
     
     $('.intro').click(function() {
         started = true;
+        opt = true;
         document.getElementById("gear").style.zIndex = "14";
         document.getElementById("mp").style.display = "none";
         document.getElementById("joystick").style.opacity = "0%";
