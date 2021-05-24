@@ -47,11 +47,21 @@
     
     @font-face {
         font-family: "pixel";
-        src: url("/dogica.otf");
+        src: url("dogica.otf");
+        /*
+        src: url("/dogica.otf");*/
     }
     @font-face {
         font-family: "boldpixel";
-        src: url("/dogicabold.otf");
+        src: url("dogicabold.otf");
+    }
+    @font-face {
+        font-family: "pixel2";
+        src: url("pixel-inversions.ttf");
+    }
+    @font-face {
+        font-family: "pixel3";
+        src: url("Pixeled.ttf");
     }
     html, body {
         overflow: hidden;
@@ -260,7 +270,7 @@
     }
     .start {
         margin-top: calc(var(--grid-cell)*-2);
-        width: calc(var(--grid-cell)*4);
+        width: calc(var(--grid-cell)*5);
         height: calc(var(--grid-cell)*1);
         position: fixed;
         z-index: 21;
@@ -276,7 +286,7 @@
         border: calc(var(--pixel-size)*1) solid #fff;
     }
     .intro {
-        width: calc(var(--grid-cell)*4);
+        width: calc(var(--grid-cell)*5);
         height: calc(var(--grid-cell)*1);
         position: fixed;
         z-index: 21;
@@ -1054,8 +1064,8 @@
     <div class="fade" id="fade"></div>
     <div class="vignette" id="vignette"></div>
     
-    <button class="start" id="start">New Game</button>
-    <button class="intro" id="intro">Controls</button>
+    <button class="start" id="start" style="font-family: pixel2;font-size: calc(var(--pixel-size)*7);">New Game</button>
+    <button class="intro" id="intro" style="font-family: pixel2;font-size: calc(var(--pixel-size)*7);">Controls</button>
     
     <p class="copytag" id="copy">Beta Version 1.2.2 &copy; 2021 ARR</p>
     
@@ -1066,17 +1076,6 @@
     <img class="anim" style="left:calc(var(--grid-cell)*42);">
     </div>
     
-    <!--
-    <div id= "error" style="text-align: center;width: 50%;display:none;">
-        
-    <P style="font-size: calc(var(--pixel-size)*4);color: #fff; text-align: center;z-index:41;position:fixed;mix-blend-mode: exclusion;">An internal error has been detected</P>
-    
-    <P style="font-size: calc(var(--pixel-size)*4);color: #fff; text-align: center;z-index:41;position:fixed;margin-top:calc(var(--grid-cell)*1.5);mix-blend-mode: exclusion;">Please refresh the page</P>
-    
-    <div style="z-index: 40; position: fixed; color: #000; text-align: center;background: linear-gradient(#426cf5,#7c3ef0,#f03e5f,#7c3ef0,#426cf5);top: 0;bottom:0;left:0;right:0;animation: hues 10s infinite;">
-    </div>
-    </div>
--->
     
     <div class="main" id="main">
         
@@ -1115,9 +1114,9 @@
         
         <button class="gear" id="gear"></button>
         <div class="settings" id="settings">
-        <p style="color: #fff; text-align: center; padding:calc(var(--grid-cell)*.1);font-family: boldpixel;opacity: 30%;font-size:calc(var(--pixel-size)*5);">Options</p>
+        <p style="color: #fff; text-align: center; padding:calc(var(--grid-cell)*.1);font-family: pixel2;opacity: 30%;font-size:calc(var(--pixel-size)*5);">Options</p>
         <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
-        <button class="option5" id="set2" style="border-color: rgb(255,255,255,.6);font-size: calc(var(--pixel-size)*4)">Quit to Title</button>
+        <button class="option5" id="quit" style="border-color: rgb(255,255,255,.6);font-size: calc(var(--pixel-size)*4)">Quit to Title</button>
         </div>
         <div style="padding: calc(var(--grid-cell)*.625);padding-top: 0;padding-bottom: calc(var(--grid-cell)*.25);">
         <button class="option2" id="fullscreen">Fullscreen</button>
@@ -1466,6 +1465,8 @@
         document.getElementById("mapper").style.display = "none";
         document.getElementById("mp").style.display = "block";
         document.getElementById("gear").style.opacity = "30%";
+        document.getElementById("fade").style.animation = "none";
+        document.getElementById("gear").style.pointerEvents = "all";
         },500);
     });
     
@@ -1474,6 +1475,7 @@
         document.getElementById("mp").style.display = "none";
         document.getElementById("joystick").style.opacity = "0%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
+        document.getElementById("pointer").style.display = "block";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
@@ -1483,20 +1485,25 @@
         document.getElementById("introdone").style.display = "none";
         document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         document.getElementById("helper").style.display = "block";
+        document.getElementById("helper").style.pointerEvents = "all";
         document.getElementById("mapper").style.opacity = "100%";
+        document.getElementById("mapper").style.display = "block";
         document.getElementById("gear").style.opacity = "0%";
+        document.getElementById("gear").style.pointerEvents = "none";
         },500);
         setTimeout(function() {
+        document.getElementById("champion").style.marginTop = "calc(var(--grid-cell)*2)";
         document.getElementById("ttype1").style.animation = "typing 1s steps(35) forwards";
-        },1500);
+        },1200);
         setTimeout(function() {
             document.getElementById("ttype2").style.animation = "typing 1s steps(35) forwards";
-        },2300);
+        },2000);
         setTimeout(function() {
             document.getElementById("joystick").style.animation = "slide1 1s steps(15) forwards";
             document.getElementById("joystick").style.pointerEvents = "none";
         },3000);
         setTimeout(function() {
+            document.getElementById("champion").style.marginTop = "0";
             document.getElementById("ttype1").style.opacity = "30%";
             document.getElementById("ttype2").style.opacity = "30%";
             document.getElementById("ttype3").style.animation = "typing 1s steps(35) forwards";
@@ -1543,7 +1550,8 @@
         },20000); */
         
         /*
-        document.getElementById("fade").style.animation = "fade 1s forwards";
+        
+        ocument.getElementById("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
@@ -1647,6 +1655,7 @@
         document.getElementById("ttype7").style.animation = "none";
         document.getElementById("ttype8").style.animation = "none";
         document.getElementById("gear").style.opacity = "0%";
+        document.getElementById("gear").style.pointerEvents = "none";
         },500);
         setTimeout(function() {
         document.getElementById("fade").style.animation = "none";
@@ -1679,22 +1688,18 @@
     $('#scalerdown').click(function() {
         document.documentElement.style.setProperty('--pixel-size', `${pixelSize-.1}px`);
         pixelSize = pixelSize - .1;
-    });
-    
+    });   
     $('#scalerauto').click(function() {
         document.documentElement.style.setProperty('--pixel-size', "2px");
         setTimeout(function() {
         pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
         },20);
     });
-    
-    
     var noise = 100;
     $('#reducenoise').click(function() {
         noise = noise - 10;
         document.getElementById('bg').style.opacity = noise + "%";
-    });
-    
+    });  
     $('#nonebutton').click(function() {
         noise = 100;
         brightness = 1;
@@ -1702,14 +1707,12 @@
         document.getElementById('plus').style.filter = "brightness(1)";
         document.getElementById('settings').style.filter = "brightness(1)";
     });
-    
     var brightness = 1;
     $('#highbrightness').click(function() {
         brightness = brightness + .1;
         document.getElementById('plus').style.filter = "brightness("+brightness+")";
         document.getElementById('settings').style.filter = "brightness("+brightness+")";
     });
-    
     $('#fullscreen').click(function() {
         openFullscreen();
 });
@@ -1785,6 +1788,11 @@
         document.getElementById('joystick').style.opacity = "100%";
         document.getElementById('hidecontrols').style.borderColor = "rgb(255,255,255, .2)";
 });
+    
+    $('#quit').click(function() {
+        $('.mapcover').click();
+        $('.introdone').click();
+    });
 
     var elem = document.documentElement;
     
