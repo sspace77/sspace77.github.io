@@ -281,11 +281,18 @@
         color: #fff;
         transition: .2s ease;
         border: rgb(0,0,0,0) solid 0px;
+        opacity: 90%;
     }
     .start:hover {
+        opacity: 100%;
         border: calc(var(--pixel-size)*1) solid #fff;
+        text-shadow: 0 0 calc(var(--pixel-size)*5) #fff;
     }
-    .intro {
+    .start:hover:before {
+        font-family: pixel;
+        content: ">";
+    }
+    .story {
         width: calc(var(--grid-cell)*5);
         height: calc(var(--grid-cell)*1);
         position: fixed;
@@ -297,9 +304,40 @@
         color: #fff;
         transition: .2s ease;
         border: rgb(0,0,0,0) solid 0px;
+        opacity: 90%;
+    }
+    .story:hover {
+        opacity: 100%;
+        border: calc(var(--pixel-size)*1) solid #fff;
+        text-shadow: 0 0 calc(var(--pixel-size)*5) #fff;
+    }
+    .story:hover:before {
+        font-family: pixel;
+        content: ">";
+    }
+    .intro {
+        margin-top: calc(var(--grid-cell)*2);
+        width: calc(var(--grid-cell)*5);
+        height: calc(var(--grid-cell)*1);
+        position: fixed;
+        z-index: 21;
+        font-family: boldpixel;
+        font-size: calc(var(--pixel-size)*5);
+        border: none;
+        background: transparent;
+        color: #fff;
+        transition: .2s ease;
+        border: rgb(0,0,0,0) solid 0px;
+        opacity: 90%;
     }
     .intro:hover {
+        opacity: 100%;
         border: calc(var(--pixel-size)*1) solid #fff;
+        text-shadow: 0 0 calc(var(--pixel-size)*5) #fff;
+    }
+    .intro:hover:before {
+        font-family: pixel;
+        content: ">";
     }
     .introdone {
         width: calc(var(--grid-cell)*1);
@@ -1095,10 +1133,14 @@
     <div class="fade" id="fade"></div>
     <div class="vignette" id="vignette"></div>
     
+    
+    <!--survival campaign controls-->
+    
+    <button class="story" id="storymode" style="font-family: pixel2;font-size: calc(var(--pixel-size)*7);">Settings</button>
     <button class="start" id="start" style="font-family: pixel2;font-size: calc(var(--pixel-size)*7);">New Game</button>
     <button class="intro" id="intro" style="font-family: pixel2;font-size: calc(var(--pixel-size)*7);">Controls</button>
     
-    <p class="copytag" id="copy">Beta Version 1.2.2 &copy; 2021 ARR</p>
+    <p class="copytag" id="copy">Beta Version 2.1.0 &copy; 2021 ARR</p>
     
     <div class="splash" id="splash">
     <img class="anim"/>
@@ -1479,6 +1521,14 @@
     
     var j = 0;
 
+    window.setInterval(function() {
+        document.getElementById("gear").style.opacity = "10%";
+        document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
+    },10000);
+    
+    $('.story').click(function() {
+        
+    });
     
     $('.start').click(function() {
         started = true;
@@ -1487,6 +1537,7 @@
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
         document.getElementById("intro").style.display = "none";
+        document.getElementById("storymode").style.display = "none";
         document.getElementById("main").style.display = "block";
         document.getElementById("helper").style.display = "none";
          document.getElementById("helper").style.pointerEvents = "none";
@@ -1501,10 +1552,15 @@
         document.getElementById("fade").style.animation = "none";
         document.getElementById("gear").style.pointerEvents = "all";
         },500);
+        
+        setTimeout(function() {
+            document.getElementById("gear").style.zIndex = "23";
+        },1000);
     });
     
     $('.intro').click(function() {
         started = true;
+        document.getElementById("gear").style.zIndex = "14";
         document.getElementById("mp").style.display = "none";
         document.getElementById("joystick").style.opacity = "0%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
@@ -1512,6 +1568,7 @@
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
+        document.getElementById("storymode").style.display = "none";
         document.getElementById("intro").style.display = "none";
         document.getElementById("main").style.display = "block";
         document.getElementById("copy").style.display = "none";
@@ -1550,14 +1607,18 @@
         setTimeout(function() {
             document.getElementById("ttype3").style.opacity = "30%";
             document.getElementById("ttype4").style.opacity = "30%";
+            document.getElementById("gear").style.backgroundImage = "url(gear.png)";
             document.getElementById("champion").style.borderColor = "rgb(255,255,255, .3)";
         },9000);
         setTimeout(function() {
             document.getElementById("ttype5").style.animation = "typing 1s steps(35) forwards";
-            document.getElementById("gear").style.opacity = "30%";
+            document.getElementById("gear").style.opacity = "90%";
+            
         },10000);
         setTimeout(function() {
             document.getElementById("ttype6").style.animation = "typing 1s steps(35) forwards";
+            document.getElementById("gear").style.opacity = "30%";
+            document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
         },10800);
         setTimeout(function() {
             document.getElementById("ttype5").style.opacity = "30%";
@@ -1664,6 +1725,7 @@
     
     $('.introdone').click(function() {
         started = false;
+        document.getElementById("gear").style.zIndex = "14";
         document.getElementById("joystick").style.opacity = "0%";
         document.getElementById("mapper").style.opacity = "100%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
@@ -1671,6 +1733,7 @@
         document.getElementById("splash").style.display = "block";
         document.getElementById("start").style.display = "block";
         document.getElementById("intro").style.display = "block";
+        document.getElementById("storymode").style.display = "block";
         document.getElementById("main").style.display = "none";
         document.getElementById("copy").style.display = "block";
         document.getElementById("helper").style.display = "none";
@@ -1706,6 +1769,7 @@
     });
     
     $('.gear').click(function() {
+        document.getElementById("gear").style.pointerEvents = "none";
         document.getElementById("mapcover").style.pointerEvents = "all";
         document.getElementById("mapcover").style.opacity = "100%";
         document.getElementById("settings").style.display = "block";
@@ -1864,7 +1928,10 @@
     });
     
     $('.mapcover').click(function() {
+        setTimeout(function() {
     document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
+        },500);
+        document.getElementById("gear").style.pointerEvents = "all";
     document.getElementById("gear").style.opacity = "30%";
     document.getElementById("settings").style.display = "none";
         
