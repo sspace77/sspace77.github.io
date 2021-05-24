@@ -686,14 +686,14 @@
     .dmap3 {
         width: calc(var(--grid-cell)*12);
         height: calc(var(--grid-cell)*11);
-        border: rgb(255,255,255, .2) solid;
-        border-width: calc(var(--grid-cell)*.1);
+        border: #000 solid;
+        box-shadow: inset 0 0 0 calc(var(--grid-cell)*.1) rgb(255,255,255,.2);
+        border-width: calc(var(--grid-cell)*100);
         position: fixed;
         z-index: 23;
         overflow: hidden;
         background: transparent;
         pointer-events: none;
-        overflow: hidden;
         display: none;
         /*transform: scale(1.1);*/
     }
@@ -798,7 +798,7 @@
         height: calc(var(--grid-cell)*2);
         margin-top: calc(var(--grid-cell)*14);
         background: #000;
-        z-index: 22;
+        z-index: 24;
         border: none;
         color: rgb(255,255,255, .5);
         display: none;
@@ -807,7 +807,7 @@
     }
     .mapback {
         position: fixed;
-        background: rgb(0,0,0, .5);
+        background: rgb(0,0,0, .8);
         width: calc(var(--grid-cell)*12);
         height: calc(var(--grid-cell)*11);
         z-index: 19;
