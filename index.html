@@ -815,6 +815,19 @@
         z-index: 19;
         display: none;
     }
+    .search {
+        position: fixed;
+        z-index: 12;
+        width: calc(var(--pixel-size)*9);
+        height: calc(var(--pixel-size)*8);
+        background-image: url(magempty.png);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        filter: blur(0);
+        background-color: transparent;
+        border: none;
+        pointer-events: all;
+    }
 </style> <!--style layout-->
     
 <style>
@@ -831,7 +844,7 @@
   appearance: none;
   width: 100%; /* Full-width */
   height: calc(var(--grid-cell)*.1); /* Specified height */
-  background: linear-gradient(90deg, #000, #424242, grey, #fff, grey, #424242, #000) no-repeat; /* Grey background */
+  background: linear-gradient(90deg, #000, #424242, grey, #fff, grey, #424242, #000); /* Grey background */
   outline: none; /* Remove outline */
 }
 
@@ -845,6 +858,7 @@
   background-image: url(magnify.png);
  background-size: 100%;
     background-color: transparent;
+    background-repeat: no-repeat;
     border: none;
 }
 
@@ -854,6 +868,7 @@
   background-image: url(magnify.png);
  background-size: 100%;
     background-color: transparent;
+    background-repeat: no-repeat;
     border: none;
 }
 </style> <!--slider-->
@@ -995,9 +1010,9 @@
         left: 50%;
         transform: translateX(-50%);
         bottom: calc(var(--grid-cell)*-2);
-        width: calc(var(--grid-cell)*10);
+        width: calc(var(--grid-cell)*12);
         height: calc(var(--grid-cell)*5);
-        z-index: 10;
+        z-index: 16;
         color: #fff;
         border-width: calc(var(--pixel-size)*.3);
         border: solid #fff;
@@ -1333,8 +1348,10 @@
     
         <div class="icon" id="icon">
             <div class="emit" id="emit"></div>
+            <button class="search" id="search"></button>
         </div>
         <div class="shadow" id="shadow"></div>
+        
         
     <div class="plus" id="plus">
     <div class="plus" style="left: calc(var(--grid-cell)*-10)" id="plusleft"></div>
@@ -1349,6 +1366,7 @@
         <p id="type1"></p>
         <p id="type2"></p>
         <p id="type3"></p>
+        <button id="moveon" style="width:calc(var(--pixel-size)*20);height:calc(var(--pixel-size)*20); position:fixed;right: calc(var(--pixel-size)*8);bottom: calc(var(--pixel-size)*6);font-size: calc(var(--pixel-size)*12);font-family:boldpixel;background: transparent; border: none;color: #fff;z-index:16;pointer-events: all;">></button>
         </div>
     </div>
     
@@ -1400,6 +1418,46 @@
     </div>
 </body>
    
+<script>
+    window.setInterval(function() {
+        if (facing == "down") {
+            document.getElementById("search").style.marginTop = "calc(var(--grid-cell)*1.5)";
+            document.getElementById("search").style.marginLeft = "0";
+        }
+        if (facing == "up") {
+            document.getElementById("search").style.marginTop = "calc(var(--grid-cell)*-1)";
+            document.getElementById("search").style.marginLeft = "0";
+        }
+        if (facing == "left") {
+            document.getElementById("search").style.marginLeft = "calc(var(--grid-cell)*-1)";
+            document.getElementById("search").style.marginTop = "0";
+        }
+        if (facing == "right") {
+            document.getElementById("search").style.marginLeft = "calc(var(--grid-cell)*1.5)";
+            document.getElementById("search").style.marginTop= "0";
+        }
+    },100);
+    
+    $('.search').click(function() {
+        document.getElementById("textbox").style.bottom = "calc(var(--grid-cell)*2)";
+        document.getElementById("textbox").style.opacity = "100%";
+        document.getElementById("type1").innerHTML = "Test interaction message here";
+        document.getElementById("type1").style.animation = "typing 1s steps(20) forwards";
+        document.getElementById("joystick").style.pointerEvents ="none";
+        document.getElementById("joystick").style.opacity ="10%";
+    });
+    
+    $('#moveon').click(function() {
+        document.getElementById("textbox").style.bottom = "calc(var(--grid-cell)*-2)";
+        document.getElementById("textbox").style.opacity = "0%";
+        document.getElementById("type1").innerHTML = "";
+        document.getElementById("type1").style.animation = "none";
+        document.getElementById("joystick").style.pointerEvents ="all";
+        document.getElementById("joystick").style.opacity ="100%";
+    });
+    
+</script> <!--interactions-->
+    
 <script>
     var xaxis = 0;
     var yaxis = 0;
