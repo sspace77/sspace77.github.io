@@ -858,21 +858,31 @@
         }
         10% {
             filter: brightness(0);
-            background-position: calc(var(--grid-cell)*-6);
+            background-position: calc(var(--grid-cell)*-5);
         }
         20% {
-            filter: brightness(.4);
-            background-position: calc(var(--grid-cell)*-6);
+            filter: brightness(0);
+            background-position: calc(var(--grid-cell)*-5);
             margin-top: calc(var(--grid-cell)*-5);
+        }
+        40% {
+            filter: brightness(.2);
+            background-position: calc(var(--grid-cell)*-5);
+            margin-top: calc(var(--grid-cell)*1);
+        }
+        40.1% {
+            filter: brightness(.2);
+            background-position: calc(var(--grid-cell)*-6);
+            margin-top: calc(var(--grid-cell)*1);
         }
         50% {
             margin-top: calc(var(--grid-cell)*4.5);
-            filter: brightness(1);
+            filter: brightness(.3);
             background-position: calc(var(--grid-cell)*-6);
         }
         50.1% {
             margin-top: calc(var(--grid-cell)*4.5);
-            filter: brightness(1);
+            filter: brightness.(.3);
             background-position: calc(var(--grid-cell)*-7);
         }
         90% {
@@ -1824,6 +1834,9 @@ slider.oninput = function() {
         opt = false;
         document.getElementById("emit2").style.opacity = "0%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
+        
+        document.getElementById("mapcover").style.display = "block";
+            document.getElementById("mapcover").style.opacity = "100%";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
@@ -1840,7 +1853,8 @@ slider.oninput = function() {
         document.getElementById("mp").style.display = "block";
         document.getElementById("gear").style.opacity = "30%";
         document.getElementById("fade").style.animation = "none";
-        document.getElementById("gear").style.pointerEvents = "all";
+        document.getElementById("gear").style.pointerEvents = "none";
+        document.getElementById("gear").style.opacity= "0%";
         
         document.getElementById("emit2").style.animation = "none";
         document.getElementById("emit").style.animation = "none";
@@ -1851,8 +1865,8 @@ slider.oninput = function() {
         },500);
         
         setTimeout(function() {
-            document.getElementById("vignette").style.animation = "scale 3.5s ease forwards";;
-        },2500);
+            document.getElementById("vignette").style.animation = "scale 2.5s ease forwards";
+        },1500);
         
         setTimeout(function() {
             document.getElementById("emit").style.opacity = "0%";
@@ -1865,6 +1879,10 @@ slider.oninput = function() {
             document.getElementById("fall").style.display = "none";
             document.getElementById("fall").style.animation = "none";
             document.getElementById("emit").style.animation = "reglow 5s ease infinite";
+            document.getElementById("mapcover").style.display = "none";
+            document.getElementById("mapcover").style.opacity = "auto";
+            document.getElementById("gear").style.opacity= "30%";
+            document.getElementById("gear").style.pointerEvents = "all";
         },4000);
         
         setTimeout(function() {
