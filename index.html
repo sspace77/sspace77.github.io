@@ -447,6 +447,7 @@
         background-size: 100%;
         opacity: 100%;
         animation: reglow 5s ease infinite;
+        transition: .2s ease;
     }
     @keyframes reglow {
         0% {
@@ -827,9 +828,78 @@
         background-color: transparent;
         border: none;
         pointer-events: all;
-        transition: .1s steps(3);
+        transition: .1s steps(2);
         display: none;
         opacity: 0%;
+    }
+    .fall {
+        width: calc(var(--grid-cell)*1);
+        height: calc(var(--grid-cell)*1);
+        background-image: url(sprites.png);
+        background-size: 1000%;
+        background-repeat: no-repeat;
+        background-position: calc(var(--grid-cell)*-5);
+        z-index: 35;
+        position: fixed;
+        filter: blur(0);
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: calc(var(--grid-cell)*-10);
+        filter: brightness(0);
+        display: none;
+    }
+    @keyframes fall {
+        0% {
+            margin-top: calc(var(--grid-cell)*-10);
+            filter: brightness(0);
+        }
+        9.99% {
+            background-position: calc(var(--grid-cell)*-5);
+        }
+        10% {
+            filter: brightness(0);
+            background-position: calc(var(--grid-cell)*-6);
+        }
+        20% {
+            filter: brightness(.4);
+            background-position: calc(var(--grid-cell)*-6);
+            margin-top: calc(var(--grid-cell)*-5);
+        }
+        50% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-6);
+        }
+        50.1% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-7);
+        }
+        90% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-7);
+        }
+        90.1% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-8);
+        }
+        95% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-8);
+        }
+        95.1% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-9);
+        }
+        100% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-9);
+        }
     }
 </style> <!--style layout-->
     
@@ -963,35 +1033,38 @@
         right: 0;
         opacity: 0%;
         pointer-events: none;
+        animation: none;
     }
     .vignette {
         position: fixed;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
         overflow: hidden;
-        z-index: 30;
-        background: radial-gradient(transparent, #000, #000, #000);
+        z-index: 20;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*.4) calc(var(--grid-cell)*7) #000;
         pointer-events: none;
-        background-position: center;
-        top: 0;
-        left:0;
-        right:0;
-        bottom: 0;
         overflow: hidden;
         animation-delay: 1s;
-        opacity: 0%;
+        opacity: 100%;
     }
     @keyframes scale {
         0% {
-        top: 0;
-        left:0;
-        right:0;
-        bottom: 0;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*.4) calc(var(--grid-cell)*5) #000;
         opacity: 100%;
         }
+        12% {
+        box-shadow: inset 0 0 calc(var(--grid-cell)*1.1) calc(var(--grid-cell)*3.8) #000;
+        opacity: 100%;
+        }
+        33% {
+        box-shadow: inset 0 0 calc(var(--grid-cell)*.8) calc(var(--grid-cell)*4.3) #000;
+        opacity: 100%;
+        }
+        80% {
+            opacity: 90%;
+        }
         100% {
-        top: -150%;
-        left:-150%;
-        right:-150%;
-        bottom: -150%;
+        box-shadow: inset 0 0 calc(var(--grid-cell)*6) calc(var(--grid-cell)*-2) #000;
         opacity: 0%;
         }
     }
@@ -1348,6 +1421,10 @@
         
     <div class="lens">
     <div class="camera">
+        
+        <div class="fall" id="fall">
+        <div class="emit" id="emit2"></div>
+        </div>
     
         <div class="icon" id="icon">
             <div class="emit" id="emit"></div>
@@ -1745,8 +1822,8 @@ slider.oninput = function() {
     $('.start').click(function() {
         started = true;
         opt = false;
-        document.getElementById
-        ("fade").style.animation = "fade 1s forwards";
+        document.getElementById("emit2").style.opacity = "0%";
+        document.getElementById("fade").style.animation = "fade 1s forwards";
         setTimeout(function() {
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
@@ -1756,7 +1833,6 @@ slider.oninput = function() {
         document.getElementById("helper").style.display = "none";
          document.getElementById("helper").style.pointerEvents = "none";
         document.getElementById("copy").style.display = "none";
-        document.getElementById("vignette").style.animation = "scale 3s ease forwards";
         document.getElementById("joystick").style.opacity = "100%";
         document.getElementById("joystick").style.pointerEvents = "all";
         document.getElementById("mapper").style.opacity = "0%";
@@ -1765,7 +1841,31 @@ slider.oninput = function() {
         document.getElementById("gear").style.opacity = "30%";
         document.getElementById("fade").style.animation = "none";
         document.getElementById("gear").style.pointerEvents = "all";
+        
+        document.getElementById("emit2").style.animation = "none";
+        document.getElementById("emit").style.animation = "none";
+        document.getElementById("icon").style.display = "none";
+        document.getElementById("fall").style.display = "block";
+        document.getElementById("fall").style.animation = "fall 2s steps(10) forwards";
+        document.getElementById("emit2").style.opacity = "80%";
         },500);
+        
+        setTimeout(function() {
+            document.getElementById("vignette").style.animation = "scale 3.5s ease forwards";;
+        },2500);
+        
+        setTimeout(function() {
+            document.getElementById("emit").style.opacity = "0%";
+            document.getElementById("icon").style.display = "block";
+        },3000);
+        
+        setTimeout(function() {
+            document.getElementById("emit2").style.opacity = "0%";
+            document.getElementById("emit").style.opacity = "80%";
+            document.getElementById("fall").style.display = "none";
+            document.getElementById("fall").style.animation = "none";
+            document.getElementById("emit").style.animation = "reglow 5s ease infinite";
+        },4000);
         
         setTimeout(function() {
             document.getElementById("gear").style.zIndex = "23";
