@@ -1966,6 +1966,7 @@ slider.oninput = function() {
         document.getElementById("settings").style.display = "block";
         document.getElementById("gear").style.backgroundImage = "url(gear.png)";
         document.getElementById("gear").style.opacity = "100%";
+        document.getElementById("textbox").style.display = "none";
     });
     
     $('#scalerup').click(function() {
@@ -2125,6 +2126,7 @@ slider.oninput = function() {
     });
     
     $('.mapcover').click(function() {
+        document.getElementById("textbox").style.display = "block";
         setTimeout(function() {
     document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
         },500);
