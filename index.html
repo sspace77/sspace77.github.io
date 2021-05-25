@@ -827,6 +827,9 @@
         background-color: transparent;
         border: none;
         pointer-events: all;
+        transition: .1s steps(3);
+        display: none;
+        opacity: 0%;
     }
 </style> <!--style layout-->
     
@@ -1419,7 +1422,30 @@
 </body>
    
 <script>
+    
+    var interact = "none";
+    
+    
     window.setInterval(function() {
+        
+        if (interact == "cactus") {
+            document.getElementById("type1").innerHTML = "Prickly...";
+        } else {
+            document.getElementById("type1").innerHTML = "";
+        }
+        
+        if (interact != "none") {
+            document.getElementById("search").style.display = "block";
+            document.getElementById("search").style.pointerEvents = "all";
+            setTimeout(function() {
+            document.getElementById("search").style.opacity = "100%";
+            document.getElementById("search").style.transform = "scale(1)";
+            },100);
+        } else {
+            document.getElementById("search").style.opacity = "0%";
+            document.getElementById("search").style.transform= "scale(.1)";
+            document.getElementById("search").style.pointerEvents = "none";
+        }
         if (facing == "down") {
             document.getElementById("search").style.marginTop = "calc(var(--grid-cell)*1.5)";
             document.getElementById("search").style.marginLeft = "0";
@@ -1441,7 +1467,6 @@
     $('.search').click(function() {
         document.getElementById("textbox").style.bottom = "calc(var(--grid-cell)*2)";
         document.getElementById("textbox").style.opacity = "100%";
-        document.getElementById("type1").innerHTML = "Test interaction message here";
         document.getElementById("type1").style.animation = "typing 1s steps(20) forwards";
         document.getElementById("joystick").style.pointerEvents ="none";
         document.getElementById("joystick").style.opacity ="10%";
@@ -2662,6 +2687,8 @@ function twinduplicate() {
         }*/    
     });
     
+
+    
     
     function temple() {
         if (saved.find(a =>a.includes(xcord + "c" + (ycord-1) + "z")) || saved.find(a =>a.includes((xcord+1) + "c" +(ycord-2) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord-2) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes(xcord + "c" +(ycord-3) + "z"))
@@ -2690,6 +2717,9 @@ function twinduplicate() {
         console.log("Room source:: " + roomrn);
     }
     
+    var walls = [""];
+    var specs = [""];
+    
     function detect() {
         if (facing == "down") {
                     yaxis = yaxis-1;
@@ -2715,6 +2745,7 @@ function twinduplicate() {
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
                 detect();
             }
+            mage();
         }
         
         //if (roomrn.indexOf("dungeon3") >-1)
@@ -2723,12 +2754,42 @@ function twinduplicate() {
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
                 detect();
             }
+            mage();
         }
         
         if (roomrn.includes('dungeon8')) {
             walls = [rng+","+rng];
             if ((walls.indexOf(xaxis + "," + yaxis))>-1){
                 detect();
+            }
+            mage();
+        }
+        
+        if (roomrn.includes('coast')) {
+            specs = ["2,-1"];
+            if ((specs.indexOf((xaxis+1) + "," + yaxis))>-1){
+                interact = "cactus";
+                facing = "right";
+            } else if ((specs.indexOf((xaxis-1) + "," + yaxis))>-1){
+                interact = "cactus";
+                facing = "left";
+            } else if ((specs.indexOf(xaxis + "," + (yaxis+1)))>-1){
+                interact = "cactus";
+                facing = "down";
+            } else if ((specs.indexOf(xaxis + "," + (yaxis-1)))>-1){
+                interact = "cactus";
+                facing = "up";
+            } else {
+                interact = "none"
+            }
+        }
+        
+        function mage() {
+            if ((walls.indexOf(xaxis+1 + "," + yaxis))>-1){
+                interact = "wall";
+            facing = "right";
+            } else {
+                interact = "none";
             }
         }
     });
