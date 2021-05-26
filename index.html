@@ -866,41 +866,41 @@
             margin-top: calc(var(--grid-cell)*-5);
         }
         40% {
-            filter: brightness(.2);
+            filter: brightness(.5);
             background-position: calc(var(--grid-cell)*-5);
             margin-top: calc(var(--grid-cell)*1);
         }
         40.1% {
-            filter: brightness(.2);
+            filter: brightness(.5);
             background-position: calc(var(--grid-cell)*-6);
             margin-top: calc(var(--grid-cell)*1);
         }
         50% {
             margin-top: calc(var(--grid-cell)*4.5);
-            filter: brightness(.3);
+            filter: brightness(.8);
             background-position: calc(var(--grid-cell)*-6);
         }
         50.1% {
             margin-top: calc(var(--grid-cell)*4.5);
-            filter: brightness.(.3);
+            filter: brightness.(.8);
             background-position: calc(var(--grid-cell)*-7);
+        }
+        80% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-7);
+        }
+        80.1% {
+            margin-top: calc(var(--grid-cell)*4.5);
+            filter: brightness(1);
+            background-position: calc(var(--grid-cell)*-8);
         }
         90% {
             margin-top: calc(var(--grid-cell)*4.5);
             filter: brightness(1);
-            background-position: calc(var(--grid-cell)*-7);
+            background-position: calc(var(--grid-cell)*-8);
         }
         90.1% {
-            margin-top: calc(var(--grid-cell)*4.5);
-            filter: brightness(1);
-            background-position: calc(var(--grid-cell)*-8);
-        }
-        95% {
-            margin-top: calc(var(--grid-cell)*4.5);
-            filter: brightness(1);
-            background-position: calc(var(--grid-cell)*-8);
-        }
-        95.1% {
             margin-top: calc(var(--grid-cell)*4.5);
             filter: brightness(1);
             background-position: calc(var(--grid-cell)*-9);
@@ -1512,7 +1512,6 @@
     
     var interact = "none";
     
-    
     window.setInterval(function() {
         
         if (interact == "cactus") {
@@ -1533,6 +1532,7 @@
             document.getElementById("search").style.transform= "scale(.1)";
             document.getElementById("search").style.pointerEvents = "none";
         }
+        setTimeout(function() {
         if (facing == "down") {
             document.getElementById("search").style.marginTop = "calc(var(--grid-cell)*1.5)";
             document.getElementById("search").style.marginLeft = "0";
@@ -1549,6 +1549,7 @@
             document.getElementById("search").style.marginLeft = "calc(var(--grid-cell)*1.5)";
             document.getElementById("search").style.marginTop= "0";
         }
+        },100);
     },100);
     
     $('.search').click(function() {
@@ -1693,6 +1694,9 @@
 <script>
     
     var antispam = 0;
+        
+    var inter = 0;
+    
     
     $(function() {
     $(document).keydown(function(e) {
@@ -1749,8 +1753,9 @@
         }
         }
     });
-    */
+    */        
 });
+         
         
 </script> <!--dekstop keyboard controls-->
 
@@ -1786,7 +1791,7 @@ slider.oninput = function() {
     document.getElementById("dmap2").style.transform = "scale(1."+zoomy+")";
     slider.style.filter = "blur(0)";
 }
-    
+
     var started = false;
     var opt = false;
     
@@ -1834,10 +1839,9 @@ slider.oninput = function() {
         opt = false;
         document.getElementById("emit2").style.opacity = "0%";
         document.getElementById("fade").style.animation = "fade 1s forwards";
-        
-        document.getElementById("mapcover").style.display = "block";
             document.getElementById("mapcover").style.opacity = "100%";
         setTimeout(function() {
+        document.getElementById("mp").style.display = "none";
         document.getElementById("splash").style.display = "none";
         document.getElementById("start").style.display = "none";
         document.getElementById("intro").style.display = "none";
@@ -1847,10 +1851,9 @@ slider.oninput = function() {
          document.getElementById("helper").style.pointerEvents = "none";
         document.getElementById("copy").style.display = "none";
         document.getElementById("joystick").style.opacity = "100%";
-        document.getElementById("joystick").style.pointerEvents = "all";
+        document.getElementById("joystick").style.pointerEvents = "none";
         document.getElementById("mapper").style.opacity = "0%";
         document.getElementById("mapper").style.display = "none";
-        document.getElementById("mp").style.display = "block";
         document.getElementById("gear").style.opacity = "30%";
         document.getElementById("fade").style.animation = "none";
         document.getElementById("gear").style.pointerEvents = "none";
@@ -1871,6 +1874,8 @@ slider.oninput = function() {
         setTimeout(function() {
             document.getElementById("emit").style.opacity = "0%";
             document.getElementById("icon").style.display = "block";
+            
+            document.getElementById("mapcover").style.transition = ".5s ease";
         },3000);
         
         setTimeout(function() {
@@ -1879,11 +1884,15 @@ slider.oninput = function() {
             document.getElementById("fall").style.display = "none";
             document.getElementById("fall").style.animation = "none";
             document.getElementById("emit").style.animation = "reglow 5s ease infinite";
-            document.getElementById("mapcover").style.display = "none";
-            document.getElementById("mapcover").style.opacity = "auto";
+            
+            document.getElementById("mapcover").style.opacity = "0%";
             document.getElementById("gear").style.opacity= "30%";
             document.getElementById("gear").style.pointerEvents = "all";
+            document.getElementById("joystick").style.pointerEvents = "all";
+            document.getElementById("mp").style.display = "block";
+            inter = 1;
         },4000);
+        
         
         setTimeout(function() {
             document.getElementById("gear").style.zIndex = "23";
@@ -2058,6 +2067,7 @@ slider.oninput = function() {
     
     $('.introdone').click(function() {
         started = false;
+        inter = 0;
         document.getElementById("gear").style.zIndex = "14";
         document.getElementById("joystick").style.opacity = "0%";
         document.getElementById("mapper").style.opacity = "100%";
@@ -2935,6 +2945,7 @@ function twinduplicate() {
 </script> <!--procedural gen and collisions-->
     
 <script>
+    
 $('body').append('<div style="" id="loading"><div class= "post"></div></div>');
 $(window).on('load', function(){
   setTimeout(removeLoader, 500); //wait for page load PLUS two seconds.
