@@ -1355,15 +1355,6 @@
     }
 </style> <!--joystick-->
     
-<script>
-var FF = (document.getBoxObjectFor != null || window.mozInnerScreenX != null);
-
-if (FF) {
-    document.getElementById("firefox").style.display = 'block';
-}
-
-</script>
-    
 <body>
     
     <div class="warning" id="firefox">
@@ -1579,7 +1570,15 @@ if (FF) {
         </div>
     </div>
 </body>
-   
+ 
+<script>
+var FIREFOX = /Firefox/i.test(navigator.userAgent);
+
+if (FIREFOX) {
+  document.getElementById("firefox").style.display="block";
+}
+</script> <!--browsers-->
+    
 <script>
     
     var interact = "none";
