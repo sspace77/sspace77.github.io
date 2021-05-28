@@ -943,10 +943,10 @@
     }
     .bottom {
         position: fixed;
-        background-image: url(grass1.png);
+        background: #000;
+        opacity: 50%;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--pixel-size)*2);
-        filter: brightness(.5);
         background-size: 100%;
         transform: rotate(180deg);
         z-index: 15;
@@ -2917,9 +2917,7 @@ function twinduplicate() {
         }
     }
 
-       setTimeout(function(){
-       document.getElementById("bottom").style.backgroundImage = roomrn;
-        },100);
+
         
         consoler();
         /*
