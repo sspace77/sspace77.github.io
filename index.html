@@ -1356,11 +1356,12 @@
 </style> <!--joystick-->
     
 <script>
-var FIREFOX = /Firefox/i.test(navigator.userAgent);
+var FF = (document.getBoxObjectFor != null || window.mozInnerScreenX != null);
 
-if (!FIREFOX) {
-  document.getElementById("firefox").style.display= "block";
+if (FF) {
+    document.getElementById("firefox").style.display = 'block';
 }
+
 </script>
     
 <body>
