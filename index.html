@@ -209,7 +209,7 @@
         overflow: hidden;
     }
     .plus {
-        position: absolute;
+        position: relative;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*10);
         border: none;
@@ -219,6 +219,11 @@
         background-image: url(grass1.png);
         background-size: 100%;
         overflow: visible; /*hidden*/
+    }
+    .plus:after {
+        content: ' ';
+        position: absolute;
+        display: block;
     }
     .layout {
         position: fixed;
