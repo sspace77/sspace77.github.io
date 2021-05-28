@@ -1601,12 +1601,7 @@ if (FIREFOX) {
 <script>
     
     var interact = "none";
-    
-   $('.dpad').click(function() {
-       setTimeout(function(){
-       document.getElementById("bottom").style.backgroundImage = roomrn;
-        },100);
-   });
+
     
     window.setInterval(function() {
         
@@ -2921,6 +2916,10 @@ function twinduplicate() {
             }
         }
     }
+
+       setTimeout(function(){
+       document.getElementById("bottom").style.backgroundImage = roomrn;
+        },100);
         
         consoler();
         /*
