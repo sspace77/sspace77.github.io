@@ -941,7 +941,7 @@
         background: linear-gradient(#000,#800000,#000);
         display: none;
     }
-    .bottom {
+    .bottomly {
         position: fixed;
         background: #000;
         opacity: 50%;
@@ -951,6 +951,13 @@
         transform: rotate(180deg);
         z-index: 15;
         bottom: 0;
+    }
+    .scrollbox {
+        position: fixed;
+        z-index: 20;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
+        background: red;
     }
 </style> <!--style layout-->
     
@@ -1531,7 +1538,7 @@
     <div class="plus" style="right: calc(var(--grid-cell)*-10)" id="plusright"></div>
     <div class="plus" style="top: calc(var(--grid-cell)*-10)" id="plustop"></div>
     <div class="plus" style="bottom: calc(var(--grid-cell)*-10)" id="plusbottom"></div>
-        <div class="bottom" id="bottom" style="color: red;">hey</div>
+        <div class="bottomly" style="color: red;">hey</div>
     </div>      
 </div>      
       
