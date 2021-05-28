@@ -172,10 +172,9 @@
         box-shadow: inset 0 0 calc(var(--grid-cell)*5) #000;
         pointer-events: none;
         box-shadow: inset 0 0 calc(var(--grid-cell)*.5) calc(var(--grid-cell)*.1) #000;
-        mix-blend-mode: overlay;
-        -webkit-mix-blend-mode: overlay;
+        mix-blend-mode: hard-light;
         transition: .1s steps(2);
-        opacity: 99%;
+        opacity: 50%;
     }
     .lens {
         position: relative;
@@ -201,7 +200,7 @@
     .square {
         border: calc(var(--pixel-size)*2) solid #000;
         aspect-ratio: 1;
-        background-image: url("grass.png");
+        background-image: url("grass1.png");
         background-size: 100%;
         background-position: center;
     }
@@ -213,7 +212,7 @@
         z-index: 5;
         pointer-events: none;
         /*transition: .2s ease;*/
-        background-image: url(grass.png);
+        background-image: url(grass1.png);
         background-size: 100%;
         overflow: visible; /*hidden*/
     }
@@ -911,7 +910,55 @@
             background-position: calc(var(--grid-cell)*-9);
         }
     }
+    .warning {
+        position: absolute;
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*13);
+        z-index: 40;
+        background: linear-gradient(#262424,#661f27);
+        text-align: center;
+        padding: calc(var(--grid-cell)*1);
+        font-size: calc(var(--pixel-size)*5);
+        border: solid #ff3030;
+        border-radius: calc(var(--grid-cell)*.5);
+        border-width: calc(var(--grid-cell)*.1);
+        color: #fff;
+        text-shadow: 0 0 calc(var(--grid-cell)*.3) red;
+        box-shadow: 0 0 calc(var(--grid-cell)*10) rgb(255, 0, 0, .5);
+        display: none;
+    }
 </style> <!--style layout-->
+    
+<style>
+    .css-selector {
+        position: fixed;
+        z-index: 13;
+    background: linear-gradient(179deg, #b2e8ff, #fff9b4, #ff6e00, #ef34b1, #af42ff, #925fff, #5fff9b);
+    background-size: 1400% 1400%;
+
+    -webkit-animation: daynight 30s ease infinite;
+    animation: daynight 30s ease infinite;
+}
+
+@-webkit-keyframes daynight {
+    0%{background-position:47% 0%}
+    50%{background-position:54% 100%}
+    100%{background-position:47% 0%}
+}
+@keyframes daynight {
+    0%{background-position:47% 0%}
+    50%{background-position:54% 100%}
+    100%{background-position:47% 0%}
+}
+    @keyframes daynigh {
+        0% {
+            animation: reglow 5s ease infinite
+        }
+        100% {
+            animation: reglow 5s ease infinite
+        }
+    }
+</style> <!--daynight-->
     
 <style>
     .slidecontainer {
@@ -1308,7 +1355,31 @@
     }
 </style> <!--joystick-->
     
+<script>
+var FIREFOX = /Firefox/i.test(navigator.userAgent);
+
+if (FIREFOX) {
+  document.getElementById("firefox").style.display= "block";
+}
+</script>
+    
 <body>
+    
+    <div class="warning" id="firefox">
+        <p style="margin-bottom:calc(var(--grid-cell)*2);font-size: calc(var(--pixel-size)*10);color:#fc6060;">Caution</p>
+        <p>Mozilla Firefox among other</p>
+        <p>browsers are still awaiting</p>
+        <p>compatability updates.</p>
+        <div style="margin-bottom:calc(var(--grid-cell)*2)";></div>
+        
+        <p>This pages performance is</p>
+        <p>optimized for Chrome and</p>
+        <p>Safari browsers.</p>
+        
+        <div style="margin-bottom:calc(var(--grid-cell)*2)";></div>
+        
+        <p>Click here to learn more</p>
+    </div>
     
     <div class="fade" id="fade"></div>
     <div class="vignette" id="vignette"></div>
@@ -1532,7 +1603,6 @@
             document.getElementById("search").style.transform= "scale(.1)";
             document.getElementById("search").style.pointerEvents = "none";
         }
-        setTimeout(function() {
         if (facing == "down") {
             document.getElementById("search").style.marginTop = "calc(var(--grid-cell)*1.5)";
             document.getElementById("search").style.marginLeft = "0";
@@ -1549,7 +1619,6 @@
             document.getElementById("search").style.marginLeft = "calc(var(--grid-cell)*1.5)";
             document.getElementById("search").style.marginTop= "0";
         }
-        },100);
     },100);
     
     $('.search').click(function() {
@@ -1697,34 +1766,52 @@
         
     var inter = 0;
     
+
     
-    $(function() {
+    $(function () {
+        
     $(document).keydown(function(e) {
+        if (inter === 1) {
         switch (e.which) {
             case 87: //w up key
                 $("#joyup").trigger("click")
                 break;
         }
+            } else {
+            return false;
+        }
     });
      $(document).keydown(function(e) {
+         if (inter === 1) {
         switch (e.which) {
             case 65: //a left key
                 $("#joyleft").trigger("click")
                 break;
         }
+             } else {
+            return false;
+        }
     });
      $(document).keydown(function(e) {
+         if (inter === 1) {
         switch (e.which) {
             case 68: //d right key
                 $("#joyright").trigger("click")
                 break;
         }
+             } else {
+            return false;
+        }
     });
      $(document).keydown(function(e) {
+         if (inter === 1) {
         switch (e.which) {
             case 83: //s down key
                 $("#joydown").trigger("click")
                 break;
+        }
+             } else {
+            return false;
         }
     });
         /*
@@ -1753,7 +1840,7 @@
         }
         }
     });
-    */        
+    */   
 });
          
         
@@ -1869,13 +1956,14 @@ slider.oninput = function() {
         
         setTimeout(function() {
             document.getElementById("vignette").style.animation = "scale 2.5s ease forwards";
+            document.getElementById("mapcover").style.transition = ".5s ease";
         },1500);
         
         setTimeout(function() {
             document.getElementById("emit").style.opacity = "0%";
             document.getElementById("icon").style.display = "block";
-            
-            document.getElementById("mapcover").style.transition = ".5s ease";
+            document.getElementById("mapcover").style.opacity = "0%";
+
         },3000);
         
         setTimeout(function() {
@@ -1885,13 +1973,13 @@ slider.oninput = function() {
             document.getElementById("fall").style.animation = "none";
             document.getElementById("emit").style.animation = "reglow 5s ease infinite";
             
-            document.getElementById("mapcover").style.opacity = "0%";
+
             document.getElementById("gear").style.opacity= "30%";
             document.getElementById("gear").style.pointerEvents = "all";
             document.getElementById("joystick").style.pointerEvents = "all";
             document.getElementById("mp").style.display = "block";
             inter = 1;
-        },4000);
+        },3500);
         
         
         setTimeout(function() {
@@ -2522,7 +2610,7 @@ $(window).on('load', () => {
     //detectswipe('swipeme',myfunction);                    important
     
     window.setInterval(function() {
-        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: ";
+        document.getElementById("cords").innerHTML = "x: " +xcord+ " y: " +ycord+ " col: " + col + " rng: " + rng + " xa: " + xaxis + " ya: " + yaxis + " rooms: " + roomcount + " biome: " + "i:" + inter;
     },200);
 
     let col = 0;
@@ -2712,24 +2800,23 @@ function twinduplicate() {
     
     
     var vaseroom = 'url("dungeon2.png")';
-    var baseroom = 'url("grass.png")';
-    var rock1 = 'url("dungeon3.png")';
-    var rock2 = 'url("dungeon4.png")';
-    var rock3 = 'url("dungeon5.png")';
-    var rock4 = 'url("dungeon6.png")';
-    var rock5 = 'url("dungeon7.png")';
+    
+    
+    var baseroom = 'url("grass1.png")';
+    var basetwo = 'url("grass2.png")';
+    var basethree = 'url("grass3.png")';
     
     var mob1 = 'url("dungeon8.png")';
     
     var sea1 = 'url("coast.png")';
     
-    var rooms = [vaseroom, baseroom, rock1, rock2, rock3,rock4,rock5, mob1,sea1];
+    var rooms = [vaseroom, baseroom, basetwo,basethree, mob1,sea1];
     
-    var saved = ["0c0zurl(grass.png)"];
+    var saved = ["0c0zurl(grass1.png)"];
     
     var index, value, result;
     
-    var roomrn = 'url("grass.png")';
+    var roomrn = 'url("grass1.png")';
     
     var roomcount = 0;
     
@@ -2790,8 +2877,16 @@ function twinduplicate() {
             
             roomrn = randomer;
             
+            /*
             if (roomrn != baseroom) {
                 removeA(rooms, roomrn);  //sets special rooms prevents re use
+            }
+            */
+            
+            if (roomrn.includes('grass')) {
+                return;
+            } else {
+                removeA(rooms, roomrn);
             }
             
             
@@ -2817,7 +2912,7 @@ function twinduplicate() {
     
 
     
-    
+    //spawns desert temple
     function temple() {
         if (saved.find(a =>a.includes(xcord + "c" + (ycord-1) + "z")) || saved.find(a =>a.includes((xcord+1) + "c" +(ycord-2) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord-2) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes(xcord + "c" +(ycord-3) + "z"))
                ) {
