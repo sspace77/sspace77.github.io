@@ -2,7 +2,7 @@
 <!--copyright 2021 all rights reserved-->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content= "ie=edge">
     <title>UN 5.0</title>
     
@@ -626,7 +626,7 @@
         width: calc(var(--grid-cell)*.25);
         height: calc(var(--grid-cell)*.25);
         background: #707070;
-        background-size: 1000%;
+        background-size: 100%;
         /*border: #fff solid;
         border-width: calc(var(--grid-cell)*.05);*/
         position: fixed;
@@ -1159,6 +1159,20 @@
             opacity: 0%;
         }
         50% {
+            opacity: 100%;
+        }
+        100% {
+            opacity: 0%;
+        }
+    }
+    @keyframes fade2 {
+        0% {
+            opacity: 0%;
+        }
+        30% {
+            opacity: 100%;
+        }
+        70% {
             opacity: 100%;
         }
         100% {
@@ -1963,7 +1977,7 @@ slider.oninput = function() {
         started = true;
         opt = false;
         document.getElementById("emit2").style.opacity = "0%";
-        document.getElementById("fade").style.animation = "fade 1s forwards";
+        document.getElementById("fade").style.animation = "fade2 1.5s forwards";
             document.getElementById("mapcover").style.opacity = "100%";
         setTimeout(function() {
         document.getElementById("mp").style.display = "none";
@@ -2848,7 +2862,9 @@ function twinduplicate() {
     
     var sea1 = 'url("coast.png")';
     
-    var rooms = [vaseroom, baseroom, basetwo,basethree, mob1,sea1];
+    var dry1 = 'url("drygrass.png")';
+    
+    var rooms = [vaseroom, baseroom, basetwo, basethree, mob1, sea1,dry1];
     
     var saved = ["0c0zurl(grass1.png)"];
     
@@ -2922,7 +2938,6 @@ function twinduplicate() {
             */
             
             if (roomrn.includes('grass')) {
-                return;
             } else {
                 removeA(rooms, roomrn);
             }
@@ -2932,6 +2947,9 @@ function twinduplicate() {
                 if (facing == "up") {
                 temple();
             }
+        }
+            if (roomrn.includes('drygrass.png')) {
+                drylands();
         }
     }
 
@@ -2965,6 +2983,44 @@ function twinduplicate() {
                 saved.push((xcord+1) + "c" + (ycord-1) + "z" + (document.getElementById("plus").style.backgroundImage));
                 saved.push((xcord-1) + "c" + (ycord-1) + "z" + (document.getElementById("plus").style.backgroundImage));
                 saved.push(xcord + "c" + (ycord-3) + "z" + (document.getElementById("plus").style.backgroundImage));
+                }
+    }
+    
+    function dryland() {
+        if (saved.find(a =>a.includes((xcord-1) + "c" + (ycord-1) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes((xcord-2) + "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord-2) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes((xcord-2) + "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -1)+ "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -3)+ "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -3)+ "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord -3)+ "c" +(ycord+1) + "z")) //check if rooms are open
+               ) {
+                return;
+            } else { //apply new rooms      
+                saved.push((xcord-1) + "c" + ycord + "z" + 'url("dryleft.png")');
+                saved.push((xcord-2) + "c" + ycord + "z" + 'url("dry2.png")');
+                saved.push((xcord-3) + "c" + ycord + "z" + 'url("dryright.png")');
+                saved.push((xcord-1) + "c" + (ycord-1) + "z" + "url(drycorner2.png)");
+                saved.push((xcord-1) + "c" + (ycord+1) + "z" + "url(drycorner4.png)");
+                saved.push((xcord-2) + "c" + (ycord-1) + "z" + "url(drytop.png)");
+                saved.push((xcord-2) + "c" + (ycord+1) + "z" + "url(drybottom.png)");
+                saved.push((xcord-3) + "c" + (ycord-1) + "z" + "url(drycorner1.png)");
+                saved.push((xcord-3) + "c" + (ycord+1) + "z" + "url(drycorner3.png)");
+                }
+    }
+    
+    var dryrooms = ['url("dry2.png")','url("dry1.png")','url("dry3.png")','url("dry4.png")'];
+    function drylands() {
+        if (saved.find(a =>a.includes((xcord-1) + "c" + (ycord-1) + "z")) || saved.find(a =>a.includes((xcord-1) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes((xcord-2) + "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord-2) + "c" +(ycord+1) + "z")) || saved.find(a =>a.includes((xcord-2) + "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -1)+ "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -3)+ "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -3)+ "c" +(ycord-1) + "z")) || saved.find(a =>a.includes((xcord -3)+ "c" +(ycord+1) + "z")) || saved.find(a =>a.includes((xcord -4)+ "c" +ycord + "z")) || saved.find(a =>a.includes((xcord -4)+ "c" +(ycord+1) + "z")) || saved.find(a =>a.includes((xcord -4)+ "c" +(ycord-1) + "z"))
+               ) {
+                return;
+            } else { //apply new rooms      
+                saved.push((xcord-1) + "c" + ycord + "z" + 'url("dryleft.png")');
+                saved.push((xcord-2) + "c" + ycord + "z" + (dryrooms[Math.floor(Math.random() * dryrooms.length)]));
+                saved.push((xcord-3) + "c" + ycord + "z" + (dryrooms[Math.floor(Math.random() * dryrooms.length)]));
+                saved.push((xcord-1) + "c" + (ycord-1) + "z" + "url(drycorner2.png)");
+                saved.push((xcord-1) + "c" + (ycord+1) + "z" + "url(drycorner4.png)");
+                saved.push((xcord-2) + "c" + (ycord-1) + "z" + "url(drytop.png)");
+                saved.push((xcord-2) + "c" + (ycord+1) + "z" + "url(drybottom.png)");
+                saved.push((xcord-3) + "c" + (ycord-1) + "z" + "url(drytop.png)");
+                saved.push((xcord-3) + "c" + (ycord+1) + "z" + "url(drybottom.png)");
+                saved.push((xcord-4) + "c" + (ycord-1) + "z" + "url(drycorner1.png)");
+                saved.push((xcord-4) + "c" + (ycord+1) + "z" + "url(drycorner3.png)");
+                saved.push((xcord-4) + "c" + ycord + "z" + "url(dryright.png)");
                 }
     }
         
