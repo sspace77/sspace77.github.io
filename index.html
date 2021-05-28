@@ -912,6 +912,7 @@
     }
     .warning {
         position: absolute;
+        top: 20%;
         width: calc(var(--grid-cell)*10);
         height: calc(var(--grid-cell)*13);
         z-index: 40;
@@ -926,6 +927,16 @@
         text-shadow: 0 0 calc(var(--grid-cell)*.3) red;
         box-shadow: 0 0 calc(var(--grid-cell)*10) rgb(255, 0, 0, .5);
         display: none;
+    }
+    .bottom {
+        position: fixed;
+        background-image: url(grass1.png);
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--pixel-size)*2);
+        filter: brightness(.5);
+        background-size: 100%;
+        z-index: 15;
+        bottom: 0;
     }
 </style> <!--style layout-->
     
@@ -1428,7 +1439,6 @@
         <div class="blocker" id="blocker"></div>
             
         </div>
-        
         <button class="gear" id="gear"></button>
         <div class="settings" id="settings">
             
@@ -1478,12 +1488,10 @@
         
         <button class="mp" id="mp"></button>
         <button class="mpreturn" id="mpreturn"></button>
- 
 <!--
     <div id='swipeme'>
 </div>
 -->
-        
         <button class="mapcover" id="mapcover"></button>
         
         <div class="cover" id="cover"></div>
@@ -1492,36 +1500,32 @@
         
  <div class="cords" id="cords">hey</div> 
         
-    <div class="lens">
-    <div class="camera">
-        
+<div class="lens">
+<div class="camera">
         <div class="fall" id="fall">
         <div class="emit" id="emit2"></div>
-        </div>
-    
+        </div> 
         <div class="icon" id="icon">
             <div class="emit" id="emit"></div>
             <button class="search" id="search"></button>
         </div>
         <div class="shadow" id="shadow"></div>
-        
-        
     <div class="plus" id="plus">
     <div class="plus" style="left: calc(var(--grid-cell)*-10)" id="plusleft"></div>
     <div class="plus" style="right: calc(var(--grid-cell)*-10)" id="plusright"></div>
     <div class="plus" style="top: calc(var(--grid-cell)*-10)" id="plustop"></div>
     <div class="plus" style="bottom: calc(var(--grid-cell)*-10)" id="plusbottom"></div>
-    </div> 
-         
+        <div class="bottom" id="bottom"></div>
     </div>      
-           
+</div>      
+      
     <div class="textbox" id="textbox">
         <p id="type1"></p>
         <p id="type2"></p>
         <p id="type3"></p>
         <button id="moveon" style="width:calc(var(--pixel-size)*20);height:calc(var(--pixel-size)*20); position:fixed;right: calc(var(--pixel-size)*8);bottom: calc(var(--pixel-size)*6);font-size: calc(var(--pixel-size)*12);font-family:boldpixel;background: transparent; border: none;color: #fff;z-index:16;pointer-events: all;">></button>
         </div>
-    </div>
+        </div>
     
 <div class="dpad" id="dpad" style="z-index: -10;">
         <div class="DemoDirectionUI flex-center">
@@ -1544,7 +1548,6 @@
   <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
         <p style="color:tranparent;" id="czoom"></p>
 </div>
-    
     <button class="zoom" id="zoomin" style="margin-left:calc(var(--grid-cell)*5);">+</button>
     <button class="zoom" id="zoomout" style="margin-left:calc(var(--grid-cell)*-5);">-</button>
     
@@ -1558,7 +1561,6 @@
         </div>
     </div>
     <div class="mapback" id="mapback"></div>
-
     
 <div class="mapper" id="mapper"></div>
     <div class="dmapshadow" id="dmapshadow"></div>
@@ -1582,6 +1584,12 @@ if (FIREFOX) {
 <script>
     
     var interact = "none";
+    
+   $('.dpad').click(function() {
+       setTimeout(function(){
+       document.getElementById("bottom").style.backgroundImage = roomrn;
+        },100);
+   });
     
     window.setInterval(function() {
         
