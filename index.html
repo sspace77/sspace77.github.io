@@ -928,6 +928,16 @@
         box-shadow: 0 0 calc(var(--grid-cell)*10) rgb(255, 0, 0, .5);
         display: none;
     }
+    .warningbackground {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 39;
+        background: linear-gradient(#000,#800000,#000);
+        display: none;
+    }
     .bottom {
         position: fixed;
         background-image: url(grass1.png);
@@ -935,6 +945,7 @@
         height: calc(var(--pixel-size)*2);
         filter: brightness(.5);
         background-size: 100%;
+        transform: rotate(180deg);
         z-index: 15;
         bottom: 0;
     }
@@ -1368,7 +1379,7 @@
     
 <body>
     
-    <div class="warning" id="firefox">
+    <div class="warning" id="firefox1">
         <p style="margin-bottom:calc(var(--grid-cell)*2);font-size: calc(var(--pixel-size)*10);color:#fc6060;">Caution</p>
         <p>Mozilla Firefox among other</p>
         <p>browsers are still awaiting</p>
@@ -1377,12 +1388,14 @@
         
         <p>This pages performance is</p>
         <p>optimized for Chrome and</p>
-        <p>Safari browsers.</p>
+        <p>Safari browsers only.</p>
         
-        <div style="margin-bottom:calc(var(--grid-cell)*2)";></div>
+        <div style="margin-bottom:calc(var(--grid-cell)*3)";></div>
         
-        <p>Click here to learn more</p>
+        <p>Currently unavailable</p>
+        <p>As of 5.27.21</p>
     </div>
+    <div class="warningbackground" id="firefox2"></div>
     
     <div class="fade" id="fade"></div>
     <div class="vignette" id="vignette"></div>
@@ -1577,7 +1590,8 @@
 var FIREFOX = /Firefox/i.test(navigator.userAgent);
 
 if (FIREFOX) {
-  document.getElementById("firefox").style.display="block";
+  document.getElementById("firefox1").style.display="block";
+  document.getElementById("firefox2").style.display="block";
 }
 </script> <!--browsers-->
     
