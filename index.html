@@ -953,9 +953,9 @@ for (i=0;i<imgUrls.length;i++) {
         background: #000;
         opacity: 50%;
         width: calc(var(--grid-cell)*10);
-        height: calc(var(--pixel-size)*4);
+        height: calc(var(--pixel-size)*2);
         z-index: 15;
-        margin-top: calc(var(--grid-cell)*9.75);
+        margin-top: calc(var(--grid-cell)*9.875);
     }
     .scrollbox {
         position: fixed;
@@ -964,6 +964,27 @@ for (i=0;i<imgUrls.length;i++) {
         height: calc(var(--grid-cell)*10);
         background: transparent;
         border: none;
+    }
+    @keyframes shakey {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 1px) rotate(0deg); }
+  100% { transform: translate(0px, 0px) rotate(-1deg); }
+}
+    @keyframes shake {
+        0% { transform: translate(1px, 1px); }
+        20% { transform: translate(-2px, -2px); }
+        40% { transform: translate(2px, 1px); }
+        60% { transform: translate(-1px, 5px); }
+        80% { transform: translate(3px, -1px); }
+        100% { transform: translate(-1px, 10px); }
     }
 </style> <!--style layout-->
     
@@ -1068,7 +1089,7 @@ for (i=0;i<imgUrls.length;i++) {
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: pixel;
-        font-size: calc(var(--pixel-size)*3);
+        font-size: calc(var(--pixel-size)*2.5);
         background: #000;
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
@@ -1078,7 +1099,7 @@ for (i=0;i<imgUrls.length;i++) {
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: boldpixel;
-        font-size: calc(var(--pixel-size)*3);
+        font-size: calc(var(--pixel-size)*2.5);
         background: #000;
         border: rgb(255,255,255, .4) solid;
         border-width: calc(var(--grid-cell)*.1);
@@ -1090,7 +1111,7 @@ for (i=0;i<imgUrls.length;i++) {
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: boldpixel;
-        font-size: calc(var(--pixel-size)*3);
+        font-size: calc(var(--pixel-size)*2.5);
         background: #000;
         background-size: 100%;
         border: rgb(255,255,255, .2) solid;
@@ -1101,7 +1122,7 @@ for (i=0;i<imgUrls.length;i++) {
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: pixel;
-        font-size: calc(var(--pixel-size)*3);
+        font-size: calc(var(--pixel-size)*2.5);
         background: #000;
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
@@ -1111,7 +1132,7 @@ for (i=0;i<imgUrls.length;i++) {
         height: calc(var(--grid-cell)*1);
         color: #fff;
         font-family: pixel;
-        font-size: calc(var(--pixel-size)*3);
+        font-size: calc(var(--pixel-size)*2.5);
         background: #000;
         border: rgb(255,255,255, .2) solid;
         border-width: calc(var(--grid-cell)*.1);
@@ -1347,7 +1368,7 @@ for (i=0;i<imgUrls.length;i++) {
         image-rendering: pixelated;
         background-size: 100%;
         border: none;
-        opacity: 30%;
+        opacity: 25%;
         transition: 1s ease;
     }
     .joyup:active {
@@ -1364,7 +1385,7 @@ for (i=0;i<imgUrls.length;i++) {
         image-rendering: pixelated;
         background-size: 100%;
         border: none;
-        opacity: 30%;
+        opacity: 25%;
         transition: 1s ease;
     }
     .joydown:active {
@@ -1381,7 +1402,7 @@ for (i=0;i<imgUrls.length;i++) {
         image-rendering: pixelated;
         background-size: 100%;
         border: none;
-        opacity: 30%;
+        opacity: 25%;
         transition: 1s ease;
     }
     .joyleft:active {
@@ -1398,7 +1419,7 @@ for (i=0;i<imgUrls.length;i++) {
         image-rendering: pixelated;
         background-size: 100%;
         border: none;
-        opacity: 30%;
+        opacity: 25%;
         transition: 1s ease;
     }
     .joyright:active {
@@ -1407,7 +1428,7 @@ for (i=0;i<imgUrls.length;i++) {
     }
 </style> <!--joystick-->
     
-<body>
+<body id="body">
     
     <div class="warning" id="firefox1">
         <p style="margin-bottom:calc(var(--grid-cell)*2);font-family:boldpixel;font-size: calc(var(--pixel-size)*10);color:#fc6060;">Caution</p>
@@ -1747,6 +1768,11 @@ if (FIREFOX) {
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
         icon.style.backgroundPosition = "20%";
+        
+        document.getElementById("joyup").style.opacity = "100%";
+        setTimeout(function() {
+            document.getElementById("joyup").style.opacity = "25%";
+        },300);
     });
     
     $('.joydown').click(function() {
@@ -1759,6 +1785,11 @@ if (FIREFOX) {
         icon.style.top = `calc(var(--grid-cell)*${yaxis})`;
         shadow.top = `calc(var(--grid-cell)*${yaxis})`;
         icon.style.backgroundPosition = "0%";
+        
+        document.getElementById("joydown").style.opacity = "100%";
+        setTimeout(function() {
+            document.getElementById("joydown").style.opacity = "25%";
+        },300);
     });
     
     $('.joyleft').click(function() {
@@ -1771,6 +1802,11 @@ if (FIREFOX) {
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
         icon.style.backgroundPosition = "40%";
+        
+        document.getElementById("joyleft").style.opacity = "100%";
+        setTimeout(function() {
+            document.getElementById("joyleft").style.opacity = "25%";
+        },300);
     });
     
     $('.joyright').click(function() {
@@ -1783,6 +1819,11 @@ if (FIREFOX) {
         icon.style.left = `calc(var(--grid-cell)*${xaxis})`;
         shadow.left = `calc(var(--grid-cell)*${xaxis})`;
         icon.style.backgroundPosition = "60%";
+        
+        document.getElementById("joyright").style.opacity = "100%";
+        setTimeout(function() {
+            document.getElementById("joyright").style.opacity = "25%";
+        },300);
     });
     
     window.setInterval(function() {
@@ -2017,6 +2058,10 @@ slider.oninput = function() {
         document.getElementById("fall").style.animation = "fall 2s steps(10) forwards";
         document.getElementById("emit2").style.opacity = "80%";
         },500);
+        
+        setTimeout(function() {
+            document.getElementById("body").style.animation = "shake .4s";
+        },1300);
         
         setTimeout(function() {
             document.getElementById("vignette").style.animation = "scale 2.5s ease forwards";
