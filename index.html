@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content= "ie=edge">
     <title>UN 5.0</title>
     
+    <script>
+var imgs = [];
+var imgUrls = ["gear.png","sprites.png","grass1.png","grass2.png","grass3.png"];
+for (i=0;i<imgUrls.length;i++) {
+    imgs.push(new Image());
+    imgs[i].src = imgUrls[i]
+}
+    </script> <!--preload images-->
+    
     <!--
     <script
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -15,7 +24,7 @@
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>   
--->
+--> 
     
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     
@@ -23,7 +32,7 @@
     
 <style>
     :root {
-        --pixel-size: 2px;
+        --pixel-size: 2.25px;
         --grid-cell: calc(var(--pixel-size)*16);
     }
     /*
@@ -2885,6 +2894,8 @@ function twinduplicate() {
     return arr;
 }
 
+    var templecount = 0;
+    var drylandcount = 0;
     
     //dash to new room
     
@@ -2945,11 +2956,17 @@ function twinduplicate() {
             
             if (roomrn.includes('coast.png')) {
                 if (facing == "up") {
-                temple();
+                    if (templecount == 0) {
+                        temple();
+                        templecount = templecount + 1;
+                    }
             }
         }
             if (roomrn.includes('drygrass.png')) {
+                if (drylandcount == 0) {
                 drylands();
+                drylandcount = drylandcount + 1;
+                }
         }
     }
 
