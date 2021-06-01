@@ -1036,13 +1036,13 @@ for (i=0;i<imgUrls.length;i++) {
 }
     @keyframes emission {
         0% {
-            opacity: 10%;
+            opacity: 0%;
         }
         50% {
             opacity: 100%;
         }
         100% {
-            opacity: 10%;
+            opacity: 0%;
         }
     }
     @keyframes fadeout {
@@ -1050,7 +1050,7 @@ for (i=0;i<imgUrls.length;i++) {
             opacity: 90%;
         }
         100% {
-            opacity: 10%;
+            opacity: 0%;
         }
     }
 </style> <!--daynight-->
@@ -2125,12 +2125,16 @@ slider.oninput = function() {
         setTimeout(function() {
             document.getElementById("vignette").style.animation = "scale 2.5s ease forwards";
             document.getElementById("mapcover").style.transition = ".5s ease";
+            document.getElementById("emit").style.opacity = "0%";
         },1500);
         
         setTimeout(function() {
             document.getElementById("icon").style.display = "block";
+        },3400);
+        
+        setTimeout(function() {
+            document.getElementById("icon").style.display = "block";
             document.getElementById("mapcover").style.opacity = "0%";
-            document.getElementById("emit").style.opacity = "10%";
 
     
             document.getElementById("fall").style.display = "none";
