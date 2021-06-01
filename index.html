@@ -453,13 +453,15 @@ for (i=0;i<imgUrls.length;i++) {
         position: absolute;
         transform: translate(calc(var(--grid-cell)*-.5), calc(var(--grid-cell)*-.8));
         mix-blend-mode: screen;
+        -webkit-mix-blend-mode: screen;
         z-index: 9;
         width: calc(var(--grid-cell)*2);
         height: calc(var(--grid-cell)*2);
         background-image: url("emit.png");
         background-size: 100%;
         opacity: 100%;
-        animation: reglow 5s ease infinite;
+        /*animation: reglow 5s ease infinite;*/
+        animation: emission 10s ease infinite;
         transition: .2s ease;
     }
     @keyframes reglow {
@@ -658,6 +660,7 @@ for (i=0;i<imgUrls.length;i++) {
         width: calc(var(--grid-cell)*.25);
         height: calc(var(--grid-cell)*.25);
         background: #fff;
+        background-size: 100%;
         position: fixed;
         z-index: 16;
     }
@@ -951,12 +954,12 @@ for (i=0;i<imgUrls.length;i++) {
     }
     .bottomly {
         position: fixed;
-        background: #000;
-        opacity: 50%;
+        background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,1) 100%);
+        opacity: 60%;
         width: calc(var(--grid-cell)*10);
-        height: calc(var(--pixel-size)*2);
+        height: calc(var(--pixel-size)*4);
         z-index: 15;
-        margin-top: calc(var(--grid-cell)*9.875);
+        margin-top: calc(var(--grid-cell)*9.75);
     }
     .scrollbox {
         position: fixed;
@@ -987,35 +990,59 @@ for (i=0;i<imgUrls.length;i++) {
         80% { transform: translate(3px, -1px); }
         100% { transform: translate(-1px, 10px); }
     }
+    .umbra {
+        position: absolute;
+        transform: translate(calc(var(--grid-cell)*-7.5), calc(var(--grid-cell)*-7.5));
+        z-index: 6;
+        width: calc(var(--grid-cell)*16);
+        height: calc(var(--grid-cell)*16);
+        box-shadow: inset #000 0 0 calc(var(--grid-cell)*2.75) calc(var(--grid-cell)*5.75);
+        pointer-events: none;
+        opacity: 0%;
+        transition: .05 steps(2);
+        animation: none;
+    }
 </style> <!--style layout-->
     
 <style>
-    .css-selector {
+    .daynight {
+        width: calc(var(--grid-cell)*10);
+        height: calc(var(--grid-cell)*10);
         position: fixed;
         z-index: 13;
-    background: linear-gradient(179deg, #b2e8ff, #fff9b4, #ff6e00, #ef34b1, #af42ff, #925fff, #5fff9b);
+    background: linear-gradient(180deg, #b2e8ff, #fff9b4, #ff6e00, #ef34b1, #af42ff, #925fff, #5036ff);
     background-size: 1400% 1400%;
-
-    -webkit-animation: daynight 30s ease infinite;
-    animation: daynight 30s ease infinite;
+        opacity: 0%;
+        transition: 1s ease;
+        mix-blend-mode: soft-light;
+        -webkit-mix-blend-mode: soft-light;
+    animation: none;
+}
+    
+@keyframes daynight1 {
+    0%{background-position:50% 0%;opacity: 0%;}
+    100%{background-position:50% 0%;opacity: 20%;}
 }
 
-@-webkit-keyframes daynight {
-    0%{background-position:47% 0%}
-    50%{background-position:54% 100%}
-    100%{background-position:47% 0%}
+@keyframes daynight2 {
+    0%{background-position:50% 0%;opacity: 20%;}
+    50%{background-position:50% 100%;opacity: 100%;}
+    100%{background-position:50% 0%;opacity: 20%;}
 }
-@keyframes daynight {
-    0%{background-position:47% 0%}
-    50%{background-position:54% 100%}
-    100%{background-position:47% 0%}
+@keyframes nightshift {
+    0%{opacity: 0%}
+    55%{opacity: 85%}
+    100%{opacity: 0%}
 }
-    @keyframes daynigh {
+    @keyframes emission {
         0% {
-            animation: reglow 5s ease infinite
+            opacity: 30%;
+        }
+        50% {
+            opacity: 100%;
         }
         100% {
-            animation: reglow 5s ease infinite
+            opacity: 30%;
         }
     }
 </style> <!--daynight-->
@@ -1139,6 +1166,7 @@ for (i=0;i<imgUrls.length;i++) {
         border-width: calc(var(--grid-cell)*.1);
     }
 </style> <!--settings-->
+    
 <style>
     .fade {
         position: fixed;
@@ -1241,6 +1269,7 @@ for (i=0;i<imgUrls.length;i++) {
         }
     }
 </style> <!--fade and textbox-->  
+    
 <style>
     .loader,
     .loader:after {
@@ -1265,6 +1294,7 @@ for (i=0;i<imgUrls.length;i++) {
         z-index: 999;
 }
 </style> <!--loader-->
+    
 <style>
 .dpad {
    position: fixed;
@@ -1342,6 +1372,7 @@ for (i=0;i<imgUrls.length;i++) {
    user-select:none;
 }
 </style> <!--dpad-->
+    
 <style>
     .joystick {
         position: fixed;
@@ -1570,12 +1601,14 @@ for (i=0;i<imgUrls.length;i++) {
         
 <div class="lens">
 <div class="camera">
+    <div class="daynight" id="daynight"></div>
         <div class="fall" id="fall">
         <div class="emit" id="emit2"></div>
-        </div> 
+        </div>
         <div class="icon" id="icon">
             <div class="emit" id="emit"></div>
             <button class="search" id="search"></button>
+            <div class="umbra" id="umbra"></div>
         </div>
         <div class="shadow" id="shadow"></div>
     
@@ -1999,6 +2032,10 @@ slider.oninput = function() {
     var started = false;
     var opt = false;
     
+    var startingrooms = ['url("start1.png")','url("start2.png")','url("start3.png")',]
+    
+    var startingroom = startingrooms[Math.floor(Math.random() * startingrooms.length)];
+    
     var j = 0;
     
     window.setInterval(function() {
@@ -2010,14 +2047,14 @@ slider.oninput = function() {
         document.getElementById("duplicater" + i).style.filter = "blur(0)";
         document.getElementById("dduplicater0").style.filter = "blur(0)";
         document.getElementById("dduplicater" + j).style.filter = "blur(0)";
-    },100);
+    },100);  //unblur images
 
     window.setInterval(function() {
         if ( opt == false) {
         document.getElementById("gear").style.opacity = "10%";
         document.getElementById("gear").style.backgroundImage = "url(gearfill.png)";
         }
-    },10000);
+    },10000); //gear opacity
 
     var zoom = 1;
     
@@ -2025,7 +2062,6 @@ slider.oninput = function() {
         zoom = zoom + .3;
         document.getElementById("dmap2").style.transform = "scale("+zoom+")";
     });
-    
     $('#zoomout').click(function() {
         zoom = zoom - .3;
         document.getElementById("dmap2").style.transform = "scale("+zoom+")";
@@ -2041,6 +2077,8 @@ slider.oninput = function() {
     $('.start').click(function() {
         started = true;
         opt = false;
+        document.getElementById("minimapstarter").style.backgroundImage = startingroom;
+        document.getElementById("plus").style.backgroundImage = startingroom;
         document.getElementById("emit2").style.opacity = "0%";
         document.getElementById("fade").style.animation = "fade2 1.5s forwards";
             document.getElementById("mapcover").style.opacity = "100%";
@@ -2068,7 +2106,7 @@ slider.oninput = function() {
         document.getElementById("icon").style.display = "none";
         document.getElementById("fall").style.display = "block";
         document.getElementById("fall").style.animation = "fall 2s steps(10) forwards";
-        document.getElementById("emit2").style.opacity = "80%";
+        document.getElementById("emit2").style.opacity = "30%";
         },500);
         
         setTimeout(function() {
@@ -2081,26 +2119,28 @@ slider.oninput = function() {
         },1500);
         
         setTimeout(function() {
-            document.getElementById("emit").style.opacity = "0%";
             document.getElementById("icon").style.display = "block";
             document.getElementById("mapcover").style.opacity = "0%";
+            document.getElementById("emit").style.opacity = "30%";
 
-        },3000);
-        
-        setTimeout(function() {
-            document.getElementById("emit2").style.opacity = "0%";
-            document.getElementById("emit").style.opacity = "auto";
+    
             document.getElementById("fall").style.display = "none";
             document.getElementById("fall").style.animation = "none";
-            document.getElementById("emit").style.animation = "reglow 5s ease infinite";
-            
 
             document.getElementById("gear").style.opacity= "30%";
             document.getElementById("gear").style.pointerEvents = "all";
             document.getElementById("joystick").style.pointerEvents = "all";
             document.getElementById("mp").style.display = "block";
             inter = 1;
+            
+        document.getElementById("daynight").style.animation = "daynight1 5s ease forwards";
         },3500);
+        
+        setTimeout(function() {
+            document.getElementById("umbra").style.animation = "nightshift 60s ease infinite";
+            document.getElementById("emit").style.animation = "emission 60s ease infinite";
+           document.getElementById("daynight").style.animation = "daynight2 60s ease infinite"; 
+        },8500);
         
         
         setTimeout(function() {
@@ -2473,6 +2513,8 @@ slider.oninput = function() {
     document.getElementById("minimapstarter2").style.opacity = "0%";
     
     $('.mp').click(function() {
+    });
+    /*
     document.getElementById("zoomslider").style.display = "block";
     document.getElementById("mapback").style.display = "block";
     document.getElementById("dmap3").style.display = "block";
@@ -2488,6 +2530,7 @@ slider.oninput = function() {
     document.getElementById("mmb2").style.opacity = "100%";
     document.getElementById("minimapstarter2").style.opacity = "100%";
     });
+    */
     
     $('.mapcover').click(function() {
         document.getElementById("textbox").style.display = "block";
@@ -2937,7 +2980,8 @@ function twinduplicate() {
     
     var rooms = [vaseroom, baseroom, basetwo, basethree, mob1, sea1,dry1];
     
-    var saved = ["0c0zurl(grass1.png)"];
+    //var saved = ["0c0zurl(grass1.png)"];
+    var saved = ["0c0z"+startingroom];
     
     var index, value, result;
     
@@ -3265,7 +3309,7 @@ function removeLoader(){
     
 </style> <!--grain overlay-->
 
-<div class="bg" id="bg">
+<div class="bg" id="bg">  
 </div>
     
 </html>
