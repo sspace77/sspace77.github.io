@@ -1036,13 +1036,21 @@ for (i=0;i<imgUrls.length;i++) {
 }
     @keyframes emission {
         0% {
-            opacity: 30%;
+            opacity: 10%;
         }
         50% {
             opacity: 100%;
         }
         100% {
-            opacity: 30%;
+            opacity: 10%;
+        }
+    }
+    @keyframes fadeout {
+        0% {
+            opacity: 90%;
+        }
+        100% {
+            opacity: 10%;
         }
     }
 </style> <!--daynight-->
@@ -2106,11 +2114,12 @@ slider.oninput = function() {
         document.getElementById("icon").style.display = "none";
         document.getElementById("fall").style.display = "block";
         document.getElementById("fall").style.animation = "fall 2s steps(10) forwards";
-        document.getElementById("emit2").style.opacity = "30%";
+        document.getElementById("emit2").style.opacity = "90%";
         },500);
         
         setTimeout(function() {
             document.getElementById("body").style.animation = "shake .4s";
+            document.getElementById("emit2").style.animation = "fadeout 3s forwards";
         },1300);
         
         setTimeout(function() {
@@ -2121,7 +2130,7 @@ slider.oninput = function() {
         setTimeout(function() {
             document.getElementById("icon").style.display = "block";
             document.getElementById("mapcover").style.opacity = "0%";
-            document.getElementById("emit").style.opacity = "30%";
+            document.getElementById("emit").style.opacity = "10%";
 
     
             document.getElementById("fall").style.display = "none";
